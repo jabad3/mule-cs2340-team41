@@ -30,11 +30,17 @@ public class Person5 {
 	 * @return the modified string
 	 */
 	private String calc(String input) {
-	  String firstPart = input.substring(0, 2);
-	  String secondPart = input.substring(3);
-	  String deleteThisPlease = "This is just a test, so delete it!";
-	  return secondPart + firstPart;
+	  if (input.length() <= 3) {
+	      return input;
+	  }
+	  else {
+    	  String firstPart = input.substring(0, 2);
+    	  String secondPart = input.substring(3);
+    	  return secondPart + firstPart;
+	  }
 	}
+	
+	
 	
 	/**
 	 * Return a string rep of this object
