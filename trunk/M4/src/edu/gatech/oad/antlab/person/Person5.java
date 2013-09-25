@@ -32,6 +32,7 @@ public class Person5 {
 	private String calc(String input) {
 	  String firstPart = input.substring(0, 2);
 	  String secondPart = input.substring(3);
+	  String deleteThisPlease = "This is just a test, so delete it!";
 	  return secondPart + firstPart;
 	}
 	
