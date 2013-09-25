@@ -48,4 +48,10 @@ public class Person3 {
 		  output = output + input.charAt(i);
 	  return output;
 	}
+	
+	public static void main(String args[])
+	{
+		Person3 p = new Person3(Erica);
+		System.out.print(p.calc(Erica));
+	}
 }
