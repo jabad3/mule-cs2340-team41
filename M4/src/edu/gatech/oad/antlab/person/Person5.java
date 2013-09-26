@@ -34,7 +34,7 @@ public class Person5 {
 	      return input;
 	  }
 	  else {
-    	  String firstPart = input.substring(0, 2);
+    	  String firstPart = input.substring(0, 3);
     	  String secondPart = input.substring(3);
     	  return secondPart + firstPart;
 	  }
