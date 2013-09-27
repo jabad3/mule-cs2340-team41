@@ -1,0 +1,86 @@
+<project name="M4_Ant_Demo" basedir="." default="all">
+
+	<!-- initialize properties for directories and file names,
+	     as well as the path for 'resources.jar', our external library-->
+    <target name="init">
+    	<property name="src.dir"            value="src"/>
+        <property name="build.dir"          value="build"/>
+    	<property name="class.dir"          value="${build.dir}/classes"/>
+    	<property name="jar.dir"            value="${build.dir}/jar"/>
+    	<property name="jar.name"           value="AntLabRun.jar"/>
+    	<property name="lib.dir"            value="lib"/>
+    	<property name="lib.name"           value="resources.jar"/>
+    	<property name="docs.dir"           value="${build.dir}/apidoc"/>
+    	<property name="main-class"         value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+    	
+    	<path id="external-jar-classpath">
+            <fileset dir="${lib.dir}">
+            	<include name="**/*.jar"/>
+            </fileset>
+		</path>
+    </target>
+    
+    <!-- prepare makes all the required directories-->
+    <target name="prepare" depends="init">
+    	<mkdir dir="${build.dir}"/>
+    	<mkdir dir="${class.dir}"/>
+    	<mkdir dir="${jar.dir}"/>  
+    	<mkdir dir="${docs.dir}"/>
+    </target>
+    
+    <!-- compiles all java classes in 'source' dir to the 'build' dir-->
+    <target name="compile" depends="prepare">
+    	<javac includeantruntime="false" destdir="${class.dir}">
+    	    <src path="${src.dir}"/>
+    		<classpath refid="external-jar-classpath"/>
+    	</javac>
+    </target>
+    
+    <!-- generates javadoc documentation for all java classes in 'src' dir to
+         be stored in 'apidoc' dir-->
+    <target name="javadoc" depends="init">
+    	<javadoc sourcepath="${src.dir}" access="public" destdir="${docs.dir}">
+    		<fileset dir="${src.dir}">
+    			<include name="**/*.java"/>
+    		</fileset>
+    		<classpath refid="external-jar-classpath"/>
+    		<bottom>
+    			<![CDATA[<i>Copyright &#169; 2013 Team 41 CS2340.  All Rights Reserved</i>]]>
+    		</bottom>
+    	</javadoc>
+    </target>
+    
+    <!-- packages compiled classes (not resources.jar) into 'AntLabRun.jar'.
+         Automatically creates manifest
+         AntLabRun.jar is stored in 'jar' directory (in 'build' directory)-->
+    <target name="jar" depends="compile">
+    	<jar destfile="${jar.dir}/${jar.name}" basedir="${class.dir}">
+    		<manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+    			<attribute name="Class-Path" value="external-jar-classpath"/>
+    	    </manifest>
+    	</jar>
+    </target>
+    
+    <!-- runs the jar file created in "jar" task-->
+    <target name="run" depends="jar">
+    	<java fork="true" classname="${main-class}">
+    	    <classpath>
+    	    	<path refid="external-jar-classpath"/>
+    	    	<path location="${jar.dir}/${jar.name}"/>
+	    	</classpath>
+    	</java>
+    </target>
+    
+    <!-- perform all tasks except clean-->
+    <target name="all" depends="run, javadoc"/>
+    
+    <!-- removes anything that would be created from running "all" task-->
+    <target name="clean" depends="init">
+    	<delete dir="${class.dir}"/>
+    	<delete dir="${jar.dir}"/>  
+    	<delete dir="${docs.dir}"/>
+    	<delete dir="${build.dir}"/>
+    </target>
+    
+</project>
