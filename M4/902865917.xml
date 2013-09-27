@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-//pkg1
 
-<project name="M4" basedir="." default="main">
+<!-- <project name="M4" basedir="." default="main">
     
     <target name="init">
 	<property name="src.dir" value="src"/>
@@ -16,19 +15,21 @@
     <target name="prepare" depends="init">
         <mkdir dir="${classes.dir}" />
         <mkdir dir="${apidoc.dir}"/>
+        <mkdir dir="${build.dir}"/>
         
     </target>
     
-    <target name="compile" depends="prepare">
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" classpath="${lib}/resources.jar"/>
+
+   <target name="compile" depends="prepare">
+        <javac srcdir="${src.dir}" destdir="${build.dir}/classes" includeantruntime="false" classpath="${lib}/resources.jar"/>
         
     </target>
     
     <target name="jar" depends="compile">
-        <jar destfile="${jar.dir}/AntLabRun.jar" basedir="${classes.dir}">
+        <jar destfile="${jar.dir}/AntLabRun.jar" basedir="${build.dir}">
             <manifest>
-                <attribute name="Main-Class" value="edu.gatech.oad.antlab.pkg1"/>
-                <attribute name="Class-Path" value="resources.jar"/>
+                <attribute name="Main-Class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+                <attribute name="Class-Path" value="RLresources.jar"/>
                 
             </manifest>
             
@@ -37,7 +38,7 @@
     </target>
     
     <target name="javadoc" depends="compile">
-        <javadoc sourcepath="${src.dir}" destdir="${apidoc.dir}" classpath="${lib.dir}/resources.jar"/>
+        <javadoc sourcepath="${src.dir}" destdir="${apidoc.dir}" classpath="${lib.dir}/RLresources.jar"/>
     </target>
     
     <target name="run" depends="jar">
@@ -54,4 +55,60 @@
     
 
 
+</project> -->
+
+<project name="M4 Ant Lab" >
+        <target name="init">
+                
+                <property name="src" location="./src" />
+                <property name="build" location="build" />
+                <property name="dist" location="dist" />
+                <property name="lib" location="./lib"/>
+                <property name="antlab" location="./src/edu/gatech/oad/antlab" />
+                <property name="apidoc" location="apidoc"/>
+        </target>
+        <target name="prepare" depends="init">
+                <mkdir dir="${build}"/>
+                <mkdir dir="${antlab}"/>
+                <mkdir dir="${src}"/>
+                <mkdir dir="${dist}"/>
+                <mkdir dir="${lib}"/>
+                <mkdir dir="${apidoc}"/>
+        </target>
+                
+        <target name="compile" depends="prepare">
+                <javac srcdir="${src}" destdir="${build}" classpath="${lib}/resources.jar" verbose="yes" />
+        </target>
+        
+        <target name="javadoc" depends="compile,prepare">
+                <javadoc sourcepath="${src}" access="public" destdir="${apidoc}" />
+        </target>
+        
+        <target name="jar" depends="compile">
+                <copy file="${lib}/resources.jar" todir="${dist}" />
+                <jar destfile="${dist}/AntLabRun.jar"  >
+                        <fileset dir="${build}">
+                                <include name="**/*"/>
+                        </fileset>
+                        <manifest>
+                                    <attribute name="Main-Class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+                                                <attribute name="Class-Path" value="resources.jar" />
+                        </manifest>
+                </jar>
+        </target>
+        
+        <target name="run" depends="jar">
+                <java jar="${dist}/AntLabRun.jar" fork="true" >
+                        
+                </java>
+        </target>
+        
+        <target name="all" depends="init,prepare,compile,javadoc,jar,run" />
+        
+        <target name="clean" depends="init">
+                <delete verbose="true" dir="${build}" />
+                <delete verbose="true" dir="${dist}" />
+                
+        </target>
+        
 </project>
