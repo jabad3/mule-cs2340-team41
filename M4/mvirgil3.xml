@@ -1,4 +1,4 @@
-<project name="M4_Ant_Demo" basedir="." default="all">
+<project name="M4_Ant_Lab" basedir="." default="all">
 
 	<!-- initialize properties for directories and file names,
 	     as well as the path for 'resources.jar', our external library-->
@@ -10,7 +10,7 @@
     	<property name="jar.name"           value="AntLabRun.jar"/>
     	<property name="lib.dir"            value="lib"/>
     	<property name="lib.name"           value="resources.jar"/>
-    	<property name="docs.dir"           value="${build.dir}/apidoc"/>
+    	<property name="docs.dir"           value="apidoc"/>
     	<property name="main-class"         value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
     	
     	<path id="external-jar-classpath">
