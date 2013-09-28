@@ -30,8 +30,16 @@ public class Person4 {
      * @return the modified string
      */
     private String calc(String input) {
-      //Person 4 put your implementation here
-      return null;
+    	char charToRotate = input.charAt(0);
+    	StringBuffer rotationBuffer = new StringBuffer(input.length());
+    	   
+    	for(int i = 1; i < input.length(); i++) {
+    	    rotationBuffer.append(input.charAt(i));
+    	}
+    	
+    	rotationBuffer.append(charToRotate);
+    	String rotatedString = new String(rotationBuffer);
+    	return rotatedString;
     }
     
     /**
