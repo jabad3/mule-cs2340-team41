@@ -1,0 +1,68 @@
+<project name="M4" basedir="." default="all">
+    
+    <!-- Sets up required properties -->
+    <target name="init">
+        <property name="src.dir" value="src"/>
+        <property name="build.dir" value="build"/>
+        <property name="classpathbase.dir" value="lib"/>
+        <property name="jar.dir" value="${build.dir}/jar"/>
+        <property name="apidoc.dir" value="${build.dir}/javadoc"/>
+        
+        <property name="jar-name" value="AntLabRun"/>
+        <property name="main-class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+        <property name="class-path" value="resources.jar"/>
+    </target>
+    
+    <!-- Creates required directories -->
+    <target name="prepare" depends="init">
+	    <mkdir dir="${build.dir}"/>
+	    <mkdir dir="${jar.dir}"/>
+	    <mkdir dir="${apidoc.dir}"/>
+    </target>
+   
+    <!-- Compiles the source code -->
+    <target name="compile" depends="prepare">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" classpath="${classpathbase.dir}/${class-path}" includeantruntime="false"/>
+    </target>
+    
+    <!-- Creates javadocs -->
+    <target name="javadoc" depends="prepare">
+        <javadoc sourcepath="${src.dir}" access="public" destdir="${apidoc.dir}" classpath="${classpathbase.dir}/${class-path}"/>
+    </target>
+    
+    <!-- Creates jar file -->
+    <target name="jar" depends="compile">
+        <jar destfile="${jar.dir}/${jar-name}.jar" basedir="${build.dir}" includes="**/*.class">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+                <attribute name="Class-Path" value="${class-path}"/>
+            </manifest>
+        </jar>
+        
+        <!-- Copy dependencies to jar path -->
+        <copy todir="${jar.dir}">
+            <fileset dir="${classpathbase.dir}" includes="**/*.jar"/>
+        </copy>
+    </target>
+    
+    <!-- Runs the jar file -->
+    <target name="run" depends="jar">
+        <java jar="${jar.dir}/${jar-name}.jar" fork="true"/>
+    </target>
+    
+    <!-- Runs all tasks except clean -->
+    <target name="all" depends="javadoc,run"/>
+    
+    <!-- Deletes all created files and directories -->
+    <target name="clean" depends="init">
+        <delete dir="${apidoc.dir}"/>
+        <delete dir="${jar.dir}"/>
+        <delete dir="${build.dir}"/>
+    </target>
+    
+    <!-- Compiles and zips the result jar plus all dependencies -->
+    <target name="archive" depends="jar">
+        <zip destfile="${jar.dir}/${jar-name}.zip" basedir="${jar.dir}" includes="*.jar"/>
+    </target>
+    
+</project>
