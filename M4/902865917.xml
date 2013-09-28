@@ -7,6 +7,8 @@
         <property name="classpathbase.dir" value="lib"/>
         <property name="jar.dir" value="${build.dir}/jar"/>
         <property name="apidoc.dir" value="apidoc"/>
+        <property name="copied.dir" value="copied"/>
+        <property name="tobecopied.dir" value="tobecopied"/>
         
         <property name="jar-name" value="AntLabRun"/>
         <property name="main-class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
@@ -18,6 +20,7 @@
             <mkdir dir="${build.dir}"/>
             <mkdir dir="${jar.dir}"/>
             <mkdir dir="${apidoc.dir}"/>
+            <mkdir dir= "${copied.dir}"/>
     </target>
    
     <!-- Compiles the source code -->
@@ -59,6 +62,16 @@
         <delete dir="${jar.dir}"/>
         <delete dir="${build.dir}"/>
     </target>
+    
+    <!-- copies one directory to another directory -->
+    <target name="copyDirectory" depends= "init">
+        <mkdir dir= "${tobecopied.dir}"/>
+        <copy todir="${copied.dir}">
+    	<fileset dir="${tobecopied.dir}"/>
+  		</copy>
+  		<delete dir="${tobecopied.dir}"/>
+    </target>
+
     
 </project>
 
