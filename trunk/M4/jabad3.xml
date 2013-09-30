@@ -1,0 +1,64 @@
+<!-- M4 Ant Build-->
+<!-- build.xml -->
+<project name="M4" basedir="." default="all">
+	<target name = "init">
+		<property name="src.dir" value="src"/>
+		<property name="build.dir" value="build"/>
+		<property name="classes.dir" value="${build.dir}/classes"/>
+		<property name="jar.dir" value="${build.dir}/jar"/>
+		<property name="jar-name" value="AntLabRun"/>
+		<property name ="apidoc.dir" value="apidoc"/>
+		<property name="main-class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+    	<property name="lib.dir" value="lib"/>
+    	<property name="class-path" value="resources.jar"/>	
+	</target>
+	
+<!-- Prepare Directories-->
+    <target name="prepare" depends="init">
+    	<mkdir dir="${class.dir}"/>
+    	<mkdir dir="${build.dir}"/>
+    	<mkdir dir="${jar.dir}"/>  
+    	<mkdir dir="${docs.dir}"/>
+    </target>
+	
+<!-- Compiles Source Code -->
+    <target name="compile" depends="prepare">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" classpath="${lib.dir}/${class-path}" includeantruntime="false"/>
+    </target>
+    
+<!-- Creates Javadocs -->
+    <target name="javadoc" depends="prepare">
+        <javadoc sourcepath="${src.dir}" access="public" destdir="${apidoc.dir}" classpath="${lib.dir}/${class-path}"/>
+    </target>	
+	
+<!-- Creates jar file -->
+    <target name="jar" depends="compile">
+        <jar destfile="${jar.dir}/${jar-name}.jar" basedir="${build.dir}" includes="**/*.class">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+                <attribute name="Class-Path" value="${class-path}"/>
+            </manifest>
+        </jar>
+        
+<!-- Copy dependencies to jar path -->
+        <copy todir="${jar.dir}">
+            <fileset dir="${lib.dir}" includes="**/*.jar"/>
+        </copy>
+    </target>
+	
+<!-- Run Jar-->
+    <target name="run" depends="jar">
+        <java jar="${jar.dir}/${jar-name}.jar" fork="true"/>
+    </target>
+    
+<!-- Runs All (except clean) -->
+    <target name="all" depends="javadoc,run"/>
+    
+<!-- Deletes created files/directories -->
+    <target name="clean" depends="init">
+        <delete dir="${apidoc.dir}"/>
+        <delete dir="${jar.dir}"/>
+        <delete dir="${build.dir}"/>
+        <delete dir="${class.dir}"/>
+    </target>
+</project>
