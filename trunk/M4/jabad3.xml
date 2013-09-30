@@ -1,5 +1,5 @@
 <!-- M4 Ant Build-->
-<!-- build.xml -->
+<!-- build.xml-->
 <project name="M4" basedir="." default="all">
 	<target name = "init">
 		<property name="src.dir" value="src"/>
@@ -21,17 +21,17 @@
     	<mkdir dir="${docs.dir}"/>
     </target>
 	
-<!-- Compiles Source Code -->
+<!-- Compiles Source Code-->
     <target name="compile" depends="prepare">
         <javac srcdir="${src.dir}" destdir="${build.dir}" classpath="${lib.dir}/${class-path}" includeantruntime="false"/>
     </target>
     
-<!-- Creates Javadocs -->
+<!-- Creates Javadocs-->
     <target name="javadoc" depends="prepare">
         <javadoc sourcepath="${src.dir}" access="public" destdir="${apidoc.dir}" classpath="${lib.dir}/${class-path}"/>
     </target>	
 	
-<!-- Creates jar file -->
+<!-- Creates Jar-->
     <target name="jar" depends="compile">
         <jar destfile="${jar.dir}/${jar-name}.jar" basedir="${build.dir}" includes="**/*.class">
             <manifest>
@@ -40,7 +40,7 @@
             </manifest>
         </jar>
         
-<!-- Copy dependencies to jar path -->
+<!-- Copy dependencies to jar path-->
         <copy todir="${jar.dir}">
             <fileset dir="${lib.dir}" includes="**/*.jar"/>
         </copy>
@@ -51,10 +51,10 @@
         <java jar="${jar.dir}/${jar-name}.jar" fork="true"/>
     </target>
     
-<!-- Runs All (except clean) -->
+<!-- Runs All (except clean)-->
     <target name="all" depends="javadoc,run"/>
     
-<!-- Deletes created files/directories -->
+<!-- Deletes created files/directories-->
     <target name="clean" depends="init">
         <delete dir="${apidoc.dir}"/>
         <delete dir="${jar.dir}"/>
