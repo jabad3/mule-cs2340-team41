@@ -13,6 +13,7 @@ public class DeckPanel extends JPanel
 {
 	private PlayerConfig playerConfig;
 	private GameConfig gamePanel;
+	private MapPanel mapPanel;
 	
 	ActionListener listener = new Listener();
 	
@@ -25,10 +26,13 @@ public class DeckPanel extends JPanel
 	setLayout(new CardLayout());
 	setPreferredSize(new Dimension(440,250));
 	gamePanel = new GameConfig(listener);
-	playerConfig = new PlayerConfig();
+	playerConfig = new PlayerConfig(); //this is the giant 4 player screen,
+	//the next button is not configured yet. the next button is configured for
+	mapPanel = new MapPanel();
 	
 	add(gamePanel);
 	add(playerConfig);
+	add(mapPanel);
 	
 	}
 	
