@@ -9,7 +9,7 @@ import java.awt.event.*;
  */
 public class RaceButtonPanel extends JPanel
 {
-	private JButton spheroid, mechtron,leggie,packer,humanoid,flapper,bonzoid,gollumer;
+	private JButton buzzite,ugaite,humanoid,flapper,bonzoid;
 	private JLabel iconLabel;
 	
 /**
@@ -25,32 +25,23 @@ public class RaceButtonPanel extends JPanel
 		
 		bonzoid = new JButton("bonzoid");
 		flapper = new JButton("flapper");
-		gollumer = new JButton("gollumer");
 		humanoid = new JButton("humanoid");
-		leggie = new JButton("leggie");
-		mechtron = new JButton("mechtron");
-		packer = new JButton("packer");
-		spheroid = new JButton("spheroid");
+		buzzite = new JButton("buzzite");
+		ugaite = new JButton("ugaite");
 		
 		ButtonListener listener = new ButtonListener();
 		bonzoid.addActionListener(listener);
 		flapper.addActionListener(listener);
-		gollumer.addActionListener(listener);
 		humanoid.addActionListener(listener);
-		leggie.addActionListener(listener);
-		mechtron.addActionListener(listener);
-		packer.addActionListener(listener);
-		spheroid.addActionListener(listener);
+		buzzite.addActionListener(listener);
+		ugaite.addActionListener(listener);
 		
 		add(iconLabel);
 		add(bonzoid);
 		add(flapper);
-		add(gollumer);
 		add(humanoid);
-		add(leggie);
-		add(mechtron);
-		add(packer);
-		add(spheroid);
+		add(buzzite);
+		add(ugaite);
 	}
 	
 
@@ -70,29 +61,17 @@ public class RaceButtonPanel extends JPanel
 				{
 				    iconLabel.setIcon(new ImageIcon("flapper.png","race"));
 				}
-			else if (source == gollumer) 
-				{
-				iconLabel.setIcon(new ImageIcon("gollumer.png","race"));
-				}
 			else if (source == humanoid)
 				{
 				iconLabel.setIcon(new ImageIcon("humanoid.png","race"));
 				}
-			else if (source == leggie)
-				{
-				iconLabel.setIcon(new ImageIcon("leggie.png","race"));
-				}
-			else if (source == mechtron)
+			else if (source == buzzite)
 			{
-				iconLabel.setIcon(new ImageIcon("mechtron.png","race"));
+				iconLabel.setIcon(new ImageIcon("buzzite.png","race"));
 			}
-			else if (source == packer)
+			else if (source == ugaite)
 			{
-				iconLabel.setIcon(new ImageIcon("packer.png","race"));
-			}
-			else if (source == spheroid)
-			{
-				iconLabel.setIcon(new ImageIcon("spheroid.png","race"));
+				iconLabel.setIcon(new ImageIcon("ugaite.png","race"));
 			}
 
 		}
