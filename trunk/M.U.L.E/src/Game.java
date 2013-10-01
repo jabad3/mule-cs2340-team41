@@ -16,7 +16,7 @@ public class Game {
 	
 	public void start()
 	{
-		(new SetupStage()).takeControl();
+		(new SetupStage()).takeControl(this);
 		//SummaryStage summaryStage = new SummaryStage();
 		//LandSelectionStage landSelectionStage = new LandSelectionStage();
 		//LandAuctionStage landAuctionStage = new LandAuctionStage();
@@ -25,12 +25,12 @@ public class Game {
 		//ResourceAuctionStage resourceAuctionStage = new ResourceAuctionStage();
 		for(int i = 0; i < 6; i++)
 		{
-			//(new summaryStage()).takeControl();
-			//(new landSelectionStage()).takeControl();
-			//(new landAuctionStage()).takeControl();
-			//(new developmentStage()).takeControl();
-			//(new productionStage()).takeControl();
-			//(new resourceAuctionStage()).takeControl();
+			//(new summaryStage()).takeControl(this);
+			//(new landSelectionStage()).takeControl(this);
+			//(new landAuctionStage()).takeControl(this);
+			//(new developmentStage()).takeControl(this);
+			//(new productionStage()).takeControl(this);
+			//(new resourceAuctionStage()).takeControl(this);
 		}
 	}
 }
