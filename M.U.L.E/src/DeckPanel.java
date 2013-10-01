@@ -11,7 +11,7 @@ import javax.swing.*;
  */
 public class DeckPanel extends JPanel
 {
-	private PlayerConfiguration playerConfig;
+	private PlayerConfig playerConfig;
 	private GameConfig gamePanel;
 	
 	ActionListener listener = new Listener();
@@ -25,7 +25,7 @@ public class DeckPanel extends JPanel
 	setLayout(new CardLayout());
 	setPreferredSize(new Dimension(440,250));
 	gamePanel = new GameConfig(listener);
-	playerConfig = new PlayerConfiguration(listener);
+	playerConfig = new PlayerConfig();
 	
 	add(gamePanel);
 	add(playerConfig);
@@ -45,10 +45,7 @@ public class DeckPanel extends JPanel
 				((CardLayout) getLayout()).next(DeckPanel.this);
 				setPreferredSize(new Dimension(700,250));
 			}
-			if (source == playerConfig.getNextButton())
-			{
-				((CardLayout) getLayout()).next(DeckPanel.this);
-			}
+			
 		}
 	}
 
