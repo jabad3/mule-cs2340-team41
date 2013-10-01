@@ -5,9 +5,9 @@
  */
 
 public class SetupStage implements Stage {
-	public void takeControl()
+	public void takeControl(Game game)
 	{
 		DeckPanel deck = new DeckPanel();
-		Main.curGame.mainFrame.getContentPane().add(deck);
+		game.mainFrame.getContentPane().add(deck);
 	}
 }

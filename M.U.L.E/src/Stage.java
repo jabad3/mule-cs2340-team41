@@ -5,5 +5,5 @@
  */
 
 public interface Stage {
-	public void takeControl();
+	public void takeControl(Game game);
 }
