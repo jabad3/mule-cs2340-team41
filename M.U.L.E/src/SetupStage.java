@@ -4,10 +4,23 @@
  * @version 1
  */
 
-public class SetupStage implements Stage {
-	public void takeControl(Game game)
+public class SetupStage extends Stage {
+	public SetupStage(Game game) {
+		super(game);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void takeControl()
 	{
-		DeckPanel deck = new DeckPanel();
+		DeckPanel deck = new DeckPanel(this);
 		game.mainFrame.getContentPane().add(deck);
+	}
+	
+	public void setDifficulty(int difficulty)
+	{
+		game.gameConfig.difficulty = difficulty;
+		
+		System.out.println("Difficulty is now: " + game.gameConfig.difficulty);
 	}
 }

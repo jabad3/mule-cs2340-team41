@@ -4,6 +4,14 @@
  * @version 1
  */
 
-public interface Stage {
-	public void takeControl(Game game);
+public abstract class Stage
+{
+	Game game;
+	
+	public Stage(Game game)
+	{
+		this.game = game;
+	}
+	
+	public abstract void takeControl();
 }

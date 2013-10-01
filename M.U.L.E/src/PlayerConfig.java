@@ -1,23 +1,11 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+/**
+ * This class stores the player configuration for a player
+ * @author Tim Farley
+ * @version 1
+ */
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-
-public class PlayerConfig extends JPanel {
-
-    private int numPlayers = 4;
-    
-    public PlayerConfig() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
-        for (int i = 0; i < numPlayers; i++) {
-            add(new PlayerConfiguration(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) { }
-            }));
-        }
-        add(new JButton("Next"));
-    }
+public class PlayerConfig {
+	public String name; //TODO: make enum
+	public int race;
+	public int color; //TODO: make color
 }
