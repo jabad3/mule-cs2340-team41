@@ -13,8 +13,8 @@ public class SetupStage extends Stage {
 	@Override
 	public void takeControl()
 	{
-		DeckPanel deck = new DeckPanel(this);
-		game.mainFrame.getContentPane().add(deck);
+		SetupView setupView = new SetupView(this);
+		game.mainFrame.getContentPane().add(setupView);
 	}
 	
 	public void setDifficulty(int difficulty)

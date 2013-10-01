@@ -9,7 +9,7 @@ import javax.swing.*;
  * @author Erica Pramer
  * @version 1
  */
-public class DeckPanel extends JPanel
+public class SetupView extends JPanel
 {
 	private PlayerConfigPanel playerConfig;
 	private GameConfigPanel gamePanel;
@@ -22,19 +22,19 @@ public class DeckPanel extends JPanel
 	 * Instantiates jpanels, adds them to a cardlayout
 	 * 
 	 */
-	public DeckPanel(SetupStage controller)
+	public SetupView(SetupStage controller)
 	{
-	setLayout(new CardLayout());
-	setPreferredSize(new Dimension(440,250));
-
-	gamePanel = new GameConfigPanel(listener, controller);
-	playerConfig = new PlayerConfigPanel(listener, controller); //this is the giant 4 player screen,
-	//the next button is not configured yet. the next button is configured for
-	mapPanel = new MapPanel();
-	
-	add(gamePanel);
-	add(playerConfig);
-	add(mapPanel);
+    	setLayout(new CardLayout());
+    	setPreferredSize(new Dimension(440,250));
+    
+    	gamePanel = new GameConfigPanel(listener, controller);
+    	playerConfig = new PlayerConfigPanel(listener, controller); //this is the giant 4 player screen,
+    	//the next button is not configured yet. the next button is configured for
+    	mapPanel = new MapPanel();
+    	
+    	add(gamePanel);
+    	add(playerConfig);
+    	add(mapPanel);
 	
 	}
 	
@@ -48,7 +48,7 @@ public class DeckPanel extends JPanel
 			Object source = event.getSource();
 			if (source == gamePanel.getNextButton())
 			{
-				((CardLayout) getLayout()).next(DeckPanel.this);
+				((CardLayout) getLayout()).next(SetupView.this);
 				setPreferredSize(new Dimension(700,250));
 			}
 			
