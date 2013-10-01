@@ -12,13 +12,15 @@ public class Main
  * game can be played
  */
 	
+	public static Game curGame;
+	
 	public static void main(String[] args)
 	{
 		JFrame frame = new JFrame("M.U.L.E");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		DeckPanel deck = new DeckPanel();
-		frame.getContentPane().add(deck);
+		curGame = new Game(frame);
+		curGame.start();
 		
 		frame.pack();
 		frame.setVisible(true);
