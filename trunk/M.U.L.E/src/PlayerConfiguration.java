@@ -38,7 +38,6 @@ public class PlayerConfiguration extends JPanel{
 	add(name);
 	add(race);
 	add(color);
-	add(next);
 	
 	next.addActionListener(L);
 	
