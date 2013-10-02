@@ -12,7 +12,6 @@
 		<property name="lib" 	     value="resources.jar"/>
 		<property name="jar.dir"     value="${build.dir}/jar"/>
 		<property name="jar.name"    value="AntLabRun.jar"/>
-		<property name="main.class"  value="
 	</target>
 	
 	<target name="prepare" depends="init">
