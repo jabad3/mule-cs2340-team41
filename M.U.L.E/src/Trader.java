@@ -6,11 +6,13 @@
  *
  */
 public abstract class Trader {
-    private Inventory inventory;
+    protected Inventory inventory;
     
-    public Trader() {
-        // TODO 
+    public Trader(int food, int energy, int ore, int money, int mules) {
+        inventory = new Inventory(food, energy, ore, money, mules);
     }
+    
+    public Trader() {}
     
     
     /**
@@ -41,7 +43,10 @@ public abstract class Trader {
     }
     
     public void removeResource(Resource rType) throws FailedTransactionException {
-        inventory.removeResource(rType);
+        if (inventory.getResourceCount(rType) == 0) 
+            throw new FailedTransactionException("Not in stock.");
+        else
+            inventory.removeResource(rType);
     }
     
     public void addResource(Resource rType) {
@@ -59,6 +64,15 @@ public abstract class Trader {
             this.inventory.withdrawMoney(price);
             seller.depositMoney(price);
         }*/
+    }
+    
+    /**
+     * Trader increases their money count by the given amount
+     * 
+     * @param amount
+     */
+    protected void depositMoney(int amount) {
+        inventory.depositMoney(amount);
     }
     
     // in context of Mule sales in town
