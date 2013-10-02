@@ -1,0 +1,60 @@
+<!-- Ant M4 -->
+<!-- kcipolla3.xml -->
+
+
+<project name="M4" basedir="." default="all">
+	
+	<target name="init">
+		<property name="src.dir"     value="src"/>
+		<property name="build.dir"   value="build"/>
+		<property name="classes.dir" value="${build.dir}/classes"/>
+		<property name="apidoc.dir"  value="${build.dir}/apidoc"/>
+		<property name="lib" 	     value="resources.jar"/>
+		<property name="jar.dir"     value="${build.dir}/jar"/>
+		<property name="jar.name"    value="AntLabRun.jar"/>
+		<property name="main.class"  value="
+	</target>
+	
+	<target name="prepare" depends="init">
+		<mkdir dir="${classes.dir}"/>
+		<mkdir dir="${jar.dir}"/>
+		<mkdir dir="${apidoc.dir}"/>
+	</target>
+	
+	<target name="compile" depends="prepare">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+		<classpath>
+			<pathelement path ="${build.dir}"/>
+			<pathelement path="${lib}"/>
+		</classpath>
+	</target>
+	
+	<target name="javadoc" depends="compile">
+		<javadoc sourcepath="${classes.dir}" access="public" destdir="${apidoc.dir}" classpath="${lib}"/>
+	</target>
+	
+	<target name="jar" depends="javadoc">
+		<jar destfile="${jar.name}" basedir="${classes.dir}"/>
+	</target>
+	
+	<target name="run" depends="jar">
+		<java jar="${jar.dir}/${jar.name}.jar" fork="true">
+		<classpath>
+		<pathelement location="${jar.dir}"/>
+		<pathelement location="${lib}"/>
+		</classpath>
+		</java>
+	</target>
+	
+	<target name="all" depends="run">
+	</target>
+	
+	<target name="clean">
+		<delete dir="${classes.dir}"/>
+		<delete dir="${apidoc.dir}"/>
+		<delete dir="${build.dir}"/>
+	</target>
+	
+	
+	</project>
+	
