@@ -10,7 +10,7 @@ import java.awt.event.*;
 
 public class PlayerConfigPanel extends JPanel{
 	
-	private SetupStage controller;
+	//private SetupStage controller;
 	private NamePanel name;
 	private RaceButtonPanel race;
 	private ColorPanel color;
@@ -24,9 +24,9 @@ public class PlayerConfigPanel extends JPanel{
 	 *            action listener passed in by the DeckPanel to facilitate
 	 *            movement between jpanels using buttons
 	 */
-	public PlayerConfigPanel(ActionListener L, SetupStage controller)
+	public PlayerConfigPanel()//ActionListener L, SetupStage controller)
 	{
-		this.controller = controller;
+		//this.controller = controller;
 		
 	setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	setPreferredSize(new Dimension(1000,400));
@@ -43,7 +43,7 @@ public class PlayerConfigPanel extends JPanel{
 	add(color);
 	add(next);
 	
-	next.addActionListener(L);
+	//next.addActionListener(L);
 	
 	}
 	
@@ -56,4 +56,10 @@ public class PlayerConfigPanel extends JPanel{
 	{
 		return next;
 	}
+	
+	public static void main(String[] args){
+		PlayerConfigPanel temp = new PlayerConfigPanel();
+		System.out.println("finished");
+	}
+	
 }
