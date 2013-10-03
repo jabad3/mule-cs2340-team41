@@ -28,8 +28,7 @@ public class SetupView extends JPanel
     	setPreferredSize(new Dimension(440,250));
     
     	gamePanel = new GameConfigPanel(listener, controller);
-    	playerConfig = new PlayerConfigPanel(listener, controller); //this is the giant 4 player screen,
-    	//the next button is not configured yet. the next button is configured for
+    	playerConfig = new PlayerConfigPanel(listener, controller);
     	mapPanel = new MapPanel();
     	
     	add(gamePanel);
@@ -50,6 +49,10 @@ public class SetupView extends JPanel
 			{
 				((CardLayout) getLayout()).next(SetupView.this);
 				setPreferredSize(new Dimension(700,250));
+			}
+			if(source==playerConfig.getNextButton())
+			{
+				((CardLayout) getLayout()).next(SetupView.this);
 			}
 			
 		}
