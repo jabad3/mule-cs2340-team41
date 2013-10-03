@@ -82,6 +82,10 @@ public class GameConfigStage {
     public void endStage() {
         // TODO
         /* perhaps something like  nextController.takeOver()? */
+    	//will add link to player config right here soon
+    	//next stage is player config. how to implement loop of n times for n players so that
+    	//everyone can configure their player in sequence?
+    	
     }
     
     /**
