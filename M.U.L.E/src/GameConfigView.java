@@ -18,7 +18,7 @@ public abstract class GameConfigView extends JPanel {
     
     public abstract void setMapTypeChoices(String[] mapChoices);
 
-    public abstract void setPlayerCountChoices(int[] playerCountChoices);
+    public abstract void setPlayerCountChoices(Integer[] playerCountChoices);
 
     public abstract void addFinishedListener(ActionListener finishedListener);
 

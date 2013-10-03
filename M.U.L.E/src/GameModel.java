@@ -37,9 +37,8 @@ public class GameModel {
 			this.store = store;
 	}
 
-    public void setNumPlayers(int numPlayers2) {
-        // TODO Auto-generated method stub
-        
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
     }
 	
 	/*private void sortPlayerList() {

@@ -9,12 +9,22 @@ import javax.swing.*;
 
 /**
  * This class configures the game: difficulty, maptype, and number of players
+ * All choices are displayed to the user using JComboBox, and the user presses
+ * a "Next" button when they are finished.
+ * 
  * @author Erica Pramer
  * @version 1
  */
-public class GameConfigPanel extends javax.swing.JPanel {
+public class BasicGameConfigView extends GameConfigView {
 
-	private SetupStage controller;
+    private JComboBox difficultyBox;
+    private JLabel difficultyText;
+    private JComboBox mapTypeBox;
+    private JLabel mapTypeText;
+    private JComboBox playerNumBox;
+    private JLabel playerNumText;
+    private JButton nextButton;
+    
     /**
      * Initializes components on the JPanel
      * 
@@ -22,60 +32,23 @@ public class GameConfigPanel extends javax.swing.JPanel {
      *            Action listener passed in by deck panel to facilitate
      *            movement between panels via next button
      */
-    public GameConfigPanel(ActionListener L, SetupStage controller) {
-    	this.controller = controller;
-    	
+    public BasicGameConfigView() {
         initComponents();
-        nextButton.addActionListener(L);
     }
 
-    /**
-     * A getter for the next button on the jpanel
-     * 
-     * @return L the next button
-     */
-	public JButton getNextButton()
-	{
-		return nextButton;
-	}
     /**
      * Instantiates all instance data, adds all jcomponents to the panel
      */
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
-        difficultyBox = new javax.swing.JComboBox();
-        mapTypeBox = new javax.swing.JComboBox();
-        playerNumBox = new javax.swing.JComboBox();
-        nextButton = new javax.swing.JButton();
-        difficultyText = new javax.swing.JLabel();
-        mapTypeText = new javax.swing.JLabel();
-        playerNumText = new javax.swing.JLabel();
-
-        difficultyBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Beginner", "Standard", "Tournament" }));
-        difficultyBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                controller.setDifficulty(difficultyBox.getSelectedIndex());
-            }
-        });
-        
-        mapTypeBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        playerNumBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4" }));
-
-        nextButton.setLabel("Next");
-        nextButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextButtonActionPerformed(evt);
-            }
-        });
-
-        difficultyText.setText("Difficulty:");
-    	
-
-        mapTypeText.setText("Map Type:");
-
-        playerNumText.setText("Number of Players:");
+        difficultyBox = new JComboBox();
+        mapTypeBox = new JComboBox();
+        playerNumBox = new JComboBox();
+        nextButton = new JButton("Next");
+        difficultyText = new JLabel("Difficulty:");
+        mapTypeText = new JLabel("Map Type:");
+        playerNumText = new JLabel("Number of Players:");
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -124,16 +97,43 @@ public class GameConfigPanel extends javax.swing.JPanel {
         );
     }
 
-    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    @Override
+    public void setDifficultyChoices(Difficulty[] difficulties) {
+        difficultyBox.setModel(new DefaultComboBoxModel(difficulties));
     }
 
-    // Variables declaration
-    private javax.swing.JComboBox difficultyBox;
-    private javax.swing.JLabel difficultyText;
-    private javax.swing.JComboBox mapTypeBox;
-    private javax.swing.JLabel mapTypeText;
-    private javax.swing.JButton nextButton;
-    private javax.swing.JComboBox playerNumBox;
-    private javax.swing.JLabel playerNumText;
+    @Override
+    public void setMapTypeChoices(String[] mapChoices) {
+        mapTypeBox.setModel(new DefaultComboBoxModel(mapChoices));
+    }
+
+    @Override
+    public void setPlayerCountChoices(Integer[] playerCountChoices) {
+        playerNumBox.setModel(new DefaultComboBoxModel(playerCountChoices));
+        
+    }
+
+    @Override
+    public void addFinishedListener(ActionListener finishedListener) {
+        nextButton.addActionListener(finishedListener);
+    }
+
+    @Override
+    public Difficulty getSelectedDifficulty() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getSelectedMapType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public int getSelectedPlayerCount() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    
 }

@@ -27,7 +27,7 @@ public class GameConfigStage {
     
     private final Difficulty[] difficulties = Difficulty.values();
     private final String[] mapChoices = new String[] {"Default", "Random"};
-    private final int[] playerCountChoices = new int[] {1, 2, 3, 4};
+    private final Integer[] playerCountChoices = new Integer[] {1, 2, 3, 4};
     
     public GameConfigStage(GameModel model, GameConfigView view) {
         this.model = model;
