@@ -27,7 +27,9 @@ public class PlayerConfigPanel extends JPanel{
 	public PlayerConfigPanel()//ActionListener L, SetupStage controller)
 	{
 		//this.controller = controller;
-		
+	////// super sample code, remove when finsihed testing -joe
+
+	//////
 	setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	setPreferredSize(new Dimension(1000,400));
 	
@@ -57,9 +59,13 @@ public class PlayerConfigPanel extends JPanel{
 		return next;
 	}
 	
-	public static void main(String[] args){
-		PlayerConfigPanel temp = new PlayerConfigPanel();
-		System.out.println("finished");
-	}
-	
+//	public static void main(String[] args){
+//		JFrame temp = new JFrame("temp");
+//		PlayerConfigPanel temp2 = new PlayerConfigPanel();
+//		temp.add(temp2);
+//		temp.pack();
+//		temp.setVisible(true);
+//		System.out.println("finished");
+//	}
+//	
 }
