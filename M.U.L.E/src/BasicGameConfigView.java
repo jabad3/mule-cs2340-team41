@@ -8,7 +8,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
- * This class configures the game: difficulty, maptype, and number of players
+ * This class lets a user choose difficulty, maptype, and number of players
+ * 
  * All choices are displayed to the user using JComboBox, and the user presses
  * a "Next" button when they are finished.
  * 
@@ -17,11 +18,11 @@ import javax.swing.*;
  */
 public class BasicGameConfigView extends GameConfigView {
 
-    private JComboBox difficultyBox;
+    private JComboBox<Difficulty> difficultyBox;
     private JLabel difficultyText;
-    private JComboBox mapTypeBox;
+    private JComboBox<String> mapTypeBox;
     private JLabel mapTypeText;
-    private JComboBox playerNumBox;
+    private JComboBox<Integer> playerNumBox;
     private JLabel playerNumText;
     private JButton nextButton;
     
@@ -42,9 +43,9 @@ public class BasicGameConfigView extends GameConfigView {
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
-        difficultyBox = new JComboBox();
-        mapTypeBox = new JComboBox();
-        playerNumBox = new JComboBox();
+        difficultyBox = new JComboBox<>();
+        mapTypeBox = new JComboBox<>();
+        playerNumBox = new JComboBox<>();
         nextButton = new JButton("Next");
         difficultyText = new JLabel("Difficulty:");
         mapTypeText = new JLabel("Map Type:");
@@ -99,17 +100,17 @@ public class BasicGameConfigView extends GameConfigView {
 
     @Override
     public void setDifficultyChoices(Difficulty[] difficulties) {
-        difficultyBox.setModel(new DefaultComboBoxModel(difficulties));
+        difficultyBox.setModel(new DefaultComboBoxModel<Difficulty>(difficulties));
     }
 
     @Override
     public void setMapTypeChoices(String[] mapChoices) {
-        mapTypeBox.setModel(new DefaultComboBoxModel(mapChoices));
+        mapTypeBox.setModel(new DefaultComboBoxModel<String>(mapChoices));
     }
 
     @Override
     public void setPlayerCountChoices(Integer[] playerCountChoices) {
-        playerNumBox.setModel(new DefaultComboBoxModel(playerCountChoices));
+        playerNumBox.setModel(new DefaultComboBoxModel<Integer>(playerCountChoices));
         
     }
 
@@ -120,20 +121,20 @@ public class BasicGameConfigView extends GameConfigView {
 
     @Override
     public Difficulty getSelectedDifficulty() {
-        // TODO Auto-generated method stub
-        return null;
+        Difficulty selectedDiff = (Difficulty) difficultyBox.getSelectedItem();
+        return selectedDiff;
     }
 
     @Override
     public String getSelectedMapType() {
-        // TODO Auto-generated method stub
-        return null;
+        String selectedMapType = (String) mapTypeBox.getSelectedItem();
+        return selectedMapType;
     }
 
     @Override
     public int getSelectedPlayerCount() {
-        // TODO Auto-generated method stub
-        return 0;
+        int selectedCount = (Integer) playerNumBox.getSelectedItem();
+        return selectedCount;
     }
     
 }
