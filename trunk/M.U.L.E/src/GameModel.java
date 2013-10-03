@@ -7,6 +7,7 @@ public class GameModel {
 	private Difficulty difficulty;
 	private Store store;
 	//private GameMap gameMap;
+	private int numPlayers;
 	
 	public GameModel() {
 		// TODO
@@ -29,12 +30,17 @@ public class GameModel {
 	}
 	
 	/*
-	 * adds a store to GameModel
+	 * Sets a store to GameModel
 	 * @param store
 	 */
-	public void addStore(Store store) {
+	public void setStore(Store store) {
 			this.store = store;
 	}
+
+    public void setNumPlayers(int numPlayers2) {
+        // TODO Auto-generated method stub
+        
+    }
 	
 	/*private void sortPlayerList() {
 		//sorts the list of players
