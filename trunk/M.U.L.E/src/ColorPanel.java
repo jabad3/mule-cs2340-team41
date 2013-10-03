@@ -8,7 +8,7 @@ import javax.swing.*;
  * @author Erica Pramer
  * @version 1
  */
-
+//
 public class ColorPanel extends JPanel{
 	
 	JButton red,green,blue,yellow;
