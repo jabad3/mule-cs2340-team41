@@ -86,6 +86,15 @@ public class GameConfigStage {
     	//next stage is player config. how to implement loop of n times for n players so that
     	//everyone can configure their player in sequence?
     	
+    	////// super sample code, remove when finsihed testing -joe
+    	////
+		JFrame temp = new JFrame("temp");
+		PlayerConfigPanel temp2 = new PlayerConfigPanel();
+		temp.add(temp2);
+		temp.pack();
+		temp.setVisible(true);
+		System.out.println("finished");
+    	///
     }
     
     /**
