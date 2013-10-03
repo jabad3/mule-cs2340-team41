@@ -14,13 +14,13 @@ public class SetupStage extends Stage {
 	public void takeControl()
 	{
 		SetupView setupView = new SetupView(this);
-		game.mainFrame.getContentPane().add(setupView);
+		//game.mainFrame.getContentPane().add(setupView);
 	}
 	
 	public void setDifficulty(int difficulty)
 	{
-		game.gameConfig.difficulty = difficulty;
+		//game.gameConfig.difficulty = difficulty;
 		
-		System.out.println("Difficulty is now: " + game.gameConfig.difficulty);
+		//System.out.println("Difficulty is now: " + game.gameConfig.difficulty);
 	}
 }

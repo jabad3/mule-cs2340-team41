@@ -48,7 +48,7 @@ public class GameConfigStage {
      * @param mainframe The primary container for all views in MULE
      */
     public void displayMyView(JFrame mainframe) {
-        // TODO
+        mainframe.setContentPane(myView);
     }
     
     /**
@@ -69,7 +69,7 @@ public class GameConfigStage {
         model.setNumPlayers(numPlayers);
         // TODO - not sure how to handle the map...
         // I don't want anymore enums!!  Can we just build the map here??
-        // Map map = buildMap(mapType);
+        // Map map = Map.buildMap(mapType);
         // model.setMap(map);
     }
     
@@ -81,6 +81,7 @@ public class GameConfigStage {
      */
     public void endStage() {
         // TODO
+        /* perhaps something like  nextController.takeOver()? */
     }
     
     /**

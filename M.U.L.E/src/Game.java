@@ -6,9 +6,9 @@ import javax.swing.JFrame;
  */
 
 public class Game {
-	public JFrame mainFrame;
-	public GameConfig gameConfig = new GameConfig();
-	public int curRound;
+	private JFrame mainFrame;
+	private GameModel gameModel = new GameModel();
+	private int curRound = 1;
 	
 	public Game(JFrame mainFrame)
 	{
@@ -17,7 +17,11 @@ public class Game {
 	
 	public void start()
 	{
-		(new SetupStage(this)).takeControl();
+	    GameConfigView gameConfigView = new BasicGameConfigView();
+	    GameConfigStage gameConfigStage
+	        = new GameConfigStage(gameModel, gameConfigView);
+	    gameConfigStage.displayMyView(mainFrame);
+	    //(new SetupStage(this)).takeControl();
 		//SummaryStage summaryStage = new SummaryStage(this);
 		//LandSelectionStage landSelectionStage = new LandSelectionStage(this);
 		//LandAuctionStage landAuctionStage = new LandAuctionStage(this);
