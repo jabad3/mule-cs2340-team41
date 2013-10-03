@@ -12,7 +12,7 @@ import javax.swing.*;
 public class SetupView extends JPanel
 {
 	private PlayerConfigPanel playerConfig;
-	private GameConfigPanel gamePanel;
+	private GameConfigView gamePanel;
 	
 	private MapPanel mapPanel;
 	
@@ -27,7 +27,7 @@ public class SetupView extends JPanel
     	setLayout(new CardLayout());
     	setPreferredSize(new Dimension(440,250));
     
-    	gamePanel = new GameConfigPanel(listener, controller);
+    	gamePanel = new BasicGameConfigView();
     	playerConfig = new PlayerConfigPanel(listener, controller);
     	mapPanel = new MapPanel();
     	
@@ -45,11 +45,11 @@ public class SetupView extends JPanel
 		public void actionPerformed(ActionEvent event)
 		{
 			Object source = event.getSource();
-			if (source == gamePanel.getNextButton())
+			/*if (source == gamePanel.getNextButton())
 			{
 				((CardLayout) getLayout()).next(SetupView.this);
 				setPreferredSize(new Dimension(700,250));
-			}
+			}*/
 			if(source==playerConfig.getNextButton())
 			{
 				((CardLayout) getLayout()).next(SetupView.this);
