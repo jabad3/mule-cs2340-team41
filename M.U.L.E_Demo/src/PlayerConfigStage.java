@@ -13,9 +13,6 @@ import javax.swing.JFrame;
  *
  */
 public class PlayerConfigStage extends Stage {
-	public String name; //TODO: make enum
-	public int race;
-	public int color; //TODO: make color
 	PlayerConfigView myView;
 	public int playerAt = 1;
 	
