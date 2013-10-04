@@ -58,22 +58,26 @@ public class ColorPanel extends JPanel{
 		public void actionPerformed(ActionEvent event)
 		{
 			Object source = event.getSource();
-			if (source == red)
+			if(source == null)
+			{
+				
+			}
+			else if (source == red)
 			{
 				color.setBackground(Color.red);
 				color.setForeground(Color.black);
 			}
-			if(source == blue)
+			else if(source == blue)
 			{
 				color.setBackground(Color.blue);
 				color.setForeground(Color.white);
 			}
-			if(source == green)
+			else if(source == green)
 			{
 				color.setBackground(Color.green);
 				color.setForeground(Color.black);
 			}
-			if(source == yellow)
+			else if(source == yellow)
 			{
 				color.setBackground(Color.yellow);
 				color.setForeground(Color.black);
