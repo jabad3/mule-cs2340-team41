@@ -24,8 +24,9 @@ public class PlayerConfigStage extends Stage {
 	
 	public void showPlConfigPane() {
 		myView = new PlayerConfigView();
+		myView.setPlayerNum(playerAt);
+		myView.addFinishedListener(new FinishedListener());
     	setView(myView);
-    	myView.addFinishedListener(new FinishedListener());
 	}
 	
 	public void start() {
