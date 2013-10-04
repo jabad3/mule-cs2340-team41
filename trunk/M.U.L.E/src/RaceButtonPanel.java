@@ -46,9 +46,21 @@ public class RaceButtonPanel extends JPanel
 		add(ugaite);
 	}
 	
-	public RaceType getRace()
+	/**
+	 * Gets the race type selected by the user
+	 * 
+	 * @return the race
+	 * 
+	 */
+	/*public RaceType getRace()
 	{
 		return race;
+	}*/
+	
+	//temporary method
+	public int getRace()
+	{
+		return 0;
 	}
 	
 

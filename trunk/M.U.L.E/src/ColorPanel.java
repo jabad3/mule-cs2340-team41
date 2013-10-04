@@ -39,6 +39,12 @@ public class ColorPanel extends JPanel{
 	
 	}
 	
+	/**
+	 * Gets the color selected by the user
+	 * 
+	 * @return the color
+	 * 
+	 */
 	public Color getColor()
 	{
 		return color.getBackground();
