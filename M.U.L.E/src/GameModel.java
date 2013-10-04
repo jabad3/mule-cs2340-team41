@@ -8,6 +8,7 @@ public class GameModel {
 	private Store store;
 	private Map map;
 	private int numPlayers;
+	public int curRound = 1; //TODO: private get/set
 	
 	public GameModel() {
 		// TODO
@@ -31,6 +32,10 @@ public class GameModel {
 		playerList.add(player);
 	}
 	
+	public Difficulty getDifficulty() {
+		return difficulty;
+	}
+	
 	/*
 	 * sets the GameModel's difficulty
 	 * @param difficulty
@@ -46,6 +51,10 @@ public class GameModel {
 	public void setStore(Store store) {
 			this.store = store;
 	}
+	
+	public int getNumPlayers() {
+        return numPlayers;
+    }
 
     public void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
