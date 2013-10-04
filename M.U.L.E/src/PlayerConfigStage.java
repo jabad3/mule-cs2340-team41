@@ -52,7 +52,7 @@ public class PlayerConfigStage extends Stage {
 			{
 				System.out.println("Last player configed, going to map!");
 				MapPanel map = new MapPanel();
-				
+				setView(map);
 			}
 			else
 			{
