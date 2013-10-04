@@ -101,7 +101,7 @@ public class IntroTrack extends Thread {
 
     
 //    public static void main(String[] args){
-//    	IntroTrack temp = new IntroTrack();
+//    	IntroTrack2 temp = new IntroTrack2();
 //    	temp.run();
 //    	}
 }
