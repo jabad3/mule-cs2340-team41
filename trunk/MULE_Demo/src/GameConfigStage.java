@@ -98,8 +98,8 @@ public class GameConfigStage {
     	
     	////// super sample code, remove when finsihed testing -joe
     	////
-		JFrame temp = new JFrame("temp");
-		PlayerConfigView temp2 = new PlayerConfigView();
+		//JFrame temp = new JFrame("temp");
+		PlayerConfig temp2 = new PlayerConfig();
 		temp.add(temp2);
 		temp.pack();
 		temp.setVisible(true);
