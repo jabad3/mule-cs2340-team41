@@ -50,7 +50,7 @@ public class ColorPanel extends JPanel{
 			if (source == red)
 			{
 				color.setBackground(Color.red);
-				
+				color.setForeground(Color.black);
 			}
 			if(source == blue)
 			{
@@ -60,10 +60,12 @@ public class ColorPanel extends JPanel{
 			if(source == green)
 			{
 				color.setBackground(Color.green);
+				color.setForeground(Color.black);
 			}
 			if(source == yellow)
 			{
 				color.setBackground(Color.yellow);
+				color.setForeground(Color.black);
 			}
 		}
 	}
