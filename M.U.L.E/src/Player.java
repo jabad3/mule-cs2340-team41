@@ -31,12 +31,9 @@ public class Player extends Trader {
 	    this.name = name;
 	    this.color = color;
 	    
+	    this.inventory = new Inventory(difficulty.playerFoodSetting(), difficulty.playerEnergySetting(), 0, 0, 0);
 	    // Difficulty affects starting food, energy, and ore
-	    if (difficulty == Difficulty.BEGINNER)
-	        this.inventory = new Inventory(8, 4, 0, 0, 0);
-	    else // STANDARD or TOURNAMENT difficulties
-	        this.inventory = new Inventory(4, 2, 0, 0, 0);
-	    
+
 	    // Race affects starting money
 	    setRace(race);
 	}
@@ -76,12 +73,7 @@ public class Player extends Trader {
 	 */
 	public void setRace(RaceType race) {
 	    setMoneyToZero();
-	    if (race == RaceType.HUMAN)
-            depositMoney(600);
-        else if (race == RaceType.FLAPPER)
-            depositMoney(1600);
-        else if (race != null)
-            depositMoney(1000);
+	    depositMoney(race.startingMoney());  
 	}
 	
 	private void setMoneyToZero() {
