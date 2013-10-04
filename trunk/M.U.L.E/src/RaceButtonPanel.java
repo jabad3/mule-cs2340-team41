@@ -11,6 +11,7 @@ public class RaceButtonPanel extends JPanel
 {
 	private JButton buzzite,ugaite,humanoid,flapper,bonzoid;
 	private JLabel iconLabel;
+	private RaceType race;
 	
 /**
  * Constructor, sets layout and size of JPanel, adds actionlisteners to
@@ -21,6 +22,7 @@ public class RaceButtonPanel extends JPanel
 		setLayout(new GridLayout(1,9));
 		setPreferredSize(new Dimension(1000,100));
 		
+		race = new RaceType();
 		iconLabel = new JLabel();
 		
 		bonzoid = new JButton("bonzoid");
@@ -44,6 +46,11 @@ public class RaceButtonPanel extends JPanel
 		add(ugaite);
 	}
 	
+	public RaceType getRace()
+	{
+		return race;
+	}
+	
 
 /**
  * Private inner class defines what happens upon button click.
@@ -55,7 +62,7 @@ public class RaceButtonPanel extends JPanel
 			Object source = event.getSource();
 			if (source == bonzoid)
 					{
-				       iconLabel.setIcon(new ImageIcon("bonzoid.png","race"));
+				       iconLabel.setIcon(new ImageIcon("bonzoid.png","race")); 
 					}
 			else if (source == flapper) 
 				{
