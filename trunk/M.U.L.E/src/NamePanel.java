@@ -30,6 +30,11 @@ public class NamePanel extends JPanel{
 		add(textField);
 	}
 	
+	public String getName()
+	{
+		return textField.getText();
+	}
+	
 	
 	/**
 	 * Private inner class defines what happens upon button click.
