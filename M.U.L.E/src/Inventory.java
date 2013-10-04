@@ -41,7 +41,8 @@ public class Inventory {
      * @param rType The resource to increment
      */
     public void addResource(Resource resource) {
-        // TODO Auto-generated method stub
+    	int currentCount = resourceCounts.get(resource);
+        resourceCounts.put(resource, currentCount++);
         
     }
     
