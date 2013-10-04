@@ -1,7 +1,11 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 /**
  * This class allows for configuration of the player including race, name, and color
  * @author Erica Pramer
@@ -42,8 +46,8 @@ public class PlayerConfigView extends JPanel{
 	add(race);
 	add(color);
 	add(next);
-	
-	//next.addActionListener(L);
+	FinishedListener ter = new FinishedListener();
+	next.addActionListener(ter);
 	
 	}
 	
@@ -55,6 +59,51 @@ public class PlayerConfigView extends JPanel{
 	public JButton getNextButton()
 	{
 		return next;
+	}
+	
+	
+    private class FinishedListener implements ActionListener {
+        
+        /**
+         * When the View is "finished", set up the model accordingly,
+         * then terminate this stage of the game.
+         * @param e
+         */
+        public void actionPerformed(ActionEvent e) {
+        	PlayerConfigView.this.configureModel();
+            PlayerConfigView.this.endStage();
+        }
+    }
+
+	public void configureModel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void endStage() {
+		JFrame frame = new JFrame("mapPanel0.o!");
+		JPanel panel = new JPanel();
+		
+		BufferedImage myPicture = null;
+		
+		String filePath = new File("").getAbsolutePath();
+	    filePath = filePath.concat("/mapPic.png");
+		try {
+			myPicture = ImageIO.read(new File(filePath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+		frame.add(picLabel);
+		
+		frame.pack();
+		frame.setVisible(true);
+		
+		System.out.println("DOneee");
+		
+		
 	}
 	
 //	public static void main(String[] args){

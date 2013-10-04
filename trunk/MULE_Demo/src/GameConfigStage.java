@@ -2,6 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * GameConfigStage acts as the Controller during the game configuration step.
@@ -20,7 +21,7 @@ import javax.swing.JFrame;
  * @author Max
  *
  */
-public class GameConfigStage {
+public class GameConfigStage extends JPanel{
 
     private GameConfigView myView;
     private GameModel model;
@@ -98,12 +99,12 @@ public class GameConfigStage {
     	
     	////// super sample code, remove when finsihed testing -joe
     	////
-		//JFrame temp = new JFrame("temp");
-		PlayerConfig temp2 = new PlayerConfig();
+		JFrame temp = new JFrame("temp");
+		PlayerConfigView temp2 = new PlayerConfigView();
 		temp.add(temp2);
 		temp.pack();
 		temp.setVisible(true);
-		System.out.println("next stage");
+		System.out.println("next stage from game config");
     	///
     }
     
