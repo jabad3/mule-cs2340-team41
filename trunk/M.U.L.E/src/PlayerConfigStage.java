@@ -10,6 +10,13 @@ import java.awt.event.ActionListener;
  *
  */
 public class PlayerConfigStage {
+	public String name; //TODO: make enum
+	public int race;
+	public int color; //TODO: make color
+	
+	public PlayerConfigStage() {
+	}
+	}
 
     private class FinishedListener implements ActionListener {
         
