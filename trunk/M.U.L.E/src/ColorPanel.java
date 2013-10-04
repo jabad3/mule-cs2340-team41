@@ -15,6 +15,10 @@ public class ColorPanel extends JPanel{
 	JButton red,green,blue,yellow;
 	JLabel color;
 	
+	/**
+	 * Constructor, adds actionlisteners to
+	 * the buttons and buttons to the JPanel
+	 */
 	public ColorPanel(){
 		
 	red = new JButton("red");
