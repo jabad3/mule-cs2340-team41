@@ -6,11 +6,21 @@ public class GameModel {
 	private List<Player> playerList = new ArrayList<>();
 	private Difficulty difficulty;
 	private Store store;
-	//private GameMap gameMap;
+	private Map map;
 	private int numPlayers;
 	
 	public GameModel() {
 		// TODO
+	}
+	
+	/* to be used for quick "testing" */
+	public String toString() {
+	    String s1 = "PlayerList:  " + playerList;
+	    String s2 = "\nDifficulty:  " + difficulty;
+	    String s3 = "\nStore:  " + store;
+	    String s4 = "\nMap:  " + map;
+	    String s5 = "\nNumber of Players:  " + numPlayers;
+	    return s1 + s2 + s3 + s4 + s5;
 	}
 	
 	/*
@@ -39,6 +49,10 @@ public class GameModel {
 
     public void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
+    }
+    
+    public void setMap(Map map) {
+        this.map = map;
     }
 	
 	/*private void sortPlayerList() {

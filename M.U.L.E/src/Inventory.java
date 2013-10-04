@@ -15,6 +15,7 @@ public class Inventory {
     EnumMap<Resource, Integer> resourceCounts;
     
     public Inventory(int food, int energy, int ore, int money, int mules) {
+        resourceCounts = new EnumMap<Resource, Integer>(Resource.class);
         resourceCounts.put(Resource.FOOD, food);
         resourceCounts.put(Resource.ENERGY, energy);
         resourceCounts.put(Resource.ORE, ore);
@@ -78,5 +79,15 @@ public class Inventory {
         int currentBalance = resourceCounts.get(Resource.MONEY);
         int newBalance = currentBalance + amount;
         resourceCounts.put(Resource.MONEY,  newBalance);
+    }
+    
+    /* for temporary "testing" */
+    public String toString() {
+        String s1 = "\nFood Count:  " + getResourceCount(Resource.FOOD);
+        String s2 = "\nEnergy Count:  " + getResourceCount(Resource.ENERGY);
+        String s3 = "\nOre Count:  " + getResourceCount(Resource.ORE);
+        String s4 = "\nMoney:  " + getResourceCount(Resource.MONEY);
+        String s5 = "\nMules:  " + getResourceCount(Resource.MULE);
+        return s1 + s2 + s3 + s4 + s5;
     }
 }
