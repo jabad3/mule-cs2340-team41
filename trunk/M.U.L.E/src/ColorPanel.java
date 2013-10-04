@@ -14,6 +14,7 @@ public class ColorPanel extends JPanel{
 	
 	JButton red,green,blue,yellow;
 	JLabel color;
+	Color chosenColor;
 	
 	/**
 	 * Constructor, adds actionlisteners to
@@ -51,7 +52,7 @@ public class ColorPanel extends JPanel{
 	 */
 	public Color getColor()
 	{
-		return color.getBackground();
+		return chosenColor;
 	}
 	
 	/**
@@ -68,22 +69,26 @@ public class ColorPanel extends JPanel{
 			}
 			else if (source == red)
 			{
-				color.setBackground(Color.red);
+				chosenColor = Color.red;
+				color.setBackground(chosenColor);
 				color.setForeground(Color.black);
 			}
 			else if(source == blue)
 			{
-				color.setBackground(Color.blue);
+				chosenColor = Color.blue;
+				color.setBackground(chosenColor);
 				color.setForeground(Color.white);
 			}
 			else if(source == green)
 			{
-				color.setBackground(Color.green);
+				chosenColor = Color.green;
+				color.setBackground(chosenColor);
 				color.setForeground(Color.black);
 			}
 			else if(source == yellow)
 			{
-				color.setBackground(Color.yellow);
+				chosenColor = Color.yellow;
+				color.setBackground(chosenColor);
 				color.setForeground(Color.black);
 			}
 		}
