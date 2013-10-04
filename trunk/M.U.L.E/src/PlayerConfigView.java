@@ -10,7 +10,6 @@ import java.awt.event.*;
 
 public class PlayerConfigView extends JPanel{
 	
-	private PlayerConfig controller;
 	private NamePanel name;
 	private RaceButtonPanel race;
 	private ColorPanel color;
@@ -26,8 +25,7 @@ public class PlayerConfigView extends JPanel{
 	 */
 	public PlayerConfigView()//ActionListener L, PlayerConfig controller)
 	{
-		this.controller = controller;
-
+		
 	setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	setPreferredSize(new Dimension(1000,400));
 	
@@ -55,6 +53,16 @@ public class PlayerConfigView extends JPanel{
 	public JButton getNextButton()
 	{
 		return next;
+	}
+
+	public String getText()
+	{
+		return name.getName();
+	}
+	
+	public Color getColor()
+	{
+		return color.getColor();
 	}
 	
 //	public static void main(String[] args){

@@ -1,4 +1,5 @@
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 /**
  * This class orchestrates an entire gameplay session passing control to various stages
  * @author Tim Farley
@@ -8,19 +9,27 @@ import javax.swing.JFrame;
 public class Game {
 	private JFrame mainFrame;
 	private GameModel gameModel = new GameModel();
-	private int curRound = 1;
 	
 	public Game(JFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
 	}
 	
+	public void setView(JPanel view)
+	{
+    	mainFrame.setContentPane(view);
+    	mainFrame.validate();
+	}
+	
 	public void start()
 	{
-	    GameConfigView gameConfigView = new BasicGameConfigView();
-	    GameConfigStage gameConfigStage
-	        = new GameConfigStage(gameModel, gameConfigView);
-	    gameConfigStage.displayMyView(mainFrame);
+	    GameConfigStage gameConfigStage = new GameConfigStage(this, gameModel);
+	    PlayerConfigStage playerConfigStage = new PlayerConfigStage(this, gameModel);
+	    
+	    gameConfigStage.setNextStage(playerConfigStage);
+	    
+	    gameConfigStage.start();
+	    
 	    //(new SetupStage(this)).takeControl();
 		//SummaryStage summaryStage = new SummaryStage(this);
 		//LandSelectionStage landSelectionStage = new LandSelectionStage(this);

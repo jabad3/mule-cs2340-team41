@@ -20,41 +20,29 @@ import javax.swing.JFrame;
  * @author Max
  *
  */
-public class GameConfigStage {
+public class GameConfigStage extends Stage {
 
     private GameConfigView myView;
-    private GameModel model;
     
     private final Difficulty[] difficulties = Difficulty.values();
     private final String[] mapChoices = new String[] {"Default", "Random"};
     private final Integer[] playerCountChoices = new Integer[] {1, 2, 3, 4};
     
-    public GameConfigStage(GameModel model, GameConfigView view) {
-        this.model = model;
-        this.myView = view;
-        setupMyView();
-//temp holder, should be placed elsewhere
-        IntroTrack theme = new IntroTrack();				//to fix, this creates a blocking thread
-        theme.start();
-//-joe
-        
-
+    public GameConfigStage(Game game, GameModel model) {
+    	super(game, model);
     }
     
-    private void setupMyView() {
+    public void start() {
+    	myView = new BasicGameConfigView();
+    	game.setView(myView);
+    	
+    	IntroTrack theme = new IntroTrack();	//to fix, this creates a blocking thread
+        theme.start();
+        
         myView.setDifficultyChoices(difficulties);
         myView.setMapTypeChoices(mapChoices);
         myView.setPlayerCountChoices(playerCountChoices);
         myView.addFinishedListener(new FinishedListener());
-    }
-    
-    /**
-     * Displays this Stage's View in the primary JFrame for the game.
-     * 
-     * @param mainframe The primary container for all views in MULE
-     */
-    public void displayMyView(JFrame mainframe) {
-        mainframe.setContentPane(myView);
     }
     
     /**
@@ -71,16 +59,16 @@ public class GameConfigStage {
         int numPlayers = myView.getSelectedPlayerCount();
         
         // give these selections to the Model
-        model.setDifficulty(difficulty);
-        model.setNumPlayers(numPlayers);
+        gameModel.setDifficulty(difficulty);
+        gameModel.setNumPlayers(numPlayers);
         // TODO - not sure how to handle the map...
         // I don't want anymore enums!!  Can we just build the map here??
         Map map = Map.buildMap(mapType);
-        model.setMap(map);
+        gameModel.setMap(map);
         // TODO - build the store here, or have GameModel do it??
         Store store = Store.buildStore(difficulty);
-        model.setStore(store);
-        System.out.println("GameModel Info----\n" + model);
+        gameModel.setStore(store);
+        System.out.println("GameModel Info----\n" + gameModel);
     }
     
     /**
@@ -89,7 +77,7 @@ public class GameConfigStage {
      *   then upon calling endStage, do something like
      *      nextController.showMyView?  It seems a little weird, though.
      */
-    public void endStage() {
+    public void goNextStage() {
         // TODO
         /* perhaps something like  nextController.takeOver()? */
     	//will add link to player config right here soon
@@ -98,11 +86,12 @@ public class GameConfigStage {
     	
     	////// super sample code, remove when finsihed testing -joe
     	////
-		JFrame temp = new JFrame("temp");
+    	nextStage.start();
+		/*JFrame temp = new JFrame("temp");
 		PlayerConfigView temp2 = new PlayerConfigView();
 		temp.add(temp2);
 		temp.pack();
-		temp.setVisible(true);
+		temp.setVisible(true);*/
 		System.out.println("next stage");
     	///
     }
@@ -122,7 +111,7 @@ public class GameConfigStage {
          */
         public void actionPerformed(ActionEvent e) {
             GameConfigStage.this.configureModel();
-            GameConfigStage.this.endStage();
+            GameConfigStage.this.goNextStage();
         }
     }
 }
