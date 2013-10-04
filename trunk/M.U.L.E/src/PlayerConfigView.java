@@ -25,24 +25,22 @@ public class PlayerConfigView extends JPanel{
 	 */
 	public PlayerConfigView()//ActionListener L, PlayerConfig controller)
 	{
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		setPreferredSize(new Dimension(1000,400));
 		
-	setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-	setPreferredSize(new Dimension(1000,400));
-	
-	name = new NamePanel();
-	race = new RaceButtonPanel();
-	next = new JButton("next");
-	color = new ColorPanel();
-	
-	next.setMaximumSize( next.getPreferredSize() );
-	
-	add(name);
-	add(race);
-	add(color);
-	add(next);
-	
-	//next.addActionListener(L);
-	
+		name = new NamePanel();
+		race = new RaceButtonPanel();
+		next = new JButton("next");
+		color = new ColorPanel();
+		
+		next.setMaximumSize( next.getPreferredSize() );
+		
+		add(name);
+		add(race);
+		add(color);
+		add(next);
+		
+		//next.addActionListener(L);
 	}
 	
 	/**
@@ -69,6 +67,10 @@ public class PlayerConfigView extends JPanel{
 	{
 		return race.getRace();
 	}
+	
+    public void addFinishedListener(ActionListener finishedListener) {
+        next.addActionListener(finishedListener);
+    }
 	
 //	public static void main(String[] args){
 //		JFrame temp = new JFrame("temp");

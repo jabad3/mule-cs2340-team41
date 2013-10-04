@@ -1,6 +1,8 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+
 /**
  * 
  */
@@ -16,14 +18,19 @@ public class PlayerConfigStage extends Stage {
 	PlayerConfigView myView;
 	public int playerAt = 1;
 	
-	public PlayerConfigStage(Game game, GameModel model) {
-    	super(game, model);
+	public PlayerConfigStage(JFrame mainFrame, GameModel model) {
+    	super(mainFrame, model);
     }
+	
+	public void showPlConfigPane() {
+		myView = new PlayerConfigView();
+    	setView(myView);
+    	myView.addFinishedListener(new FinishedListener());
+	}
 	
 	public void start() {
 		System.out.println("pconfig start");
-		myView = new PlayerConfigView();
-    	game.setView(myView);
+		showPlConfigPane();
 	}
 	
 	public void goNextStage() {
@@ -34,16 +41,21 @@ public class PlayerConfigStage extends Stage {
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			if(playerAt > gameModel.getNumPlayers())
-			{
-				//go to map
-			}
-				
-			//TODO: myView.getRace() instead of 123 in here!
 			Player player = new Player(myView.getText(), RaceType.values()[myView.getRace()], myView.getColor(), gameModel.getDifficulty());
+			gameModel.addPlayer(player);
 			playerAt++;
 			
-			//reset view, invalidate colors
+			System.out.println("New model = " + gameModel);
+			
+			if(playerAt > gameModel.getNumPlayers())
+			{
+				System.out.println("Last player configed, going to map!");
+				//TODO: go to map
+			}
+			else
+			{
+				showPlConfigPane();
+			}
 		}
 	}
 }

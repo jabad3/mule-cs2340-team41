@@ -15,16 +15,10 @@ public class Game {
 		this.mainFrame = mainFrame;
 	}
 	
-	public void setView(JPanel view)
-	{
-    	mainFrame.setContentPane(view);
-    	mainFrame.validate();
-	}
-	
 	public void start()
 	{
-	    GameConfigStage gameConfigStage = new GameConfigStage(this, gameModel);
-	    PlayerConfigStage playerConfigStage = new PlayerConfigStage(this, gameModel);
+	    GameConfigStage gameConfigStage = new GameConfigStage(mainFrame, gameModel);
+	    PlayerConfigStage playerConfigStage = new PlayerConfigStage(mainFrame, gameModel);
 	    
 	    gameConfigStage.setNextStage(playerConfigStage);
 	    

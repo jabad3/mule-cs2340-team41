@@ -28,13 +28,13 @@ public class GameConfigStage extends Stage {
     private final String[] mapChoices = new String[] {"Default", "Random"};
     private final Integer[] playerCountChoices = new Integer[] {1, 2, 3, 4};
     
-    public GameConfigStage(Game game, GameModel model) {
-    	super(game, model);
+    public GameConfigStage(JFrame mainFrame, GameModel model) {
+    	super(mainFrame, model);
     }
     
     public void start() {
     	myView = new BasicGameConfigView();
-    	game.setView(myView);
+    	setView(myView);
     	
     	IntroTrack theme = new IntroTrack();	//to fix, this creates a blocking thread
         theme.start();
