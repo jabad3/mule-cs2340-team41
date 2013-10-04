@@ -8,9 +8,9 @@ import java.awt.event.*;
  * @version 1
  */
 
-public class PlayerConfigPanel extends JPanel{
+public class PlayerConfigView extends JPanel{
 	
-	//private SetupStage controller;
+	private PlayerConfig controller;
 	private NamePanel name;
 	private RaceButtonPanel race;
 	private ColorPanel color;
@@ -24,12 +24,10 @@ public class PlayerConfigPanel extends JPanel{
 	 *            action listener passed in by the DeckPanel to facilitate
 	 *            movement between jpanels using buttons
 	 */
-	public PlayerConfigPanel()//ActionListener L, SetupStage controller)
+	public PlayerConfigView()//ActionListener L, PlayerConfig controller)
 	{
-		//this.controller = controller;
-	////// super sample code, remove when finsihed testing -joe
+		this.controller = controller;
 
-	//////
 	setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	setPreferredSize(new Dimension(1000,400));
 	
