@@ -1,3 +1,7 @@
+/*
+ * Difficulty enum type, has getters for player and store difficulty settings
+ * @author Kevin
+ */
 
 public enum Difficulty {
 	BEGINNER(8, 4, 0, 16, 16, 0, 25), 
