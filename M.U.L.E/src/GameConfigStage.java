@@ -33,6 +33,12 @@ public class GameConfigStage {
         this.model = model;
         this.myView = view;
         setupMyView();
+//temp holder, should be placed elsewhere
+        //IntroTrack theme = new IntroTrack();				//to fix, this creates a blocking thread
+        //theme.run();
+//-joe
+        
+
     }
     
     private void setupMyView() {
