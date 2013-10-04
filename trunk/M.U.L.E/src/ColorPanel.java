@@ -37,8 +37,13 @@ public class ColorPanel extends JPanel{
 	add(yellow);
 	add(blue);
 	
-	
 	}
+	
+	public Color getColor()
+	{
+		return color.getBackground();
+	}
+	
 	/**
 	 * Private inner class defines what happens upon button click.
 	 */	
