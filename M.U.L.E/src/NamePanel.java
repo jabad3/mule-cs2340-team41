@@ -30,6 +30,11 @@ public class NamePanel extends JPanel{
 		add(textField);
 	}
 	
+	/**
+	 * Gets the name input by the user
+	 * 
+	 * @return the name
+	 */
 	public String getName()
 	{
 		return textField.getText();
