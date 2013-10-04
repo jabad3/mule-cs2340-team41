@@ -17,36 +17,6 @@ public class Map {
      * the string "Random".  Any other string entry will produce
      * the default map object.
      */
-    public static Map buildMap(String mapType) {
-        /* use if we stick with a char map, otherwise delete */
-        /*final char MOUNTAIN_1 = '1';
-        final char MOUNTAIN_2 = '2';
-        final char MOUNTAIN_3 = '3';
-        final char PLAIN = 'p';
-        final char RIVER = 'r';
-        final char TOWN = 't';
-        
-        char[][] charMap;*/
-        
-        LandPlotType[][] typeMap;
-        LandPlot[][] landPlots;
-        
-        if ("Random".equals(mapType))
-            typeMap = MapGenerator.generateRandomMap();
-        else // Default
-            typeMap = MapGenerator.generateDefaultMap();
-        
-        landPlots = new LandPlot[typeMap.length][typeMap[0].length];
-        for (int row = 0; row < typeMap.length; row++) {
-            for (int col = 0; col < typeMap[0].length; col++) {
-                LandPlotType currentType = typeMap[row][col];
-                landPlots[row][col] = new LandPlot(currentType);
-            }
-        }
-        
-        return new Map(landPlots);
-    }
-    
     
     private LandPlot[][] landPlots;
     
