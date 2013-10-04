@@ -51,7 +51,8 @@ public class PlayerConfigStage extends Stage {
 			if(playerAt > gameModel.getNumPlayers())
 			{
 				System.out.println("Last player configed, going to map!");
-				//TODO: go to map
+				MapPanel map = new MapPanel();
+				
 			}
 			else
 			{
