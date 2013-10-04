@@ -2,6 +2,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 /**
  * This class allows for configuration of the player including race, name, and color
  * @author Erica Pramer
@@ -14,6 +15,8 @@ public class PlayerConfigView extends JPanel{
 	private RaceButtonPanel race;
 	private ColorPanel color;
 	private JButton next;
+	
+
 	
 	
 	/**
@@ -73,6 +76,14 @@ public class PlayerConfigView extends JPanel{
 	public void setPlayerNum(int num)
 	{
 		curPlayerLabel.setText("Player " + num);
+	}
+	
+	public void setAllColorOptions(String[] colorNames) {
+	   color.setAllColorOptions(colorNames);
+	}
+	
+	public void setDisabledColorOptions(List<Color> disabledColors) {
+	    color.setDisabledColorOptions(disabledColors);
 	}
 	
     public void addFinishedListener(ActionListener finishedListener) {
