@@ -1,3 +1,4 @@
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -8,17 +9,23 @@ import javax.swing.JPanel;
 
 public abstract class Stage
 {
-	Game game;
+	JFrame mainFrame;
 	GameModel gameModel;
 	Stage nextStage;
 	
-	public Stage(Game game, GameModel gameModel) {
-		this.game = game;
+	public Stage(JFrame mainFrame, GameModel gameModel) {
+		this.mainFrame = mainFrame;
 		this.gameModel = gameModel;
 	}
 	
 	public void setNextStage(Stage nextStage) {
 		this.nextStage = nextStage;
+	}
+	
+	public void setView(JPanel view)
+	{
+    	mainFrame.setContentPane(view);
+    	mainFrame.validate();
 	}
 	
 	public abstract void start();
