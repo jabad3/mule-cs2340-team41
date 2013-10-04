@@ -11,7 +11,7 @@ public class RaceButtonPanel extends JPanel
 {
 	private JButton buzzite,ugaite,humanoid,flapper,bonzoid;
 	private JLabel iconLabel;
-	private RaceType race;
+	private int race = -1;
 	
 /**
  * Constructor, sets layout and size of JPanel, adds actionlisteners to
@@ -25,25 +25,25 @@ public class RaceButtonPanel extends JPanel
 		//race = new RaceType();
 		iconLabel = new JLabel();
 		
-		bonzoid = new JButton("bonzoid");
-		flapper = new JButton("flapper");
 		humanoid = new JButton("humanoid");
-		buzzite = new JButton("buzzite");
+		flapper = new JButton("flapper");
+		bonzoid = new JButton("bonzoid");
 		ugaite = new JButton("ugaite");
+		buzzite = new JButton("buzzite");
 		
 		ButtonListener listener = new ButtonListener();
-		bonzoid.addActionListener(listener);
-		flapper.addActionListener(listener);
 		humanoid.addActionListener(listener);
-		buzzite.addActionListener(listener);
+		flapper.addActionListener(listener);
+		bonzoid.addActionListener(listener);
 		ugaite.addActionListener(listener);
+		buzzite.addActionListener(listener);
 		
 		add(iconLabel);
-		add(bonzoid);
-		add(flapper);
 		add(humanoid);
-		add(buzzite);
+		add(flapper);
+		add(bonzoid);
 		add(ugaite);
+		add(buzzite);
 	}
 	
 	/**
@@ -52,15 +52,9 @@ public class RaceButtonPanel extends JPanel
 	 * @return the race
 	 * 
 	 */
-	/*public RaceType getRace()
-	{
-		return race;
-	}*/
-	
-	//temporary method
 	public int getRace()
 	{
-		return 0;
+		return race;
 	}
 	
 
@@ -72,25 +66,30 @@ public class RaceButtonPanel extends JPanel
 		public void actionPerformed(ActionEvent event)
 		{
 			Object source = event.getSource();
-			if (source == bonzoid)
+			if (source == humanoid)
 					{
-				       iconLabel.setIcon(new ImageIcon("bonzoid.png","race")); 
+				       iconLabel.setIcon(new ImageIcon("humanoid.png","race")); 
+				       race = 0;
 					}
 			else if (source == flapper) 
 				{
 				    iconLabel.setIcon(new ImageIcon("flapper.png","race"));
+				    race = 1;
 				}
-			else if (source == humanoid)
+			else if (source == bonzoid)
 				{
-				iconLabel.setIcon(new ImageIcon("humanoid.png","race"));
+				iconLabel.setIcon(new ImageIcon("bonzoid.png","race"));
+				race = 2;
 				}
-			else if (source == buzzite)
-			{
-				iconLabel.setIcon(new ImageIcon("buzzite.png","race"));
-			}
 			else if (source == ugaite)
 			{
 				iconLabel.setIcon(new ImageIcon("ugaite.png","race"));
+				race = 3;
+			}
+			else if (source == buzzite)
+			{
+				iconLabel.setIcon(new ImageIcon("buzzite.png","race"));
+				race = 4;
 			}
 
 		}

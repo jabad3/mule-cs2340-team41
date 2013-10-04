@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,7 +27,7 @@ public class PlayerConfigStage extends Stage {
 		myView = new PlayerConfigView();
 		myView.setPlayerNum(playerAt);
 		myView.addFinishedListener(new FinishedListener());
-    	setView(myView);
+    	displayView(myView);
 	}
 	
 	public void start() {
@@ -42,6 +43,11 @@ public class PlayerConfigStage extends Stage {
 	{
 		public void actionPerformed(ActionEvent e)
 		{
+			if(myView.getRace() == -1 || myView.getColor() == null)
+			{
+				return;
+			}
+			
 			Player player = new Player(myView.getText(), RaceType.values()[myView.getRace()], myView.getColor(), gameModel.getDifficulty());
 			gameModel.addPlayer(player);
 			playerAt++;
@@ -52,7 +58,7 @@ public class PlayerConfigStage extends Stage {
 			{
 				System.out.println("Last player configed, going to map!");
 				MapPanel map = new MapPanel();
-				setView(map);
+				displayView(map);
 			}
 			else
 			{

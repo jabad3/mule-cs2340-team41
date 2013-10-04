@@ -34,7 +34,7 @@ public class GameConfigStage extends Stage {
     
     public void start() {
     	myView = new BasicGameConfigView();
-    	setView(myView);
+    	displayView(myView);
     	
     	IntroTrack theme = new IntroTrack();	//to fix, this creates a blocking thread
         theme.start();

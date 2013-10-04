@@ -22,7 +22,7 @@ public abstract class Stage
 		this.nextStage = nextStage;
 	}
 	
-	public void setView(JPanel view)
+	public void displayView(JPanel view)
 	{
     	mainFrame.setContentPane(view);
     	mainFrame.validate();
