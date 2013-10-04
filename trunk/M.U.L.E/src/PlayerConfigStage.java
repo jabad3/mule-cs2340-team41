@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -16,6 +18,10 @@ public class PlayerConfigStage extends Stage {
 	PlayerConfigView myView;
 	public int playerAt = 1;
 	
+	// used to setup the View
+    private String[] allColorOptions = {"0xFF0000", "0x008000", "0xFFFF00", "0x0000FF"};
+    private List<Color> disabledColorOptions = new ArrayList<>();
+	
 	public PlayerConfigStage(JFrame mainFrame, GameModel model) {
     	super(mainFrame, model);
     }
@@ -23,6 +29,8 @@ public class PlayerConfigStage extends Stage {
 	public void showPlConfigPane() {
 		myView = new PlayerConfigView();
 		myView.setPlayerNum(playerAt);
+		myView.setAllColorOptions(allColorOptions);
+		myView.setDisabledColorOptions(disabledColorOptions);
 		myView.addFinishedListener(new FinishedListener());
     	displayView(myView);
 	}
@@ -45,6 +53,8 @@ public class PlayerConfigStage extends Stage {
 				return;
 			}
 			
+			// Ensures that no color is selected twice
+			disabledColorOptions.add(myView.getColor());
 			Player player = new Player(myView.getText(), RaceType.values()[myView.getRace()], myView.getColor(), gameModel.getDifficulty());
 			gameModel.addPlayer(player);
 			playerAt++;
