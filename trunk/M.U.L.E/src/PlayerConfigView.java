@@ -9,7 +9,7 @@ import java.awt.event.*;
  */
 
 public class PlayerConfigView extends JPanel{
-	
+	private JLabel curPlayerLabel;
 	private NamePanel name;
 	private RaceButtonPanel race;
 	private ColorPanel color;
@@ -28,6 +28,7 @@ public class PlayerConfigView extends JPanel{
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		setPreferredSize(new Dimension(1000,400));
 		
+		curPlayerLabel = new JLabel();
 		name = new NamePanel();
 		race = new RaceButtonPanel();
 		next = new JButton("next");
@@ -35,6 +36,7 @@ public class PlayerConfigView extends JPanel{
 		
 		next.setMaximumSize( next.getPreferredSize() );
 		
+		add(curPlayerLabel);
 		add(name);
 		add(race);
 		add(color);
@@ -66,6 +68,11 @@ public class PlayerConfigView extends JPanel{
 	public int getRace()
 	{
 		return race.getRace();
+	}
+	
+	public void setPlayerNum(int num)
+	{
+		curPlayerLabel.setText("Player " + num);
 	}
 	
     public void addFinishedListener(ActionListener finishedListener) {
