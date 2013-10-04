@@ -63,7 +63,7 @@ public class GameConfigStage extends Stage {
         gameModel.setNumPlayers(numPlayers);
         // TODO - not sure how to handle the map...
         // I don't want anymore enums!!  Can we just build the map here??
-        Map map = Map.buildMap(mapType);
+        Map map = MapFactory.buildMap(mapType);
         gameModel.setMap(map);
         // TODO - build the store here, or have GameModel do it??
         Store store = Store.buildStore(difficulty);
