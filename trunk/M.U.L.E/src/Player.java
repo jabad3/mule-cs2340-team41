@@ -8,6 +8,13 @@ public class Player extends Trader {
 	private Color color;
 	private EnumMap<InputType, Boolean> keyStates;
 	
+	public String toString() {
+	    String s1 = "\nPlayer Name:  " + name;
+	    String s2 = "\nRace: " + race.name();
+	    String s3 = "\nColor:  " + color;
+	    String s4 = "My inventory info... " + inventory.toString();
+	    return s1 + s2 + s3 + s4;
+	}
 	/**
 	 * Create a Player object using a name, a RaceType, and a Color.
 	 * 

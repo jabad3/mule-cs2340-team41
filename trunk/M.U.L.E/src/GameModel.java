@@ -16,12 +16,14 @@ public class GameModel {
 	
 	/* to be used for quick "testing" */
 	public String toString() {
-	    String s1 = "PlayerList:  " + playerList;
 	    String s2 = "\nDifficulty:  " + difficulty;
 	    String s3 = "\nStore:  " + store;
 	    String s4 = "\nMap:  " + map;
 	    String s5 = "\nNumber of Players:  " + numPlayers;
-	    return s1 + s2 + s3 + s4 + s5;
+	    String s6 = "\n\n Player info.......";
+	    for (Player p: playerList)
+	        s6 += p.toString();
+	    return s2 + s3 + s4 + s5 + s6;
 	}
 	
 	/*
