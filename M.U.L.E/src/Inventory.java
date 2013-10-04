@@ -29,7 +29,7 @@ public class Inventory {
      * Precondition:  The current resource count is > 0
      * Postcondition:  The final resource count is >= 0
      * 
-     * @param rType The resource to decrement
+     * @param resource The resource to decrement
      */
     public void removeResource(Resource resource) {
         int currentCount = resourceCounts.get(resource);
@@ -39,7 +39,7 @@ public class Inventory {
     /**
      * Increments the count of the given resource type by one.
      * 
-     * @param rType The resource to increment
+     * @param resource The resource to increment
      */
     public void addResource(Resource resource) {
     	int currentCount = resourceCounts.get(resource);
