@@ -9,18 +9,15 @@
  */
 public class Store extends Trader {
 
-    
     /**
-     * Creates a store based on its intial quantities of each resource.
+     * Creates a Store object with the proper initial inventory.
+     * The initial inventory depends on the difficulty.
      * 
-     * @param food Initial food quantity
-     * @param energy Initial energy quantity
-     * @param ore Initial ore quantity
-     * @param money Initial money quantity
-     * @param mules Initial mule quantity
+     * @param difficulty The game's difficulty
+     * @return A Store object with proper inventory
      */
-    public Store(int food, int energy, int ore, int money, int mules) {
-        super(food, energy, ore, money, mules);
+    public static Store buildStore(Difficulty difficulty) {
+        return new Store(difficulty);
     }
     
     /**
@@ -29,10 +26,26 @@ public class Store extends Trader {
      * @param difficulty
      */
     public Store(Difficulty difficulty) {
-        if (difficulty == Difficulty.BEGINNER)
-            inventory = new Inventory(16, 16, 0, Integer.MAX_VALUE / 2, 0);
-        else  // Standard or Tournament
-            inventory = new Inventory(8, 8, 8, Integer.MAX_VALUE / 2, 8);
+        /* Integer.MAX_VALUE / 2 is an arbitrarily large number
+         * for the Store's initial money count.
+         * 
+         * We use a large money count to simulate the Store's infinite supply
+         * of money because we still want the Store to function like a Trader.
+         * A Trader must pull money out of their inventory to pay another
+         * Trader.
+         * 
+         * The alternative approach is that the Store pays Traders without
+         * removing money from its Inventory, but in this case, Store's
+         * behavior deviates too far from how we expect a Trader to behave
+         * (i.e. possible violation of LSP)
+         */
+        int food = difficulty.storeFoodSetting();
+        int energy = difficulty.storeEnergySetting();
+        int ore = difficulty.storeOreSetting();
+        int money = Integer.MAX_VALUE / 2;
+        int mules = difficulty.storeMuleSetting();
+        
+        inventory = new Inventory(food, energy, ore, money, mules);
     }
     
     @Override
@@ -51,6 +64,13 @@ public class Store extends Trader {
     
     public void buildMulesWithOre() {
         // TODO
+    }
+
+    
+    
+    /* for temporary "testing" */
+    public String toString() {
+        return inventory.toString();
     }
 
 }
