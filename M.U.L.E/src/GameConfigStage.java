@@ -99,11 +99,11 @@ public class GameConfigStage {
     	////// super sample code, remove when finsihed testing -joe
     	////
 		JFrame temp = new JFrame("temp");
-		PlayerConfigPanel temp2 = new PlayerConfigPanel();
+		PlayerConfigView temp2 = new PlayerConfigView();
 		temp.add(temp2);
 		temp.pack();
 		temp.setVisible(true);
-		System.out.println("finished");
+		System.out.println("next stage");
     	///
     }
     
