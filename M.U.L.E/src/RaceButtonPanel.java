@@ -22,7 +22,7 @@ public class RaceButtonPanel extends JPanel
 		setLayout(new GridLayout(1,9));
 		setPreferredSize(new Dimension(1000,100));
 		
-		race = new RaceType();
+		//race = new RaceType();
 		iconLabel = new JLabel();
 		
 		bonzoid = new JButton("bonzoid");
