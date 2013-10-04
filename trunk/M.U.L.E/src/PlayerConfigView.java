@@ -65,6 +65,11 @@ public class PlayerConfigView extends JPanel{
 		return color.getColor();
 	}
 	
+	public int getRace()
+	{
+		return race.getRace();
+	}
+	
 //	public static void main(String[] args){
 //		JFrame temp = new JFrame("temp");
 //		PlayerConfigPanel temp2 = new PlayerConfigPanel();

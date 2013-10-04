@@ -40,7 +40,7 @@ public class PlayerConfigStage extends Stage {
 			}
 				
 			//TODO: myView.getRace() instead of 123 in here!
-			Player player = new Player(myView.getText(), 123, myView.getColor(), gameModel.getDifficulty());
+			Player player = new Player(myView.getText(), RaceType.values()[myView.getRace()], myView.getColor(), gameModel.getDifficulty());
 			playerAt++;
 			
 			//reset view, invalidate colors
