@@ -26,6 +26,7 @@ public class Player extends Trader {
 	public Player(String name, RaceType race, Color color, Difficulty difficulty) {
 	    this.name = name;
 	    this.color = color;
+	    this.race = race;
 	    
 	    // set inventory, which depends on Race, Difficulty
 	    int food = difficulty.playerFoodSetting();
