@@ -19,7 +19,7 @@ public class PlayerConfigStage extends Stage {
 	public int playerAt = 1;
 	
 	// used to setup the View
-    private String[] allColorOptions = {"0xFF0000", "0x008000", "0xFFFF00", "0x0000FF"};
+    private String[] allColorOptions = {"0xFF0000", "0x008000", "0xFFA500", "0x0000FF"};
     private List<Color> disabledColorOptions = new ArrayList<>();
 	
 	public PlayerConfigStage(JFrame mainFrame, GameModel model) {
