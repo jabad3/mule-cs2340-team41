@@ -16,7 +16,7 @@ public class ColorPanel extends JPanel{
 	
 	//JButton red,green,blue,yellow;
     List<JButton> buttonList = new ArrayList<>();
-	JLabel color;
+	JLabel colorLabel;
 	Color chosenColor;
 	
 	/**
@@ -25,30 +25,10 @@ public class ColorPanel extends JPanel{
 	 */
 	public ColorPanel(){
 		
-    	/*
-    	red = new JButton("red");
-    	green = new JButton("green");
-    	yellow = new JButton("yellow");
-    	blue = new JButton("blue");
-    	*/
-    	color = new JLabel("Player Color");
-    	color.setOpaque(true);
+    	colorLabel = new JLabel("Player Color");
+    	colorLabel.setOpaque(true);
     	
-    	/*
-    	ButtonListener listener = new ButtonListener();
-    	red.addActionListener(listener);
-    	green.addActionListener(listener);
-    	blue.addActionListener(listener);
-    	yellow.addActionListener(listener);
-    	*/
-    	
-    	add(color);
-    	/*
-    	add(red);
-    	add(green);
-    	add(yellow);
-    	add(blue);
-    	*/
+    	add(colorLabel);
 	
 	}
 	
@@ -71,13 +51,11 @@ public class ColorPanel extends JPanel{
 	 * @param colorNames An array of color names for all possible colors in the game
 	 */
 	public void setAllColorOptions(String[] colorNames) {
-	    System.out.println("I was called");
 	    for (String colorName: colorNames) {
 	        JButton colorButton = new JButton(colorName);
 	        colorButton.addActionListener(new ColorButtonListener(colorName));
 	        buttonList.add(colorButton);
 	        this.add(colorButton);
-	        System.out.println("Added a button");
 	    }
 	}
 	
@@ -114,40 +92,7 @@ public class ColorPanel extends JPanel{
 		 */
 		public void actionPerformed(ActionEvent event) {
 		    chosenColor = Color.decode(colorName);
-		    color.setForeground(chosenColor);
+		    colorLabel.setForeground(chosenColor);
 		}
-	    /* old actionperformed
-	    public void actionPerformed(ActionEvent event)
-		{
-			Object source = event.getSource();
-			if(source == null)
-			{
-				
-			}
-			else if (source == red)
-			{
-				chosenColor = Color.red;
-				color.setBackground(chosenColor);
-				color.setForeground(Color.black);
-			}
-			else if(source == blue)
-			{
-				chosenColor = Color.blue;
-				color.setBackground(chosenColor);
-				color.setForeground(Color.white);
-			}
-			else if(source == green)
-			{
-				chosenColor = Color.green;
-				color.setBackground(chosenColor);
-				color.setForeground(Color.black);
-			}
-			else if(source == yellow)
-			{
-				chosenColor = Color.yellow;
-				color.setBackground(chosenColor);
-				color.setForeground(Color.black);
-			}
-		}*/
 	}
 }
