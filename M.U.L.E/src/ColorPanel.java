@@ -114,7 +114,7 @@ public class ColorPanel extends JPanel{
 		 */
 		public void actionPerformed(ActionEvent event) {
 		    chosenColor = Color.decode(colorName);
-		    color.setBackground(chosenColor);
+		    color.setForeground(chosenColor);
 		}
 	    /* old actionperformed
 	    public void actionPerformed(ActionEvent event)
