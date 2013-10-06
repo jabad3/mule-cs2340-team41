@@ -51,7 +51,8 @@ public class ColorPanel extends JPanel{
 	 * These buttons are added to the buttonsList field.
 	 * These buttons are then added to the ColorPanel to be displayed.
 	 * 
-	 * @param colorNames An array of color names for all possible colors in the game
+	 * @param nameColorMap A mapping of color names to Color objects for
+	 * all colors that need to be displayed
 	 */
 	public void setAllColorOptions(Map<String, Color> nameColorMap) {
 	    this.nameColorMap = nameColorMap;
@@ -68,7 +69,8 @@ public class ColorPanel extends JPanel{
 	 * This method disables any buttons corresponding to the given color names.
 	 * Color choices are disabled so that no two players share the same color.
 	 * 
-	 * @param colorNames An array of color names for all disabled colors
+	 * @param colorNames A list of color objects whose corresponding buttons
+	 * need to be disabled
 	 */
 	public void setDisabledColorOptions(List<Color> colors) {
 	    for (Color color: colors) {

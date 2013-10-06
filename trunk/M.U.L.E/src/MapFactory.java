@@ -5,7 +5,6 @@ import java.util.List;
 /**
  * This class generates the default MULE map
  * @author Erica
- * @Version 1
  */
    public class MapFactory
    {
