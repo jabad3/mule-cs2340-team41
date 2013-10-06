@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import java.util.Map;
 /**
  * This class allows for configuration of the player including race, name, and color
  * @author Erica Pramer
@@ -47,16 +48,6 @@ public class PlayerConfigView extends JPanel{
 		
 		//next.addActionListener(L);
 	}
-	
-	/**
-	 * This method returns the next button on the player configuration panel
-	 * 
-	 * @return a next button to go to the next jpanel
-	 */
-	public JButton getNextButton()
-	{
-		return next;
-	}
 
 	public String getText()
 	{
@@ -78,8 +69,8 @@ public class PlayerConfigView extends JPanel{
 		curPlayerLabel.setText("Player " + num);
 	}
 	
-	public void setAllColorOptions(String[] colorNames) {
-	   color.setAllColorOptions(colorNames);
+	public void setAllColorOptions(Map<String, Color> nameColorMap) {
+	   color.setAllColorOptions(nameColorMap);
 	}
 	
 	public void setDisabledColorOptions(List<Color> disabledColors) {

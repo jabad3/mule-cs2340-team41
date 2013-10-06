@@ -3,6 +3,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.*;
 /**
@@ -17,7 +19,8 @@ public class ColorPanel extends JPanel{
 	//JButton red,green,blue,yellow;
     List<JButton> buttonList = new ArrayList<>();
 	JLabel colorLabel;
-	Color chosenColor;
+	String chosenColorName;
+	Map<String, Color> nameColorMap;
 	
 	/**
 	 * Constructor, adds actionlisteners to
@@ -33,14 +36,14 @@ public class ColorPanel extends JPanel{
 	}
 	
 	/**
-	 * Gets the color selected by the user
+	 * Gets the color selected by the user in the form of a String
 	 * 
-	 * @return the color
+	 * @return the color name
 	 * 
 	 */
 	public Color getColor()
 	{
-		return chosenColor;
+		return nameColorMap.get(chosenColorName);
 	}
 	
 	/**
@@ -50,7 +53,9 @@ public class ColorPanel extends JPanel{
 	 * 
 	 * @param colorNames An array of color names for all possible colors in the game
 	 */
-	public void setAllColorOptions(String[] colorNames) {
+	public void setAllColorOptions(Map<String, Color> nameColorMap) {
+	    this.nameColorMap = nameColorMap;
+	    Set<String> colorNames = nameColorMap.keySet();
 	    for (String colorName: colorNames) {
 	        JButton colorButton = new JButton(colorName);
 	        colorButton.addActionListener(new ColorButtonListener(colorName));
@@ -69,7 +74,7 @@ public class ColorPanel extends JPanel{
 	    for (Color color: colors) {
 	        for (JButton button: buttonList) {
 	            String buttonColorString = button.getText();
-	            Color buttonColor = Color.decode(buttonColorString);
+	            Color buttonColor = nameColorMap.get(buttonColorString);
 	            if (color.equals(buttonColor))
 	                button.setEnabled(false);
 	        }
@@ -91,8 +96,8 @@ public class ColorPanel extends JPanel{
 		 * Sets chosen color to the color corresponding to this button
 		 */
 		public void actionPerformed(ActionEvent event) {
-		    chosenColor = Color.decode(colorName);
-		    colorLabel.setForeground(chosenColor);
+		    chosenColorName = colorName;
+		    colorLabel.setForeground(nameColorMap.get(colorName));
 		}
 	}
 }

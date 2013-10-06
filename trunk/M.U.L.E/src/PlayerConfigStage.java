@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -19,17 +21,36 @@ public class PlayerConfigStage extends Stage {
 	public int playerAt = 1;
 	
 	// used to setup the View
-    private String[] allColorOptions = {"0xFF0000", "0x008000", "0xFFA500", "0x0000FF"};
+	/**
+	 * Contains a mapping of color names to Color objects for all
+	 * colors that the View needs to account for.
+	 */
+    private Map<String, Color> nameColorMap = new HashMap<>();
+    
+    /**
+     * A list of Color objects representing colors that cannot be chosen.
+     * 
+     * Colors must be disabled after they are picked so that no two Players
+     * have the same Color.  
+     * 
+     * This list grows as more Players select their colors. 
+     */
     private List<Color> disabledColorOptions = new ArrayList<>();
 	
 	public PlayerConfigStage(JFrame mainFrame, GameModel model) {
     	super(mainFrame, model);
+    	
+    	// name-color map needs to be setup
+    	nameColorMap.put("Red", Color.red);
+    	nameColorMap.put("Orange", Color.decode("0xFF8000"));  // darker orange
+    	nameColorMap.put("Green", Color.decode("0x01DF01"));  // darker green
+    	nameColorMap.put("Blue", Color.blue);
     }
 	
 	public void showPlConfigPane() {
 		myView = new PlayerConfigView();
 		myView.setPlayerNum(playerAt);
-		myView.setAllColorOptions(allColorOptions);
+		myView.setAllColorOptions(nameColorMap);
 		myView.setDisabledColorOptions(disabledColorOptions);
 		myView.addFinishedListener(new FinishedListener());
     	displayView(myView);
