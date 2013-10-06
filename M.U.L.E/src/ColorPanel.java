@@ -16,7 +16,6 @@ import javax.swing.*;
 //testing
 public class ColorPanel extends JPanel{
 	
-	//JButton red,green,blue,yellow;
     List<JButton> buttonList = new ArrayList<>();
 	JLabel colorLabel;
 	String chosenColorName;
@@ -69,7 +68,7 @@ public class ColorPanel extends JPanel{
 	 * This method disables any buttons corresponding to the given color names.
 	 * Color choices are disabled so that no two players share the same color.
 	 * 
-	 * @param colorNames A list of color objects whose corresponding buttons
+	 * @param colors A list of color objects whose corresponding buttons
 	 * need to be disabled
 	 */
 	public void setDisabledColorOptions(List<Color> colors) {
