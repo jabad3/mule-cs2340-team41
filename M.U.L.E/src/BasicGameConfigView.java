@@ -28,10 +28,6 @@ public class BasicGameConfigView extends GameConfigView {
     
     /**
      * Initializes components on the JPanel
-     * 
-     * @param L 
-     *            Action listener passed in by deck panel to facilitate
-     *            movement between panels via next button
      */
     public BasicGameConfigView() {
         initComponents();

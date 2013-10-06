@@ -21,11 +21,7 @@ public class PlayerConfigView extends JPanel{
 	
 	
 	/**
-	 * Instantiates all instance data, sets layout, adds action listener to the buttons
-	 * 
-	 * @param L
-	 *            action listener passed in by the DeckPanel to facilitate
-	 *            movement between jpanels using buttons
+	 * Instantiates all instance data, sets layout
 	 */
 	public PlayerConfigView()//ActionListener L, PlayerConfig controller)
 	{
@@ -80,14 +76,4 @@ public class PlayerConfigView extends JPanel{
     public void addFinishedListener(ActionListener finishedListener) {
         next.addActionListener(finishedListener);
     }
-	
-//	public static void main(String[] args){
-//		JFrame temp = new JFrame("temp");
-//		PlayerConfigPanel temp2 = new PlayerConfigPanel();
-//		temp.add(temp2);
-//		temp.pack();
-//		temp.setVisible(true);
-//		System.out.println("finished");
-//	}
-//	
 }
