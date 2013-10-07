@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,16 +11,31 @@ import javax.swing.*;
 /**
  * This class allows the user to choose their color
  * @author Erica Pramer
- * @version 1
  */
-//
-//testing
 public class ColorPanel extends JPanel{
 	
+    /**
+     * List of all buttons that will be displayed.
+     * A list must be kept so that we can disable buttons that have been
+     * added to the panel.
+     */
     List<JButton> buttonList = new ArrayList<>();
+    
+    /**
+     * Holds text that will change color depending on the user's selection.
+     */
 	JLabel colorLabel;
+	
+	/**
+	 * The name of the color that was chosen by the user.
+	 */
 	String chosenColorName;
-	Map<String, Color> nameColorMap;
+	
+	/**
+     * Contains a mapping of color names to Color objects for all
+     * colors that the View will offer to the user.
+     */
+    private Map<String, Color> nameColorMap = new HashMap<>();
 	
 	/**
 	 * Constructor, adds actionlisteners to
@@ -31,37 +47,33 @@ public class ColorPanel extends JPanel{
     	colorLabel.setOpaque(true);
     	
     	add(colorLabel);
+    	
+
+        // name-color map needs to be setup
+        nameColorMap.put("Red", Color.red);
+        nameColorMap.put("Orange", Color.decode("0xFF8000"));  // darker orange
+        nameColorMap.put("Green", Color.decode("0x01DF01"));  // darker green
+        nameColorMap.put("Blue", Color.blue);
 	
+        // add buttons
+        Set<String> colorNames = nameColorMap.keySet();
+        for (String colorName: colorNames) {
+            JButton colorButton = new JButton(colorName);
+            colorButton.addActionListener(new ColorButtonListener(colorName));
+            buttonList.add(colorButton);
+            this.add(colorButton);
+        }
 	}
 	
 	/**
 	 * Gets the color selected by the user in the form of a String
 	 * 
-	 * @return the color name
+	 * @return the Color object corresponding to the color's name
 	 * 
 	 */
-	public Color getColor()
+	public Color getChosenColor()
 	{
 		return nameColorMap.get(chosenColorName);
-	}
-	
-	/**
-	 * This method creates buttons for all of the possible colors.
-	 * These buttons are added to the buttonsList field.
-	 * These buttons are then added to the ColorPanel to be displayed.
-	 * 
-	 * @param nameColorMap A mapping of color names to Color objects for
-	 * all colors that need to be displayed
-	 */
-	public void setAllColorOptions(Map<String, Color> nameColorMap) {
-	    this.nameColorMap = nameColorMap;
-	    Set<String> colorNames = nameColorMap.keySet();
-	    for (String colorName: colorNames) {
-	        JButton colorButton = new JButton(colorName);
-	        colorButton.addActionListener(new ColorButtonListener(colorName));
-	        buttonList.add(colorButton);
-	        this.add(colorButton);
-	    }
 	}
 	
 	/**
