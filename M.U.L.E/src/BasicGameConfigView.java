@@ -18,7 +18,7 @@ import javax.swing.*;
  */
 public class BasicGameConfigView extends GameConfigView {
 
-    private JComboBox<Difficulty> difficultyBox;
+    private JComboBox<String> difficultyBox;
     private JLabel difficultyText;
     private JComboBox<String> mapTypeBox;
     private JLabel mapTypeText;
@@ -96,7 +96,10 @@ public class BasicGameConfigView extends GameConfigView {
 
     @Override
     public void setDifficultyChoices(Difficulty[] difficulties) {
-        difficultyBox.setModel(new DefaultComboBoxModel<Difficulty>(difficulties));
+        String[] diffNames = new String[difficulties.length];
+        for (int i = 0; i < difficulties.length; i++)
+            diffNames[i] = difficulties[i].toString();
+        difficultyBox.setModel(new DefaultComboBoxModel<String>(diffNames));
     }
 
     @Override
@@ -117,7 +120,9 @@ public class BasicGameConfigView extends GameConfigView {
 
     @Override
     public Difficulty getSelectedDifficulty() {
-        Difficulty selectedDiff = (Difficulty) difficultyBox.getSelectedItem();
+        String diffName = (String) difficultyBox.getSelectedItem();
+        diffName = diffName.toUpperCase();
+        Difficulty selectedDiff = Difficulty.valueOf(diffName);
         return selectedDiff;
     }
 
