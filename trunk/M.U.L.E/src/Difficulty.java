@@ -54,5 +54,14 @@ public enum Difficulty {
 		return storeMuleCount;
 	}
 	
-	
+	/**
+	 * Returns name of the Difficulty with only the first letter capitalized
+	 * for more user-friendly display.
+	 */
+	public String toString() {
+	    String allCaps = this.name();
+        String firstLetter = allCaps.substring(0, 1);  // capitalize first letter
+        String remainingLetters = allCaps.substring(1).toLowerCase();  // all others are lowercase
+        return firstLetter + remainingLetters;
+	}
 }

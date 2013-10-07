@@ -33,7 +33,7 @@ public class RaceButtonPanel extends JPanel
 		 */
 		RaceType[] raceChoices = RaceType.values();
 		for (RaceType race: raceChoices) {
-		    String raceName = race.name();
+		    String raceName = race.toString();
 		    JButton raceButton = new JButton(raceName);
 		    raceButton.addActionListener(new RaceButtonListener(race));
 		    this.add(raceButton);
