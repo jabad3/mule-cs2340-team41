@@ -41,8 +41,6 @@ public class PlayerConfigView extends JPanel{
 		add(race);
 		add(color);
 		add(next);
-		
-		//next.addActionListener(L);
 	}
 
 	public String getText()
@@ -52,21 +50,21 @@ public class PlayerConfigView extends JPanel{
 	
 	public Color getColor()
 	{
-		return color.getColor();
+		return color.getChosenColor();
 	}
 	
-	public int getRace()
+	/**
+	 * Returns the RaceType selected by the user.
+	 * @return The user's selected RaceType.  null if no race was chosen.
+	 */
+	public RaceType getRace()
 	{
-		return race.getRace();
+		return race.getChosenRace();
 	}
 	
 	public void setPlayerNum(int num)
 	{
 		curPlayerLabel.setText("Player " + num);
-	}
-	
-	public void setAllColorOptions(Map<String, Color> nameColorMap) {
-	   color.setAllColorOptions(nameColorMap);
 	}
 	
 	public void setDisabledColorOptions(List<Color> disabledColors) {

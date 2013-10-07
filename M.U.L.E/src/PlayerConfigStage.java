@@ -21,11 +21,7 @@ public class PlayerConfigStage extends Stage {
 	public int playerAt = 1;
 	
 	// used to setup the View
-	/**
-	 * Contains a mapping of color names to Color objects for all
-	 * colors that the View needs to account for.
-	 */
-    private Map<String, Color> nameColorMap = new HashMap<>();
+	
     
     /**
      * A list of Color objects representing colors that cannot be chosen.
@@ -40,17 +36,11 @@ public class PlayerConfigStage extends Stage {
 	public PlayerConfigStage(JFrame mainFrame, GameModel model) {
     	super(mainFrame, model);
     	
-    	// name-color map needs to be setup
-    	nameColorMap.put("Red", Color.red);
-    	nameColorMap.put("Orange", Color.decode("0xFF8000"));  // darker orange
-    	nameColorMap.put("Green", Color.decode("0x01DF01"));  // darker green
-    	nameColorMap.put("Blue", Color.blue);
     }
 	
-	public void showPlConfigPane() {
+	public void showPlayerConfigPane() {
 		myView = new PlayerConfigView();
 		myView.setPlayerNum(playerAt);
-		myView.setAllColorOptions(nameColorMap);
 		myView.setDisabledColorOptions(disabledColorOptions);
 		myView.addFinishedListener(new FinishedListener());
     	displayView(myView);
@@ -58,7 +48,7 @@ public class PlayerConfigStage extends Stage {
 	
 	public void start() {
 		System.out.println("pconfig start");
-		showPlConfigPane();
+		showPlayerConfigPane();
 	}
 	
 	public void goNextStage() {
@@ -69,28 +59,28 @@ public class PlayerConfigStage extends Stage {
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			if(myView.getRace() == -1 || myView.getColor() == null)
+			// take no action if user does not select a race or color
+		    if(myView.getRace() == null || myView.getColor() == null)
 			{
 				return;
 			}
 			
 			// Ensures that no color is selected twice
 			disabledColorOptions.add(myView.getColor());
-			Player player = new Player(myView.getText(), RaceType.values()[myView.getRace()], myView.getColor(), gameModel.getDifficulty());
+			Player player = new Player(myView.getText(), myView.getRace(), myView.getColor(), gameModel.getDifficulty());
 			gameModel.addPlayer(player);
 			playerAt++;
 			
-			System.out.println("New model = " + gameModel);
-			
 			if(playerAt > gameModel.getNumPlayers())
 			{
-				System.out.println("Last player configed, going to map!");
+				System.out.println("Game Model info after configuring... \n" + gameModel);
+			    System.out.println("Last player configed, going to map!");
 				MapPanel map = new MapPanel();
 				displayView(map);
 			}
 			else
 			{
-				showPlConfigPane();
+				showPlayerConfigPane();
 			}
 		}
 	}
