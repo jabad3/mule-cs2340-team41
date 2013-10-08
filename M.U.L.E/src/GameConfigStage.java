@@ -70,16 +70,6 @@ public class GameConfigStage extends Stage {
     }
     
     /**
-     * Need to figure out the best way to do this...
-     *   one way:  let a Stage controller know what the next controller is,
-     *   then upon calling endStage, do something like
-     *      nextController.showMyView?  It seems a little weird, though.
-     */
-    public void goNextStage() {
-    	nextStage.start();
-    }
-    
-    /**
      * This class listens to the View for an ActionEvent signalling
      * that the User is finished interacting with the 
      * @author Max

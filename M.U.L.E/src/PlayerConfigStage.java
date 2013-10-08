@@ -51,10 +51,6 @@ public class PlayerConfigStage extends Stage {
 		showPlayerConfigPane();
 	}
 	
-	public void goNextStage() {
-		
-	}
-	
 	private class FinishedListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
@@ -75,8 +71,7 @@ public class PlayerConfigStage extends Stage {
 			{
 				System.out.println("Game Model info after configuring... \n" + gameModel);
 			    System.out.println("Last player configed, going to map!");
-				MapPanel map = new MapPanel();
-				displayView(map);
+				goNextStage();
 			}
 			else
 			{

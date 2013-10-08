@@ -19,26 +19,11 @@ public class Game {
 	{
 	    GameConfigStage gameConfigStage = new GameConfigStage(mainFrame, gameModel);
 	    PlayerConfigStage playerConfigStage = new PlayerConfigStage(mainFrame, gameModel);
+	    LandSelectionStage landSelectionStage = new LandSelectionStage(mainFrame, gameModel);
 	    
 	    gameConfigStage.setNextStage(playerConfigStage);
+	    playerConfigStage.setNextStage(landSelectionStage);
 	    
 	    gameConfigStage.start();
-	    
-	    //(new SetupStage(this)).takeControl();
-		//SummaryStage summaryStage = new SummaryStage(this);
-		//LandSelectionStage landSelectionStage = new LandSelectionStage(this);
-		//LandAuctionStage landAuctionStage = new LandAuctionStage(this);
-		//DevelopmentStage developmentStage = new DevelopmentStage(this);
-		//ProductionStage productionStage = new ProductionStage(this);
-		//ResourceAuctionStage resourceAuctionStage = new ResourceAuctionStage(this);
-		for(int i = 0; i < 6; i++)
-		{
-			//summaryStage.takeControl();
-			//landSelectionStage.takeControl();
-			//landAuctionStage.takeControl();
-			//developmentStage.takeControl();
-			//productionStage.takeControl();
-			//resourceAuctionStage.takeControl();
-		}
 	}
 }
