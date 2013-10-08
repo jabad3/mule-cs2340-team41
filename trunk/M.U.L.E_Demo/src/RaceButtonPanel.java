@@ -2,6 +2,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * This class lets the player choose their race
  * @author Erica Pramer
@@ -9,9 +11,8 @@ import java.awt.event.*;
  */
 public class RaceButtonPanel extends JPanel
 {
-	private JButton buzzite,ugaite,humanoid,flapper,bonzoid;
 	private JLabel iconLabel;
-	private int race = -1;
+	private RaceType chosenRace;
 	
 /**
  * Constructor, sets layout and size of JPanel, adds actionlisteners to
@@ -22,28 +23,22 @@ public class RaceButtonPanel extends JPanel
 		setLayout(new GridLayout(1,9));
 		setPreferredSize(new Dimension(1000,100));
 		
-		//race = new RaceType();
+		/* add icon to panel first so it appears at the far left */
 		iconLabel = new JLabel();
+		this.add(iconLabel);
 		
-		humanoid = new JButton("humanoid");
-		flapper = new JButton("flapper");
-		bonzoid = new JButton("bonzoid");
-		ugaite = new JButton("ugaite");
-		buzzite = new JButton("buzzite");
+		/* 
+		 * create buttons corresponding to all possible races in RaceType
+		 * and adds them to the panel
+		 */
+		RaceType[] raceChoices = RaceType.values();
+		for (RaceType race: raceChoices) {
+		    String raceName = race.toString();
+		    JButton raceButton = new JButton(raceName);
+		    raceButton.addActionListener(new RaceButtonListener(race));
+		    this.add(raceButton);
+		}
 		
-		ButtonListener listener = new ButtonListener();
-		humanoid.addActionListener(listener);
-		flapper.addActionListener(listener);
-		bonzoid.addActionListener(listener);
-		ugaite.addActionListener(listener);
-		buzzite.addActionListener(listener);
-		
-		add(iconLabel);
-		add(humanoid);
-		add(flapper);
-		add(bonzoid);
-		add(ugaite);
-		add(buzzite);
 	}
 	
 	/**
@@ -52,46 +47,32 @@ public class RaceButtonPanel extends JPanel
 	 * @return the race
 	 * 
 	 */
-	public int getRace()
+	public RaceType getChosenRace()
 	{
-		return race;
+		return chosenRace;
 	}
 	
 
 /**
  * Private inner class defines what happens upon button click.
+ * Each race button should have a separate instance of this class.
  */	
-	private class ButtonListener implements ActionListener
+	private class RaceButtonListener implements ActionListener
 	{
-		public void actionPerformed(ActionEvent event)
+	    /**
+	     * The race that is associated with the button that the
+	     * RaceButtonListener is listening to.
+	     */
+	    RaceType raceOfButton;
+	    
+		public RaceButtonListener(RaceType race) {
+		    this.raceOfButton = race;
+		}
+	    
+	    public void actionPerformed(ActionEvent event)
 		{
-			Object source = event.getSource();
-			if (source == humanoid)
-					{
-				       iconLabel.setIcon(new ImageIcon("humanoid.png","race")); 
-				       race = 0;
-					}
-			else if (source == flapper) 
-				{
-				    iconLabel.setIcon(new ImageIcon("flapper.png","race"));
-				    race = 1;
-				}
-			else if (source == bonzoid)
-				{
-				iconLabel.setIcon(new ImageIcon("bonzoid.png","race"));
-				race = 2;
-				}
-			else if (source == ugaite)
-			{
-				iconLabel.setIcon(new ImageIcon("ugaite.png","race"));
-				race = 3;
-			}
-			else if (source == buzzite)
-			{
-				iconLabel.setIcon(new ImageIcon("buzzite.png","race"));
-				race = 4;
-			}
-
+			iconLabel.setIcon(raceOfButton.getStockImageIcon());
+			chosenRace = raceOfButton;
 		}
 	}
 }

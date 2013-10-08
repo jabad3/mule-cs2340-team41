@@ -1,20 +1,41 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.*;
 /**
  * This class allows the user to choose their color
  * @author Erica Pramer
- * @version 1
  */
-//
-//testing
 public class ColorPanel extends JPanel{
 	
-	JButton red,green,blue,yellow;
-	JLabel color;
-	Color chosenColor;
+    /**
+     * List of all buttons that will be displayed.
+     * A list must be kept so that we can disable buttons that have been
+     * added to the panel.
+     */
+    List<JButton> buttonList = new ArrayList<>();
+    
+    /**
+     * Holds text that will change color depending on the user's selection.
+     */
+	JLabel colorLabel;
+	
+	/**
+	 * The name of the color that was chosen by the user.
+	 */
+	String chosenColorName;
+	
+	/**
+     * Contains a mapping of color names to Color objects for all
+     * colors that the View will offer to the user.
+     */
+    private Map<String, Color> nameColorMap = new HashMap<>();
 	
 	/**
 	 * Constructor, adds actionlisteners to
@@ -22,75 +43,74 @@ public class ColorPanel extends JPanel{
 	 */
 	public ColorPanel(){
 		
-	red = new JButton("red");
-	green = new JButton("green");
-	yellow = new JButton("yellow");
-	blue = new JButton("blue");
+    	colorLabel = new JLabel("Player Color");
+    	colorLabel.setOpaque(true);
+    	
+    	add(colorLabel);
+    	
+
+        // name-color map needs to be setup
+        nameColorMap.put("Red", Color.red);
+        nameColorMap.put("Orange", Color.decode("0xFF8000"));  // darker orange
+        nameColorMap.put("Green", Color.decode("0x01DF01"));  // darker green
+        nameColorMap.put("Blue", Color.blue);
 	
-	color = new JLabel("Player Color");
-	color.setOpaque(true);
-	
-	ButtonListener listener = new ButtonListener();
-	red.addActionListener(listener);
-	green.addActionListener(listener);
-	blue.addActionListener(listener);
-	yellow.addActionListener(listener);
-	
-	add(color);
-	add(red);
-	add(green);
-	add(yellow);
-	add(blue);
-	
+        // add buttons
+        Set<String> colorNames = nameColorMap.keySet();
+        for (String colorName: colorNames) {
+            JButton colorButton = new JButton(colorName);
+            colorButton.addActionListener(new ColorButtonListener(colorName));
+            buttonList.add(colorButton);
+            this.add(colorButton);
+        }
 	}
 	
 	/**
-	 * Gets the color selected by the user
+	 * Gets the color selected by the user in the form of a String
 	 * 
-	 * @return the color
+	 * @return the Color object corresponding to the color's name
 	 * 
 	 */
-	public Color getColor()
+	public Color getChosenColor()
 	{
-		return chosenColor;
+		return nameColorMap.get(chosenColorName);
+	}
+	
+	/**
+	 * This method disables any buttons corresponding to the given color names.
+	 * Color choices are disabled so that no two players share the same color.
+	 * 
+	 * @param colors A list of color objects whose corresponding buttons
+	 * need to be disabled
+	 */
+	public void setDisabledColorOptions(List<Color> colors) {
+	    for (Color color: colors) {
+	        for (JButton button: buttonList) {
+	            String buttonColorString = button.getText();
+	            Color buttonColor = nameColorMap.get(buttonColorString);
+	            if (color.equals(buttonColor))
+	                button.setEnabled(false);
+	        }
+	    }
 	}
 	
 	/**
 	 * Private inner class defines what happens upon button click.
 	 */	
-	private class ButtonListener implements ActionListener
+	private class ColorButtonListener implements ActionListener
 	{
-		public void actionPerformed(ActionEvent event)
-		{
-			Object source = event.getSource();
-			if(source == null)
-			{
-				
-			}
-			else if (source == red)
-			{
-				chosenColor = Color.red;
-				color.setBackground(chosenColor);
-				color.setForeground(Color.black);
-			}
-			else if(source == blue)
-			{
-				chosenColor = Color.blue;
-				color.setBackground(chosenColor);
-				color.setForeground(Color.white);
-			}
-			else if(source == green)
-			{
-				chosenColor = Color.green;
-				color.setBackground(chosenColor);
-				color.setForeground(Color.black);
-			}
-			else if(source == yellow)
-			{
-				chosenColor = Color.yellow;
-				color.setBackground(chosenColor);
-				color.setForeground(Color.black);
-			}
+		String colorName;
+		
+		public ColorButtonListener(String colorName) {
+		    this.colorName = colorName;
+		}
+		
+		/**
+		 * Sets chosen color to the color corresponding to this button
+		 */
+		public void actionPerformed(ActionEvent event) {
+		    chosenColorName = colorName;
+		    colorLabel.setForeground(nameColorMap.get(colorName));
 		}
 	}
 }

@@ -1,0 +1,36 @@
+<project name="MULE" basedir="." default="javadoc">
+
+    <!-- initialize properties for directories and file names-->
+    <target name="init">
+        <property name="src.dir"            value="src"/>
+        <property name="build.dir"          value="build"/>
+        <property name="class.dir"          value="${build.dir}/classes"/>
+        <property name="jar.name"           value="MULE.jar"/>
+        <property name="docs.dir"           value="apidoc"/>
+        <property name="main-class"         value="Main"/>
+    </target>
+    
+    <!-- prepare makes all the required directories-->
+    <target name="prepare" depends="init">
+        <mkdir dir="${docs.dir}"/>
+    </target>
+    
+    <!-- generates javadoc documentation for all java classes in 'src' dir to
+         be stored in 'apidoc' dir-->
+    <target name="javadoc" depends="prepare">
+        <javadoc sourcepath="${src.dir}" access="public" destdir="${docs.dir}">
+            <fileset dir="${src.dir}">
+                <include name="**/*.java"/>
+            </fileset>
+            <bottom>
+                <![CDATA[<i>Copyright &#169; 2013 Team 41 CS2340.  All Rights Reserved</i>]]>
+            </bottom>
+        </javadoc>
+    </target>
+    
+    <!-- removes anything that would be created from running "all" task-->
+    <target name="clean" depends="prepare">
+        <delete dir="${docs.dir}"/>
+    </target>
+    
+</project>

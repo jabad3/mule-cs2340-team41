@@ -5,7 +5,6 @@ import java.util.List;
 /**
  * This class generates the default MULE map
  * @author Erica
- * @Version 1
  */
    public class MapFactory
    {
@@ -35,11 +34,25 @@ import java.util.List;
        * The method generates a 2D array of land plot types.
        * The type at each (row,col) coordinate corresponds to the
        * type that the actual land plot at that positions will have.
-       * @return The 2D LandPlotType array
+       * @return The 2D LandPlotType array in row-major order
        */
       public static LandPlotType[][] generateDefaultMap()
       {
-         LandPlotType[][] map = new LandPlotType[5][9];
+         LandPlotType p = LandPlotType.PLAIN;
+         LandPlotType r = LandPlotType.RIVER;
+         LandPlotType t = LandPlotType.TOWN;
+         LandPlotType m1 = LandPlotType.MTN_1;
+         LandPlotType m2 = LandPlotType.MTN_2;
+         LandPlotType m3 = LandPlotType.MTN_3;
+         
+         LandPlotType[][] defaultMap =  { { p, p, m1, p, r, p, m3, p, p },
+                                          { p, m1, p, p, r, p, p, p, m3 },
+                                          { m3, p, p, p, t, p, p, p, m1 },
+                                          { p, m2, p, p, r, p, m2, p, p },
+                                          { p, p, m2, p, r, p, p, p, m2 } };
+         return defaultMap;
+     }
+          /*LandPlotType[][] map = new LandPlotType[5][9];
       
          for (int i = 0; i < map.length; i++) 
          {
@@ -69,7 +82,7 @@ import java.util.List;
          map[2][4] = LandPlotType.TOWN;  // town is the center
         
          return map;
-      }
+      } */
       
       /**
        * This method generates a randomized 2D array of land plots similar
