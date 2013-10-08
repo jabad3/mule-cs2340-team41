@@ -1,30 +1,37 @@
 /**
- * The Map class holds a 9x5 grid of LandPlots
+ * The Map class holds a 9x5 grid of LandPlots and methods to act on the
+ * LandPlots as a whole
+ * 
  * @author Max
  *
  */
 public class Map {
-
-    /**
-     * A factory method for producing two kinds of Maps:
-     *   1)  the Default map
-     *   2)  a randomized map
-     *   
-     * Every map will always have the river running down the middle, as
-     * well as have a Town in the center LandPlot.
-     * 
-     * This method should be called with either the string "Default" or
-     * the string "Random".  Any other string entry will produce
-     * the default map object.
-     */
     
+    /** A 9x5 array of all landPlots in the map in row-major order. */
     private LandPlot[][] landPlots;
     
+    /**
+     * Creates the map model object.
+     * 
+     * @param landPlots The instantiated 9x5 array of landPlots
+     */
     public Map(LandPlot[][] landPlots) {
         this.landPlots = landPlots;
     }
+
+    /**
+     * Returns the array of landPlots held inside the map.
+     * 
+     * @return 9x5 array of LandPlots in row-major order
+     */
+    public LandPlot[][] landPlotArray() {
+        return landPlots;
+    }
     
-    /* for temporary "testing" */
+    /**
+     * Returns a String containing a grid of LandTypes that are in the map.
+     * Intended for use in print-testing.
+     */
     public String toString() {
         String result = "\n";
         for (int row = 0; row < landPlots.length; row++) {
@@ -34,9 +41,5 @@ public class Map {
             result += "\n";
         }
         return result;
-    }
-
-    public LandPlot[][] landPlotArray() {
-        return landPlots;
     }
 }
