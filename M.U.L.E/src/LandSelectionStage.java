@@ -57,6 +57,11 @@ public class LandSelectionStage extends Stage {
             
             if (allPlayersHaveSelected())
                 goNextStage();
+            else { // update the View to display new name
+                Player currentPlayer = playerList.get(currentPlayerIndex);
+                String currentName = currentPlayer.getName();
+                myView.setCurrentPlayerName(currentName);
+            }
         }
         
         private boolean allPlayersHaveSelected() {

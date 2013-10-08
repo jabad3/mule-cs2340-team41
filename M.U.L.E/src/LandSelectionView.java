@@ -21,7 +21,7 @@ public class LandSelectionView extends JPanel {
         // add stuff to the View's main panel to get desired display
     }
 
-    public void changeCurrentPlayerName(String playerName) {
+    public void setCurrentPlayerName(String playerName) {
         playerNameLabel.setText(playerName);
     }
 
