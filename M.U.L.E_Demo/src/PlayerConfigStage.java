@@ -1,6 +1,10 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -16,20 +20,35 @@ public class PlayerConfigStage extends Stage {
 	PlayerConfigView myView;
 	public int playerAt = 1;
 	
+	// used to setup the View
+	
+    
+    /**
+     * A list of Color objects representing colors that cannot be chosen.
+     * 
+     * Colors must be disabled after they are picked so that no two Players
+     * have the same Color.  
+     * 
+     * This list grows as more Players select their colors. 
+     */
+    private List<Color> disabledColorOptions = new ArrayList<>();
+	
 	public PlayerConfigStage(JFrame mainFrame, GameModel model) {
     	super(mainFrame, model);
+    	
     }
 	
-	public void showPlConfigPane() {
+	public void showPlayerConfigPane() {
 		myView = new PlayerConfigView();
 		myView.setPlayerNum(playerAt);
+		myView.setDisabledColorOptions(disabledColorOptions);
 		myView.addFinishedListener(new FinishedListener());
     	displayView(myView);
 	}
 	
 	public void start() {
 		System.out.println("pconfig start");
-		showPlConfigPane();
+		showPlayerConfigPane();
 	}
 	
 	public void goNextStage() {
@@ -40,26 +59,28 @@ public class PlayerConfigStage extends Stage {
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			if(myView.getRace() == -1 || myView.getColor() == null)
+			// take no action if user does not select a race or color
+		    if(myView.getRace() == null || myView.getColor() == null)
 			{
 				return;
 			}
 			
-			Player player = new Player(myView.getText(), RaceType.values()[myView.getRace()], myView.getColor(), gameModel.getDifficulty());
+			// Ensures that no color is selected twice
+			disabledColorOptions.add(myView.getColor());
+			Player player = new Player(myView.getText(), myView.getRace(), myView.getColor(), gameModel.getDifficulty());
 			gameModel.addPlayer(player);
 			playerAt++;
 			
-			System.out.println("New model = " + gameModel);
-			
 			if(playerAt > gameModel.getNumPlayers())
 			{
-				System.out.println("Last player configed, going to map!");
+				System.out.println("Game Model info after configuring... \n" + gameModel);
+			    System.out.println("Last player configed, going to map!");
 				MapPanel map = new MapPanel();
 				displayView(map);
 			}
 			else
 			{
-				showPlConfigPane();
+				showPlayerConfigPane();
 			}
 		}
 	}

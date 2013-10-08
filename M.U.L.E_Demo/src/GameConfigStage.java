@@ -61,14 +61,12 @@ public class GameConfigStage extends Stage {
         // give these selections to the Model
         gameModel.setDifficulty(difficulty);
         gameModel.setNumPlayers(numPlayers);
-        // TODO - not sure how to handle the map...
-        // I don't want anymore enums!!  Can we just build the map here??
+        
         Map map = MapFactory.buildMap(mapType);
         gameModel.setMap(map);
-        // TODO - build the store here, or have GameModel do it??
+
         Store store = Store.buildStore(difficulty);
         gameModel.setStore(store);
-        System.out.println("GameModel Info----\n" + gameModel);
     }
     
     /**
@@ -78,22 +76,7 @@ public class GameConfigStage extends Stage {
      *      nextController.showMyView?  It seems a little weird, though.
      */
     public void goNextStage() {
-        // TODO
-        /* perhaps something like  nextController.takeOver()? */
-    	//will add link to player config right here soon
-    	//next stage is player config. how to implement loop of n times for n players so that
-    	//everyone can configure their player in sequence?
-    	
-    	////// super sample code, remove when finsihed testing -joe
-    	////
     	nextStage.start();
-		/*JFrame temp = new JFrame("temp");
-		PlayerConfigView temp2 = new PlayerConfigView();
-		temp.add(temp2);
-		temp.pack();
-		temp.setVisible(true);*/
-		System.out.println("next stage");
-    	///
     }
     
     /**

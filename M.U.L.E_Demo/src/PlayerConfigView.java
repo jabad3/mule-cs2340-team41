@@ -2,6 +2,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
+import java.util.Map;
 /**
  * This class allows for configuration of the player including race, name, and color
  * @author Erica Pramer
@@ -15,13 +17,11 @@ public class PlayerConfigView extends JPanel{
 	private ColorPanel color;
 	private JButton next;
 	
+
+	
 	
 	/**
-	 * Instantiates all instance data, sets layout, adds action listener to the buttons
-	 * 
-	 * @param L
-	 *            action listener passed in by the DeckPanel to facilitate
-	 *            movement between jpanels using buttons
+	 * Instantiates all instance data, sets layout
 	 */
 	public PlayerConfigView()//ActionListener L, PlayerConfig controller)
 	{
@@ -41,18 +41,6 @@ public class PlayerConfigView extends JPanel{
 		add(race);
 		add(color);
 		add(next);
-		
-		//next.addActionListener(L);
-	}
-	
-	/**
-	 * This method returns the next button on the player configuration panel
-	 * 
-	 * @return a next button to go to the next jpanel
-	 */
-	public JButton getNextButton()
-	{
-		return next;
 	}
 
 	public String getText()
@@ -62,12 +50,16 @@ public class PlayerConfigView extends JPanel{
 	
 	public Color getColor()
 	{
-		return color.getColor();
+		return color.getChosenColor();
 	}
 	
-	public int getRace()
+	/**
+	 * Returns the RaceType selected by the user.
+	 * @return The user's selected RaceType.  null if no race was chosen.
+	 */
+	public RaceType getRace()
 	{
-		return race.getRace();
+		return race.getChosenRace();
 	}
 	
 	public void setPlayerNum(int num)
@@ -75,17 +67,11 @@ public class PlayerConfigView extends JPanel{
 		curPlayerLabel.setText("Player " + num);
 	}
 	
+	public void setDisabledColorOptions(List<Color> disabledColors) {
+	    color.setDisabledColorOptions(disabledColors);
+	}
+	
     public void addFinishedListener(ActionListener finishedListener) {
         next.addActionListener(finishedListener);
     }
-	
-//	public static void main(String[] args){
-//		JFrame temp = new JFrame("temp");
-//		PlayerConfigPanel temp2 = new PlayerConfigPanel();
-//		temp.add(temp2);
-//		temp.pack();
-//		temp.setVisible(true);
-//		System.out.println("finished");
-//	}
-//	
 }

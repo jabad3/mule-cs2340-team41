@@ -24,4 +24,15 @@ public enum RaceType {
 	    return stockIcon;
 	}
 	
+	/**
+	 * Returns the RaceType name keeping only the first letter capitalized
+	 * for more user-friendly display.
+	 */
+	public String toString() {
+	    String allCaps = this.name();
+	    String firstLetter = allCaps.substring(0, 1);  // capitalize first letter
+	    String remainingLetters = allCaps.substring(1).toLowerCase();  // all others are lowercase
+	    return firstLetter + remainingLetters;
+	}
+	
 }
