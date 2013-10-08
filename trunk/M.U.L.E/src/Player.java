@@ -60,5 +60,8 @@ public class Player extends Trader {
 	public String getName() {
 	    return name;
 	}
+    public Color getColor() {
+        return color;
+    }
 	
 }

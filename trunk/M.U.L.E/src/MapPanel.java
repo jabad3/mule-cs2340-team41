@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -17,17 +18,29 @@ public class MapPanel extends JPanel{
 	/**
 	 * Creates the MapPanel containing a 5x9 grid of buttons
 	 * 
-	 * @param commonListener
+	 * @param map The map object being used by the current game
+	 * @param commonPlotListener A MouseListener object that will listen to
+	 * each LandPlotBtn object
 	 */
-	public MapPanel(ActionListener commonButtonListener)
+	public MapPanel(Map map, MouseListener commonPlotListener)
 	{
-		
-		
+	    LandPlot[][] landPlots = map.landPlotArray();
+	    
+	    setLayout(new GridLayout(5, 9));
+	    
+	    for (int row = 0; row < landPlots.length; row++) {
+	        for (int col = 0; col < landPlots[0].length; col++) {
+	            LandPlot plot = landPlots[row][col];
+	            LandPlotBtn plotBtn = new LandPlotBtn(plot, commonPlotListener);
+	            this.add(plotBtn);
+	        }
+	    }
+		/*
 		setLayout(new GridLayout(5, 9));
 		for(int i = 0; i < 9*5; i++)
 		{
 				
-			LandPlotBtn btttnn = new LandPlotBtn(commonButtonListener);
+			
 			if(i == 25)
 				btttnn.setBorder(BorderFactory.createLineBorder(Color.red, 3));
 			else if(i == 24)
@@ -54,14 +67,8 @@ public class MapPanel extends JPanel{
 			btttnn.setLayout(new BorderLayout());
 	        btttnn.add(myLabel, BorderLayout.CENTER);
 	        add(btttnn, BorderLayout.CENTER);*/
-			add(btttnn);
-		}
+			//add(btttnn);
+		//}
 		this.setPreferredSize(new Dimension(600, 600));
-	}
-	
-	public void paintComponent(Graphics page)
-	{
-		super.paintComponent(page);
-		//create a new map object and do drawMap(page)
 	}
 }
