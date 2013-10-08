@@ -68,7 +68,7 @@ public class LandSelectionStage extends Stage {
             LandPlotBtn landPlotBtn = (LandPlotBtn) e.getSource();
             LandPlot chosenPlot = landPlotBtn.getMyLandPlot();
             
-            if (chosenPlot.getOwner() == null && chosenPlot.getLandType() != LandPlotType.TOWN) {
+            if (chosenPlot.isAvailable()) {
                 chosenPlot.setOwner(currentPlayer);
                 currentPlayerIndex++;
             }
@@ -99,7 +99,7 @@ public class LandSelectionStage extends Stage {
             LandPlotBtn landPlotBtn = (LandPlotBtn) e.getSource();
             LandPlot highlightedPlot = landPlotBtn.getMyLandPlot();
             
-            if (highlightedPlot.getOwner() == null && highlightedPlot.getLandType() != LandPlotType.TOWN) {
+            if (highlightedPlot.isAvailable()) {
                 Color tempBorderColor = currentPlayer.getColor();
                 landPlotBtn.setBorder(BorderFactory.createLineBorder(tempBorderColor, 3));
             }
@@ -118,7 +118,7 @@ public class LandSelectionStage extends Stage {
             LandPlotBtn landPlotBtn = (LandPlotBtn) e.getSource();
             LandPlot highlightedPlot = landPlotBtn.getMyLandPlot();
             
-            if (highlightedPlot.getOwner() == null)
+            if (highlightedPlot.isAvailable())
                 landPlotBtn.setBorderToDefault();
         }
     }
