@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -55,6 +56,7 @@ public class MapPanel extends JPanel{
 	        add(btttnn, BorderLayout.CENTER);*/
 			add(btttnn);
 		}
+		this.setPreferredSize(new Dimension(600, 600));
 	}
 	
 	public void paintComponent(Graphics page)
