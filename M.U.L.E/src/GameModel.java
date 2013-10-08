@@ -66,16 +66,13 @@ public class GameModel {
         this.map = map;
     }
 	
-	/*private void sortPlayerList() {
-		//sorts the list of players
+	private void sortPlayerList() {
+		// TODO
 	}
-										//undecided on whether to have this functionality here
-	public void getPlayerOrder() {
+
+	public List<Player> getSortedPlayerList() {
 		sortPlayerList();
-		//return playerList
-	}
-	
-	*/
-	
+		return playerList;
+	}	
 	
 }

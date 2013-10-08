@@ -57,4 +57,8 @@ public class Player extends Trader {
 		
 	}
 	
+	public String getName() {
+	    return name;
+	}
+	
 }
