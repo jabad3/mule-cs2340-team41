@@ -32,4 +32,15 @@ public class LandPlot {
             return null;
         return owner.getColor();
     }
+
+    /**
+     * A land plot is available to be purchased (or selected using
+     * a land grant) as long as it has no owner and it is not the town.
+     * 
+     * @return True if the land plot can still be claimed by a Player,
+     * false otherwise
+     */
+    public boolean isAvailable() {
+        return (owner == null && landType != LandPlotType.TOWN);
+    }
 }
