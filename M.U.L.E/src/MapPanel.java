@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 import javax.swing.*;
 
 
@@ -14,5 +16,11 @@ public class MapPanel extends JPanel{
 		temp = new JLabel();
 		temp.setIcon(new ImageIcon("mapPic.png","this will be replaced"));
 		add(temp);
+	}
+	
+	public void paintComponent(Graphics page)
+	{
+		super.paintComponent(page);
+		//create a new map object and do drawMap(page)
 	}
 }
