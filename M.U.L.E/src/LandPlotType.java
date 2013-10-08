@@ -8,10 +8,10 @@ import javax.swing.ImageIcon;
 
 public enum LandPlotType {
 	RIVER(4, 2, 0, "river.png"), 
-	PLAIN(2, 3, 1, "m2.png"),
-	MTN_1(1, 1, 2, "m2.png"),
+	PLAIN(2, 3, 1, "plain.png"),
+	MTN_1(1, 1, 2, "m1.png"),
 	MTN_2(1, 1, 3, "m2.png"),
-	MTN_3(1, 1, 4, "m2.png"),
+	MTN_3(1, 1, 4, "m3.png"),
 	TOWN(0, 0, 0, "town.png");
 	
 	private final int foodRate;
