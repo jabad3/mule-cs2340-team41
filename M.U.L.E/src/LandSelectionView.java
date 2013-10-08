@@ -1,3 +1,5 @@
+import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -18,7 +20,10 @@ public class LandSelectionView extends JPanel {
         this.mapPanel = mapPanel;
         
         // TODO
-        // add stuff to the View's main panel to get desired display
+        this.setLayout(new BorderLayout());
+        this.add(mapPanel, BorderLayout.CENTER);
+        this.add(landPlotPriceLabel, BorderLayout.NORTH);
+        this.add(playerNameLabel, BorderLayout.SOUTH);
     }
 
     public void setCurrentPlayerName(String playerName) {
