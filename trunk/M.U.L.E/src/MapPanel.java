@@ -3,6 +3,7 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,22 +12,21 @@ import javax.swing.border.EmptyBorder;
 public class MapPanel extends JPanel{
 	
 	JLabel temp;
-	public MapPanel()
+	
+	/**
+	 * Creates the MapPanel containing a 5x9 grid of buttons
+	 * 
+	 * @param commonListener
+	 */
+	public MapPanel(ActionListener commonButtonListener)
 	{
-		//char[][] charMap = MapGenerator.generateDefaultMap('A','B','C','P','R','T');
-		//a is one mountain, b is two, c is three
 		
-		//map = new LandPlot[CharMap.length][CharMap[0].length];
-		// ^ a map of landplots (what class are we using for that?) as opposed to characters
-		/*temp = new JLabel();
-		temp.setIcon(new ImageIcon("mapPic.png","this will be replaced"));
-		add(temp);*/
 		
 		setLayout(new GridLayout(5, 9));
 		for(int i = 0; i < 9*5; i++)
 		{
 				
-			LandPlotBtn btttnn = new LandPlotBtn();
+			LandPlotBtn btttnn = new LandPlotBtn(commonButtonListener);
 			if(i == 25)
 				btttnn.setBorder(BorderFactory.createLineBorder(Color.red, 3));
 			else if(i == 24)
