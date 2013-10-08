@@ -1,17 +1,17 @@
 import javax.swing.JFrame;
 /**
- * This class executes the game of MULE
+ * This class executes the game of MULE.
+ * 
  * @author Erica Pramer
  * @version 1
  */
 
 public class Main
 {
-/**
- * Main method; sets up JFrame and puts a DeckPanel on the JFrame so that the 
- * game can be played
- */
-	
+    /**
+     * Creates the main JFrame container for MULE, then runs the Game
+     * object.
+     */
 	public static void main(String[] args)
 	{
 		JFrame frame = new JFrame("M.U.L.E");

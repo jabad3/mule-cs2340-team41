@@ -8,22 +8,26 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
- * This class lets a user choose difficulty, maptype, and number of players
+ * This class lets a user choose difficulty, map type, and number of players
  * 
  * All choices are displayed to the user using JComboBox, and the user presses
- * a "Next" button when they are finished.
+ * a "Next" button when they are finished with configuring the game.
  * 
  * @author Erica Pramer
  * @version 1
  */
 public class BasicGameConfigView extends GameConfigView {
 
+    /** Combo-box to display difficulty options. */
     private JComboBox<String> difficultyBox;
-    private JLabel difficultyText;
+    
+    /** Combo-box to display map type options. */
     private JComboBox<String> mapTypeBox;
-    private JLabel mapTypeText;
+
+    /** Combo-box to display available options for total number of players */
     private JComboBox<Integer> playerNumBox;
-    private JLabel playerNumText;
+
+    /** Button that the user can press to finish configuring the game. */
     private JButton nextButton;
     
     /**
@@ -34,7 +38,7 @@ public class BasicGameConfigView extends GameConfigView {
     }
 
     /**
-     * Instantiates all instance data, adds all jcomponents to the panel
+     * Instantiates all JComponents and adds them to the View
      */
     @SuppressWarnings("unchecked")
     private void initComponents() {
@@ -43,9 +47,9 @@ public class BasicGameConfigView extends GameConfigView {
         mapTypeBox = new JComboBox<>();
         playerNumBox = new JComboBox<>();
         nextButton = new JButton("Next");
-        difficultyText = new JLabel("Difficulty:");
-        mapTypeText = new JLabel("Map Type:");
-        playerNumText = new JLabel("Number of Players:");
+        JLabel difficultyText = new JLabel("Difficulty:");
+        JLabel mapTypeText = new JLabel("Map Type:");
+        JLabel playerNumText = new JLabel("Number of Players:");
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);

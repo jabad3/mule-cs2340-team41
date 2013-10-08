@@ -3,12 +3,31 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * This class generates the default MULE map
+ * This class is responsible for creating Map objects based on a given type of
+ * map.
+ * 
+ * The two types of maps that the MapFactory can create are:
+ *      1) "Default"
+ *      2) "Random"
+ *      
+ * The difference between the two maps is only in the arrangement of Plain
+ * and Mountain LandPlots in the map.
+ *      
+ * If MapFactory is asked to build a map type that it cannot identify, it
+ * will build a default map object.
+ * 
  * @author Erica
  */
    public class MapFactory
    {
-   	
+   	   /**
+   	    * Creates the map object depending on mapType.  The String mapType
+   	    * should be either "Default" or "Random".  Any other String, including
+   	    * null, will result in the default map being returned.
+   	    * 
+   	    * @param mapType String specifying the map type
+   	    * @return A map object with LandPlots arranged according to mapType
+   	    */
        public static Map buildMap(String mapType) {
            
            LandPlotType[][] typeMap;
@@ -34,9 +53,13 @@ import java.util.List;
        * The method generates a 2D array of land plot types.
        * The type at each (row,col) coordinate corresponds to the
        * type that the actual land plot at that positions will have.
+       * 
+       * The arrangement of LandPlotTypes is based on the specification
+       * for the default map.
+       * 
        * @return The 2D LandPlotType array in row-major order
        */
-      public static LandPlotType[][] generateDefaultMap()
+      private static LandPlotType[][] generateDefaultMap()
       {
          LandPlotType p = LandPlotType.PLAIN;
          LandPlotType r = LandPlotType.RIVER;
@@ -52,37 +75,6 @@ import java.util.List;
                                           { p, p, m2, p, r, p, p, p, m2 } };
          return defaultMap;
      }
-          /*LandPlotType[][] map = new LandPlotType[5][9];
-      
-         for (int i = 0; i < map.length; i++) 
-         {
-               map[i][4] = LandPlotType.RIVER;
-         }
-         
-         map[3][1] = LandPlotType.MTN_1;
-         map[4][2] = LandPlotType.MTN_2;
-         map[3][6] = LandPlotType.MTN_2;
-         map[4][8] = LandPlotType.MTN_2;
-         map[0][2] = LandPlotType.MTN_1;
-         map[1][1] = LandPlotType.MTN_1;
-         map[2][8] = LandPlotType.MTN_1;
-         map[0][6] = LandPlotType.MTN_3;
-         map[1][8] = LandPlotType.MTN_3;
-         map[2][0] = LandPlotType.MTN_3;
-
-         for(int row = 0; row <map.length; row++) //fills in the remaining plots with plains
-         {
-             for(int col = 0; col < map[row].length; col++)
-             {
-                 if (map[row][col] == null)
-                     map[row][col] = LandPlotType.PLAIN;
-             }
-         }
-         
-         map[2][4] = LandPlotType.TOWN;  // town is the center
-        
-         return map;
-      } */
       
       /**
        * This method generates a randomized 2D array of land plots similar
@@ -90,10 +82,13 @@ import java.util.List;
        * 
        * The center row will still be the same as the default map
        *  (i.e. it will have the river plots plus the town in the center)
+       *  
+       * The random map will have the same number of each LandPlotType that
+       * the default map has.
        * 
        * @return A randomized 2D LandPlotType array
        */
-      public static LandPlotType[][] generateRandomMap() {
+      private static LandPlotType[][] generateRandomMap() {
           LandPlotType[][] typeMap = generateDefaultMap();
           
           // Allocate an array big enough to hold all positions except
