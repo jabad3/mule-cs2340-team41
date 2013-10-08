@@ -73,6 +73,10 @@ public class GameModel {
 	public List<Player> getSortedPlayerList() {
 		sortPlayerList();
 		return playerList;
-	}	
+	}
+
+    public Map getMap() {
+        return map;
+    }	
 	
 }

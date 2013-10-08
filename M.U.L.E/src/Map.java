@@ -35,4 +35,8 @@ public class Map {
         }
         return result;
     }
+
+    public LandPlot[][] landPlotArray() {
+        return landPlots;
+    }
 }
