@@ -22,6 +22,10 @@ public abstract class Stage
 		this.nextStage = nextStage;
 	}
 	
+	public void goNextStage() {
+    	nextStage.start();
+    }
+	
 	public void displayView(JPanel view)
 	{
     	mainFrame.setContentPane(view);
@@ -29,5 +33,4 @@ public abstract class Stage
 	}
 	
 	public abstract void start();
-	public abstract void goNextStage();
 }
