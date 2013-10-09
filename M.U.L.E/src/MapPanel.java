@@ -1,19 +1,15 @@
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+/**
+ * This class is the view for the map screen
+ * @author Tim Farley
+ * @version 1
+ */
 
-
-public class MapPanel extends JPanel{
-	
-	JLabel temp;
+public class MapPanel extends JPanel {
 	
 	/**
 	 * Creates the MapPanel containing a 5x9 grid of buttons

@@ -6,7 +6,7 @@
  *
  */
 public abstract class Trader {
-    
+	
     /** The inventory for this Trader object */
     protected Inventory inventory;
     

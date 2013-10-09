@@ -27,6 +27,7 @@ public class Game {
 	}
 	
 	/**
+	 * Creates and links each stage to prepare the game loop.
 	 * Begins a game of MULE by starting the first stage of the game.
 	 */
 	public void start()

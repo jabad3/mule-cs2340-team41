@@ -13,7 +13,7 @@ public class Player extends Trader {
 	/** The color that the Player uses to mark land that it owns */
 	private Color color;
 	
-	/** Maps which directions the Player should move */
+	/** Holds the up/down status for each possible player key input */
 	private EnumMap<InputType, Boolean> keyStates;
 	
 	/**
@@ -44,7 +44,7 @@ public class Player extends Trader {
 	/**
 	 * Calculates and returns the Player's current score.
 	 * 
-	 * @return The current score
+	 * @return The Player's current score
 	 */
 	public int calculateScore() {
 		// TODO
@@ -68,7 +68,7 @@ public class Player extends Trader {
 	/**
 	 * Get the Player's name
 	 * 
-	 * @return name
+	 * @return The Player's name
 	 */
 	public String getName() {
 	    return name;
@@ -77,7 +77,7 @@ public class Player extends Trader {
 	/**
 	 * Get the Player's color
 	 * 
-	 * @return color
+	 * @return The Player's color
 	 */
     public Color getColor() {
         return color;
@@ -87,12 +87,14 @@ public class Player extends Trader {
      * Returns a String containing information for the Player's instance
      * data, as well as information concerning its inventory.
      * Intended to be printed to the console for testing.
+     * 
+     * @return The Player's information
      */
     public String toString() {
         String s1 = "\nPlayer Name:  " + name;
         String s2 = "\nRace: " + race.name();
         String s3 = "\nColor:  " + color;
-        String s4 = "My inventory info... " + inventory.toString();
+        String s4 = "\nMy inventory info... " + inventory.toString();
         return s1 + s2 + s3 + s4;
     }
 	

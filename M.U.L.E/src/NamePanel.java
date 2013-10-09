@@ -7,10 +7,14 @@ import java.awt.event.*;
  * @author Erica Pramer
  * @version 1
  */
-public class NamePanel extends JPanel{
+public class NamePanel extends JPanel {
 	
+	/** Holds the player name input */
 	private JTextField textField;
+	
+	/** Label for player name */
 	private JLabel nameOutput;
+	
     /**
      * Initializes components on the JPanel
      * 
