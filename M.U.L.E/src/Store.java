@@ -8,31 +8,22 @@
  *
  */
 public class Store extends Trader {
-
-    /**
-     * Creates a Store object with the proper initial inventory.
-     * The initial inventory depends on the difficulty.
-     * 
-     * @param difficulty The game's difficulty
-     * @return A Store object with proper inventory
-     */
-    public static Store buildStore(Difficulty difficulty) {
-        return new Store(difficulty);
-    }
     
     /**
-     * Creates a store based on a difficulty.
+     * Creates a store with the proper initial inventory based on a difficulty.
+     * The store is given an arbitrarily large number for its initial money
+     * balance.
+     * 
+     * This is done in order to simulate the Store's
+     * infinite supply of money while still having the Store interact with its
+     * inventory as all Traders should, as a Store must still pull money out of
+     * its inventory to pay another Trader.
      * 
      * @param difficulty
      */
     public Store(Difficulty difficulty) {
         /* Integer.MAX_VALUE / 2 is an arbitrarily large number
          * for the Store's initial money count.
-         * 
-         * We use a large money count to simulate the Store's infinite supply
-         * of money because we still want the Store to function like a Trader.
-         * A Trader must pull money out of their inventory to pay another
-         * Trader.
          * 
          * The alternative approach is that the Store pays Traders without
          * removing money from its Inventory, but in this case, Store's
@@ -62,13 +53,18 @@ public class Store extends Trader {
         
     }
     
+    /**
+     * Increases the Stores quantity of mules by consuming the appropriate
+     * number of ore units.
+     */
     public void buildMulesWithOre() {
         // TODO
     }
 
-    
-    
-    /* for temporary "testing" */
+    /**
+     * Prints the Store's inventory information.
+     * Intended to be printed to the console for testing.
+     */
     public String toString() {
         return inventory.toString();
     }

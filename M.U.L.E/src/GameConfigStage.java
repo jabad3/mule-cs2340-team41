@@ -82,7 +82,7 @@ public class GameConfigStage extends Stage {
         Map map = MapFactory.buildMap(mapType);
         gameModel.setMap(map);
 
-        Store store = Store.buildStore(difficulty);
+        Store store = new Store(difficulty);
         gameModel.setStore(store);
     }
     

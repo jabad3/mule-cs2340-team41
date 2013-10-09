@@ -8,12 +8,18 @@ import java.util.EnumMap;
  */
 public class Inventory {
 
-    /**
-     * ResourceCount will hold quantities for:
-     *   Food, Energy, Ore, Money, Mule
-     */
+    /** Holds quantities for:  Food, Energy, Ore, Money, Mule */
     EnumMap<Resource, Integer> resourceCounts;
     
+    /**
+     * Create an Inventory object.
+     * 
+     * @param food The starting food count
+     * @param energy The starting energy count
+     * @param ore The starting ore count
+     * @param money The starting money balance
+     * @param mules The initial number of mules
+     */
     public Inventory(int food, int energy, int ore, int money, int mules) {
         resourceCounts = new EnumMap<Resource, Integer>(Resource.class);
         resourceCounts.put(Resource.FOOD, food);
@@ -48,7 +54,8 @@ public class Inventory {
     }
     
     /**
-     * Returns the current count of the given resource
+     * Returns the current count of the given resource.
+     * 
      * @param resource The resource type we care about
      * @return The count of the given resource type
      */
@@ -57,7 +64,7 @@ public class Inventory {
     }
     
     /**
-     * Subtracts the amount of money withdrawn from the original balance
+     * Subtracts the amount of money withdrawn from the original balance.
      * 
      * Precondition:  Current money count must be >= amount
      * Postcondition:  Current money count must be >= 0
@@ -71,7 +78,7 @@ public class Inventory {
     }
     
     /**
-     * Adds the amount of money deposited to the original balance
+     * Adds the amount of money deposited to the original balance.
      * 
      * @param amount The amount of money to be deposited
      */
@@ -81,7 +88,10 @@ public class Inventory {
         resourceCounts.put(Resource.MONEY,  newBalance);
     }
     
-    /* for temporary "testing" */
+    /**
+     * Returns a String containing the counts of all items in resourceCounts.
+     * Intended to be printed to the console for testing.
+     */
     public String toString() {
         String s1 = "\nFood Count:  " + getResourceCount(Resource.FOOD);
         String s2 = "\nEnergy Count:  " + getResourceCount(Resource.ENERGY);
