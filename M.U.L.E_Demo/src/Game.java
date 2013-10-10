@@ -1,44 +1,44 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 /**
- * This class orchestrates an entire gameplay session passing control to various stages
+ * This class orchestrates an entire gameplay session of MULE.
+ * All Stages and the GameModel are instantiated in this class.
+ * 
  * @author Tim Farley
  * @version 1
  */
 
 public class Game {
-	private JFrame mainFrame;
-	private GameModel gameModel = new GameModel();
+	/**  The primary container to hold all Views used during the game. */
+    private JFrame mainFrame;
+    
+    /** The gameModel object that will be used for the duration of the game. */
+	private GameModel gameModel;
 	
+	/**
+	 * Instantiates a new Game object to run a game of MULE.
+	 * 
+	 * @param mainFrame An empty mainFrame
+	 */
 	public Game(JFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
+		this.gameModel = new GameModel();
 	}
 	
+	/**
+	 * Creates and links each stage to prepare the game loop.
+	 * Begins a game of MULE by starting the first stage of the game.
+	 */
 	public void start()
 	{
-	    GameConfigStage gameConfigStage = new GameConfigStage(mainFrame, gameModel);
-	    PlayerConfigStage playerConfigStage = new PlayerConfigStage(mainFrame, gameModel);
+	    Stage gameConfigStage = new GameConfigStage(mainFrame, gameModel);
+	    Stage playerConfigStage = new PlayerConfigStage(mainFrame, gameModel);
+	    Stage landSelectionStage = new LandSelectionStage(mainFrame, gameModel);
 	    
 	    gameConfigStage.setNextStage(playerConfigStage);
+	    playerConfigStage.setNextStage(landSelectionStage);
 	    
 	    gameConfigStage.start();
-	    
-	    //(new SetupStage(this)).takeControl();
-		//SummaryStage summaryStage = new SummaryStage(this);
-		//LandSelectionStage landSelectionStage = new LandSelectionStage(this);
-		//LandAuctionStage landAuctionStage = new LandAuctionStage(this);
-		//DevelopmentStage developmentStage = new DevelopmentStage(this);
-		//ProductionStage productionStage = new ProductionStage(this);
-		//ResourceAuctionStage resourceAuctionStage = new ResourceAuctionStage(this);
-		for(int i = 0; i < 6; i++)
-		{
-			//summaryStage.takeControl();
-			//landSelectionStage.takeControl();
-			//landAuctionStage.takeControl();
-			//developmentStage.takeControl();
-			//productionStage.takeControl();
-			//resourceAuctionStage.takeControl();
-		}
 	}
 }

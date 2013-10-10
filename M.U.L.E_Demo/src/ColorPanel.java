@@ -38,7 +38,7 @@ public class ColorPanel extends JPanel{
     private Map<String, Color> nameColorMap = new HashMap<>();
 	
 	/**
-	 * Constructor, adds actionlisteners to
+	 * Creates the ColorPanel, adding ActionListeners to
 	 * the buttons and buttons to the JPanel
 	 */
 	public ColorPanel(){
@@ -48,7 +48,6 @@ public class ColorPanel extends JPanel{
     	
     	add(colorLabel);
     	
-
         // name-color map needs to be setup
         nameColorMap.put("Red", Color.red);
         nameColorMap.put("Orange", Color.decode("0xFF8000"));  // darker orange
@@ -95,18 +94,30 @@ public class ColorPanel extends JPanel{
 	}
 	
 	/**
-	 * Private inner class defines what happens upon button click.
+	 * Private inner class defines what happens when a color button is pressed.
+	 * Each color button should have a unique ColorButtonListener listening
+	 * for it to fire an ActionEvent.
 	 */	
 	private class ColorButtonListener implements ActionListener
 	{
-		String colorName;
+	    /** 
+	     * The String representation of the color that is associated with
+	     * the button that the ColorButtonListener will listen to
+	     */
+	    String colorName;
 		
+	    /**
+	     * Creates a ColorButtonListener.
+	     * 
+	     * @param colorName The String representation of the color that will
+	     * be selected when the ColorButtonListener responds to an ActionEvent
+	     */
 		public ColorButtonListener(String colorName) {
 		    this.colorName = colorName;
 		}
 		
 		/**
-		 * Sets chosen color to the color corresponding to this button
+		 * Sets chosen color to the color corresponding to the pressed button
 		 */
 		public void actionPerformed(ActionEvent event) {
 		    chosenColorName = colorName;
