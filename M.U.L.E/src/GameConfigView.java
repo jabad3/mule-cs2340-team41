@@ -32,9 +32,9 @@ public abstract class GameConfigView extends JPanel {
 
     /**
      * Configure appropriate component(s) in this GameConfigView to display
-     * given map type choices to the user.
+     * given player count choices to the user.
      * 
-     * @param mapChoices String array of map type options
+     * @param playerCountChoices int array of options for the number of players
      */
     public abstract void setPlayerCountChoices(Integer[] playerCountChoices);
 
