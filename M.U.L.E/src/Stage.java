@@ -48,9 +48,17 @@ public abstract class Stage
 	
 	/**
 	 * Starts nextStage.  Call this method when this Stage is finished.
+	 * 
+	 * @return true if transition to next stage successful
 	 */
-	public void goNextStage() {
-    	nextStage.start();
+	public boolean goNextStage() {
+		if(nextStage != null)
+		{
+			nextStage.start();
+			return true;
+		}
+		
+		return false;
     }
 	
 	/**
