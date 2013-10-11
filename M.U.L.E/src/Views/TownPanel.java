@@ -4,8 +4,6 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
-import Models.PlayerPawn;
-
 /**
  * Displays the Town.  The Town is made up of four components:
  *      1)  The Mule Store
