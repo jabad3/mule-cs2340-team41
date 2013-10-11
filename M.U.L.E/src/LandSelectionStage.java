@@ -93,8 +93,10 @@ public class LandSelectionStage extends Stage {
                 currentPlayerIndex++;
             }
             
-            if (allPlayersHaveSelected())
-                goNextStage();
+            if (allPlayersHaveSelected()){
+                System.out.println("Ending LandSelection Stage");
+            	goNextStage();
+        	}
             else {  // let the next player go
                 currentPlayer = playerList.get(currentPlayerIndex);
                 String currentName = currentPlayer.getName();
