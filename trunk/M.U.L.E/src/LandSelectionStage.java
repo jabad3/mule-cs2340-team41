@@ -17,20 +17,39 @@ import javax.swing.JFrame;
  */
 public class LandSelectionStage extends Stage {
 
+    /** The view to be controlled by this stage. */
     private LandSelectionView myView;
+    
+    /** The map panel to be displayed in the view. */
     private MapPanel mapPanel;
     
+    /** Ordered list of players.  Player at index 0 goes first. */
     private List<Player> playerList;
+    
+    /** The player whose turn it currently is. */
     private Player currentPlayer;
+    
+    /** The index in the playerList of the player whose turn it currently is. */
     private int currentPlayerIndex;
     
+    /** The price that land will be for the current turn */
     private int landPlotPrice;
     
+    /**
+     * Creates the LandSelectionStage object.
+     * 
+     * @param mainFrame The container used to display the View
+     * @param model The GameModel used throughout the game
+     */
     public LandSelectionStage(JFrame mainFrame, GameModel model) {
     	super(mainFrame, model);
     	
     }
     
+    /**
+     * To start the LandSelectionStage, determine the starting player and land
+     * price, then configure and display the View using this information.
+     */
     public void start() {
         playerList = gameModel.getSortedPlayerList();
         currentPlayerIndex = 0;
@@ -46,7 +65,8 @@ public class LandSelectionStage extends Stage {
     
     /**
      * A user selects a LandPlot by clicking on it.  This class listens for
-     * that selection.
+     * that selection while providing user-friendly cues to indicate
+     * which plot the user's mouse cursor is on.
      * 
      * @author Max
      *
