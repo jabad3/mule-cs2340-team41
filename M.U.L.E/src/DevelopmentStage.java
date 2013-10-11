@@ -1,5 +1,9 @@
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
 /**
@@ -47,15 +51,16 @@ public class DevelopmentStage extends Stage {
 	public void start() {
 		// TODO Auto-generated method stub
 		System.out.println("Starting Development Stage");
+        Map map = gameModel.getMap();
+		mapPanel = new MapPanel(map, new LandPlotListener());
+		myView = new DevelopmentStageView(mapPanel,"HARD CODED RANDOMNESS"); //badness here
 		displayView(myView);
 	}
 
-	/**
-	 * @param args
-	 */
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//
-//	}
+	
+	
+    private class LandPlotListener extends MouseAdapter {
+
+    }
 
 }
