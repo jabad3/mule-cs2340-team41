@@ -35,9 +35,11 @@ public class Game {
 	    Stage gameConfigStage = new GameConfigStage(mainFrame, gameModel);
 	    Stage playerConfigStage = new PlayerConfigStage(mainFrame, gameModel);
 	    Stage landSelectionStage = new LandSelectionStage(mainFrame, gameModel);
+	    Stage developmentStage = new DevelopmentStage(mainFrame, gameModel);
 	    
 	    gameConfigStage.setNextStage(playerConfigStage);
 	    playerConfigStage.setNextStage(landSelectionStage);
+	    landSelectionStage.setNextStage(developmentStage);
 	    
 	    gameConfigStage.start();
 	}
