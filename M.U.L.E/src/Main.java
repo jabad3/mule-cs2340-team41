@@ -1,4 +1,6 @@
 import javax.swing.JFrame;
+
+import Models.Game;
 /**
  * This class executes the game of MULE.
  * 
