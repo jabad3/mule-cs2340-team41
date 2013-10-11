@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import Models.Difficulty;
+
 /**
  * This class lets a user choose difficulty, map type, and number of players
  * 
