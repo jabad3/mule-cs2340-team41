@@ -97,7 +97,6 @@ public class LandSelectionStage extends Stage {
         public void mouseClicked(MouseEvent e) {
             LandPlotBtn landPlotBtn = (LandPlotBtn) e.getSource();
             LandPlot chosenPlot = landPlotBtn.getMyLandPlot();
-            
             if (chosenPlot.isAvailable()) {
                 chosenPlot.setOwner(currentPlayer);
                 currentPlayerIndex++;
