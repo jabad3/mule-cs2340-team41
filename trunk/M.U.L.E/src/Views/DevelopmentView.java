@@ -37,12 +37,12 @@ public class DevelopmentView extends JLayeredPane {
      * Create the Development View.
      * 
      * @param mapPanel The map panel to display to the user
-     * @param initialPawn The first pawn to display to the user
+     * @param playerPawn The first pawn to display to the user
      */
-    public DevelopmentView(MapPanel mapPanel, PlayerPawn initialPawn) {
+    public DevelopmentView(MapPanel mapPanel, PlayerPawn playerPawn) {
         playerNameLabel = new JLabel("Whose turn is it?");
         this.mapPanel = mapPanel;
-        this.currentPawn = initialPawn;
+        this.currentPawn = playerPawn;
         
         // Because JLayeredPane layout manager is null, manually set size,
         // location of components to add to it
