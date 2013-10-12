@@ -1,10 +1,16 @@
 package Views;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * This class allows an icon to be displayed in a JComponent.  The icon is
@@ -24,20 +30,24 @@ public class ResizableIcon extends JComponent {
     
     /**
      * Create a ResizableIcon to display the given ImageIcon object.
+     * Preferred size of the component defaults to the icon's width and height.
      * 
      * @param icon The ImageIcon to be displayed
      */
     public ResizableIcon(ImageIcon icon) {
-        this(icon.getImage());
+        this(icon, new Dimension(icon.getIconWidth(), icon.getIconHeight()));
     }
     
     /**
-     * Create a ResizableIcon to display the given Image object.
+     * Create a ResizableIcon to display a given ImageIcon object with the
+     * specified preferred size.
      * 
-     * @param image The image to be displayed
+     * @param icon The ImageIcon to be displayed
+     * @param preferredSize The Dimension of the preferred size
      */
-    public ResizableIcon(Image image) {
-        this.image = image;
+    public ResizableIcon(ImageIcon icon, Dimension preferredSize) {
+        image = icon.getImage();
+        setPreferredSize(preferredSize);
     }
     
     /**
@@ -55,5 +65,19 @@ public class ResizableIcon extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+    }
+    
+    public static void main(String[] args) {
+        JFrame jf = new JFrame("Display a pawn");
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(new PlayerPawn(new ImageIcon("Buzzite.png")), BorderLayout.CENTER);
+        panel.add(new ResizableIcon(new ImageIcon("flapper.png")), BorderLayout.WEST);
+        panel.add(new JLabel(new ImageIcon("bonzoid.png")), BorderLayout.EAST);
+        panel.setPreferredSize(new Dimension(300, 200));
+        jf.getContentPane().add(panel);
+        jf.pack();
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf.setVisible(true);
     }
 }
