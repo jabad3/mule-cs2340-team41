@@ -1,5 +1,7 @@
 package Stages;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -74,7 +76,8 @@ public abstract class Stage
 	public void displayView(JComponent myView)
 	{
     	mainFrame.setContentPane(myView);
-    	mainFrame.validate();
+    	mainFrame.pack();
+	    mainFrame.validate();
 	}
 	
 	/**

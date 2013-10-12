@@ -13,7 +13,10 @@ import java.awt.event.*;
  */
 public class RaceButtonPanel extends JPanel
 {
-	private JLabel iconLabel;
+	/** The icon to be displayed to the user. */
+    private ResizableIcon iconLabel;
+    
+    /** The RaceType selected by the user. */
 	private RaceType chosenRace;
 	
 /**
@@ -23,10 +26,10 @@ public class RaceButtonPanel extends JPanel
 	public RaceButtonPanel()
 	{
 		setLayout(new GridLayout(1,9));
-		setPreferredSize(new Dimension(1000,100));
+		setPreferredSize(new Dimension(500,100));
 		
 		/* add icon to panel first so it appears at the far left */
-		iconLabel = new JLabel();
+		iconLabel = new ResizableIcon(new ImageIcon());
 		this.add(iconLabel);
 		
 		addRaceButtons();

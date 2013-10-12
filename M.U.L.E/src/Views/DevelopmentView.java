@@ -1,6 +1,7 @@
 package Views;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -60,6 +61,7 @@ public class DevelopmentView extends JLayeredPane {
         this.add(currentPawn, new Integer(2));
         
         this.setPreferredSize(mapPanel.getPreferredSize());
+        //this.setPreferredSize(new Dimension(400, 300));
     }
 
     /**

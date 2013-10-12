@@ -40,6 +40,17 @@ public class ResizableIcon extends JComponent {
         this.image = image;
     }
     
+    /**
+     * Set the displayed icon and automatically updates the component to
+     * display the new icon.
+     * 
+     * @param icon The new icon to be displayed
+     */
+    public void setIcon(ImageIcon icon) {
+        this.image = icon.getImage();
+        repaint();
+    }
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

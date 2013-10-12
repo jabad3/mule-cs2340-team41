@@ -30,7 +30,7 @@ public class PlayerConfigView extends JPanel{
 	public PlayerConfigView()//ActionListener L, PlayerConfig controller)
 	{
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		setPreferredSize(new Dimension(1000,400));
+		setPreferredSize(new Dimension(500,300));
 		
 		curPlayerLabel = new JLabel();
 		name = new NamePanel();
