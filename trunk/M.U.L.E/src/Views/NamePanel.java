@@ -23,7 +23,7 @@ public class NamePanel extends JPanel {
 		JLabel nameOutput = new JLabel("Player Name:");
 		
 		setLayout(new GridLayout(1,2));
-		setPreferredSize(new Dimension(1000,100));
+		setPreferredSize(new Dimension(300,75));
 		
 		add(nameOutput);
 		add(textField);
