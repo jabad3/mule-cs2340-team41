@@ -1,5 +1,6 @@
 package Stages;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -70,7 +71,7 @@ public abstract class Stage
 	 * 
 	 * @param myView The View that belongs to this Stage
 	 */
-	public void displayView(JPanel myView)
+	public void displayView(JComponent myView)
 	{
     	mainFrame.setContentPane(myView);
     	mainFrame.validate();

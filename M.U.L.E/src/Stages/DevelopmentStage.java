@@ -6,13 +6,15 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import Models.GameModel;
 import Models.Map;
 import Models.Player;
-import Views.DevelopmentStageView;
+import Views.DevelopmentView;
 import Views.MapPanel;
+import Views.PlayerPawn;
 
 /**
  * Controller for Development Stage
@@ -25,7 +27,7 @@ import Views.MapPanel;
 public class DevelopmentStage extends Stage {
 
     /** The view to be controlled by this stage. */
-    private DevelopmentStageView myView;
+    private DevelopmentView myView;
     
     /** The map panel to be displayed in the view. */
     private MapPanel mapPanel;
@@ -61,7 +63,7 @@ public class DevelopmentStage extends Stage {
 		System.out.println("Starting Development Stage");
         Map map = gameModel.getMap();
 		mapPanel = new MapPanel(map, new LandPlotListener());
-		myView = new DevelopmentStageView(mapPanel,"HARD CODED RANDOMNESS"); //badness here
+		myView = new DevelopmentView(mapPanel, new PlayerPawn(new ImageIcon("buzzite.png"))); // temporary
 		displayView(myView);
 	}
 
