@@ -63,7 +63,7 @@ public class DevelopmentView extends JLayeredPane {
         this.add(currentPawn, new Integer(2));
         this.mapPanel.setFocusable(true);
         this.mapPanel.requestFocusInWindow();
-        this.mapPanel.addKeyListener(currentPawn.getListener());
+        //this.mapPanel.addKeyListener(currentPawn.getListener());
         System.out.println(this.mapPanel.requestFocusInWindow()); //debug statement, returns false, this is the problem
         this.setPreferredSize(mapPanel.getPreferredSize());
         //this.setPreferredSize(new Dimension(400, 300));

@@ -26,7 +26,7 @@ public class PlayerPawn extends ResizableIcon {
 
     /** The Point representing the top-right-most position of the PlayerPawn */
 	private Point location;
-	private KeyListener directionListener = new DirectionListener();
+	//private KeyListener directionListener = new DirectionListener();
 	
 	
 	/**
@@ -89,10 +89,10 @@ public class PlayerPawn extends ResizableIcon {
 	 * 
 	 * @return the pawn's keylistener
 	 */
-	public KeyListener getListener()
+	/*public KeyListener getListener()
 	{
 		return directionListener;
-	}
+	}*/
 	
 	public static void main(String[] args) {
 	    JFrame jf = new JFrame("Display a pawn");
@@ -113,14 +113,14 @@ public class PlayerPawn extends ResizableIcon {
 	 * @author epramer3
 	 *
 	 */
-	private class DirectionListener implements KeyListener
+	/*private class DirectionListener implements KeyListener
 	{
 	
 /**
  * Moves the player according to which key was pressed
  * @param event The key that was pressed
  */
-		public void keyPressed (KeyEvent event)
+		/*public void keyPressed (KeyEvent event)
 		{
 			switch (event.getKeyCode())
 			{
@@ -143,6 +143,6 @@ public class PlayerPawn extends ResizableIcon {
 		}
 		public void keyReleased(KeyEvent event) {}
 		public void keyTyped(KeyEvent event) {}
-	}
+	}*/
 
 }
