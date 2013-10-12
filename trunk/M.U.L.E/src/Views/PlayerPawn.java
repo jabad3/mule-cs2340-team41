@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -24,6 +26,7 @@ public class PlayerPawn extends ResizableIcon {
 
     /** The Point representing the top-right-most position of the PlayerPawn */
 	private Point location;
+	private KeyListener directionListener = new DirectionListener();
 	
 	
 	/**
@@ -81,6 +84,16 @@ public class PlayerPawn extends ResizableIcon {
 	    // TODO
 	}
 	
+	/**
+	 * Returns the KeyListener of the PlayerPawn so other classes can use it
+	 * 
+	 * @return the pawn's keylistener
+	 */
+	public KeyListener getListener()
+	{
+		return directionListener;
+	}
+	
 	public static void main(String[] args) {
 	    JFrame jf = new JFrame("Display a pawn");
 	    JPanel panel = new JPanel();
@@ -93,6 +106,43 @@ public class PlayerPawn extends ResizableIcon {
 	    jf.pack();
 	    jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    jf.setVisible(true);
+	}
+
+	
+	/**
+	 * @author epramer3
+	 *
+	 */
+	private class DirectionListener implements KeyListener
+	{
+	
+/**
+ * Moves the player according to which key was pressed
+ * @param event The key that was pressed
+ */
+		public void keyPressed (KeyEvent event)
+		{
+			switch (event.getKeyCode())
+			{
+				case KeyEvent.VK_UP:
+					System.out.println("up"); //debug statement
+					location.translate(0,-30);
+					break;
+				case KeyEvent.VK_DOWN:
+					location.translate(0,30);
+					break;
+				case KeyEvent.VK_LEFT:
+					location.translate(-30,0);
+					break;
+				case KeyEvent.VK_RIGHT:
+					location.translate(0,30);
+					break;
+			}
+			repaint();
+		
+		}
+		public void keyReleased(KeyEvent event) {}
+		public void keyTyped(KeyEvent event) {}
 	}
 
 }

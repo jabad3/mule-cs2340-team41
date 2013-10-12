@@ -2,6 +2,8 @@ package Views;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -54,12 +56,15 @@ public class DevelopmentView extends JLayeredPane {
         playerNameLabel.setLocation(0, this.mapPanel.getHeight() - 100);
         
         currentPawn.setSize(currentPawn.getPreferredSize());
-        currentPawn.setLocation(50, 50);
+        currentPawn.setLocation(100, 50);
         
         this.add(mapPanel, new Integer(0));  // place map underneath everything
         this.add(playerNameLabel, new Integer(1));
         this.add(currentPawn, new Integer(2));
-        
+        this.mapPanel.setFocusable(true);
+        this.mapPanel.requestFocusInWindow();
+        this.mapPanel.addKeyListener(currentPawn.getListener());
+        System.out.println(this.mapPanel.requestFocusInWindow()); //debug statement, returns false, this is the problem
         this.setPreferredSize(mapPanel.getPreferredSize());
         //this.setPreferredSize(new Dimension(400, 300));
     }
