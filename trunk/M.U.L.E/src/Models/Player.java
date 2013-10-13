@@ -63,7 +63,7 @@ public class Player extends Trader {
 	@Override
 	public void buyLandFromSeller(Trader seller, int price)
 			throws FailedTransactionException {
-		// TODO Auto-generated method stub
+		paySeller(seller, price);
 		
 	}
 	
