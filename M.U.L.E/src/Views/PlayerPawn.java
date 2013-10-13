@@ -25,7 +25,7 @@ import Models.RaceType;
 public class PlayerPawn extends ResizableIcon {
 
     /** The Point representing the top-right-most position of the PlayerPawn */
-	private Point location;
+	Point location = new Point(280,265);	//change back to private
 	//private KeyListener directionListener = new DirectionListener();
 	
 	
@@ -70,7 +70,11 @@ public class PlayerPawn extends ResizableIcon {
 	 */
 	public void setLocation(Point newLocation) {
 	    location = newLocation;
+	    this.setLocation((int)newLocation.getX(), (int)newLocation.getY());
 	}
+	public Point getLocation() {
+		return location;
+		}
 	
 	/**
 	 * Sets the given input type to be either on or off.
@@ -84,6 +88,14 @@ public class PlayerPawn extends ResizableIcon {
 	    // TODO
 	}
 	
+	
+	protected void paintComponenet(Graphics g) {
+		super.paintComponent(g);
+		g.fillOval((int)location.getX(),(int)location.getY(),1000,1000);
+		System.out.println("playerPawn");
+	}
+	
+	
 	/**
 	 * Returns the KeyListener of the PlayerPawn so other classes can use it
 	 * 
@@ -94,20 +106,22 @@ public class PlayerPawn extends ResizableIcon {
 		return directionListener;
 	}*/
 	
-	public static void main(String[] args) {
-	    JFrame jf = new JFrame("Display a pawn");
-	    JPanel panel = new JPanel();
-	    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-	    panel.add(new PlayerPawn(new ImageIcon("Buzzite.png")));
-	    panel.add(new ResizableIcon(new ImageIcon("flapper.png")));
-	    panel.add(new JLabel(new ImageIcon("bonzoid.png")));
-	    panel.setPreferredSize(new Dimension(300, 200));
-	    jf.getContentPane().add(panel);
-	    jf.pack();
-	    jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    jf.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//	    JFrame jf = new JFrame("Display a pawn");
+//	    JPanel panel = new JPanel();
+//	    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+//	    panel.add(new PlayerPawn(new ImageIcon("Buzzite.png")));
+//	    panel.add(new ResizableIcon(new ImageIcon("flapper.png")));
+//	    panel.add(new JLabel(new ImageIcon("bonzoid.png")));
+//	    panel.setPreferredSize(new Dimension(300, 200));
+//	    jf.getContentPane().add(panel);
+//	    jf.pack();
+//	    jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//	    jf.setVisible(true);
+//	}
 
+	
+	
 	
 	/**
 	 * @author epramer3
