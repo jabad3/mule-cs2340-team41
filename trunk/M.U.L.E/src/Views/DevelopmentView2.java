@@ -81,7 +81,7 @@ public class DevelopmentView2 extends JLayeredPane implements KeyListener {
 			System.out.println("omg it works, key pressed: " + keyWord);
 			double x = currentPawn.location.getX();
 			double y = currentPawn.location.getY();
-			currentPawn.setLocation(new Point((int)x+10,(int)y+10));
+			currentPawn.setLocation(new Point((int)x+3,(int)y+3));
 			System.out.println(currentPawn.getLocation());
 			
 			this.validate();
