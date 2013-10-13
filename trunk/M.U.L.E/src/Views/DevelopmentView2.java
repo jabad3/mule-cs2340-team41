@@ -32,8 +32,10 @@ public class DevelopmentView2 extends JLayeredPane implements KeyListener {
         playerNameLabel.setLocation(0, this.mapPanel.getHeight() - 100);
         currentPawn.setSize(currentPawn.getPreferredSize());
         
-        //currentPawn.setLocation(280, 265);
+        System.out.println((int)currentPawn.location.getX() +", "+ (int)currentPawn.location.getY());
         currentPawn.setLocation(new Point((int)currentPawn.location.getX(), (int)currentPawn.location.getY()));
+        System.out.println((int)currentPawn.location.getX() +", "+ (int)currentPawn.location.getY());
+        //currentPawn.setLocation(280,265);
         
         this.add(mapPanel, new Integer(0));  // place map underneath everything
         this.add(playerNameLabel, new Integer(1));

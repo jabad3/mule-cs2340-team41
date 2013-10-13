@@ -20,7 +20,8 @@ public class MyPanel extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) { }
     public void keyReleased(KeyEvent e) { }
     public void keyTyped(KeyEvent e) {
-        temp = e.getKeyChar();
+        System.out.print("testing");
+    	temp = e.getKeyChar();
         repaint();}
     public static void main(String[] s) {
         JFrame f = new JFrame();
