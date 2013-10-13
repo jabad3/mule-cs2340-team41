@@ -129,5 +129,14 @@ public class GameModel {
             s6 += p.toString();
         return s2 + s3 + s4 + s5 + s6;
     }
+
+    /**
+     * Returns the Store object.
+     * 
+     * @return The store used in the game
+     */
+    public Store getStore() {
+        return store;
+    }
 	
 }

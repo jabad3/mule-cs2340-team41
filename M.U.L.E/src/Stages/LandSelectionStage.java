@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
+import Models.FailedTransactionException;
 import Models.GameModel;
 import Models.LandPlot;
 import Models.Map;
@@ -69,8 +70,34 @@ public class LandSelectionStage extends Stage {
         mapPanel = new MapPanel(map, new LandPlotListener());
         
         String currentPlayerName = currentPlayer.getName();
-    	myView = new LandSelectionView(mapPanel, landPlotPrice, currentPlayerName);
+    	myView = new LandSelectionView(mapPanel, landPlotPrice, currentPlayerName, new SelectionSkipListener());
     	displayView(myView);
+    }
+    
+    /**
+     * Chooses the next player in the land selection stage, then updates
+     * the View to display this new change.
+     * 
+     * If there is no next player, then the stage is over, so go to the next
+     * stage.
+     */
+    public void updateViewForNextPlayer() {
+        currentPlayerIndex++;
+        
+        if (allPlayersHaveSelected()){
+            System.out.println("Ending LandSelection Stage");
+            System.out.println("\n\n Current state of the model:  \n");
+            System.out.println(gameModel);
+            goNextStage();
+        } else {  // let the next player go
+            currentPlayer = playerList.get(currentPlayerIndex);
+            String currentName = currentPlayer.getName();
+            myView.setCurrentPlayerName(currentName);
+        }
+    }
+    
+    private boolean allPlayersHaveSelected() {
+        return currentPlayerIndex >= playerList.size();
     }
     
     /**
@@ -97,24 +124,20 @@ public class LandSelectionStage extends Stage {
         public void mouseClicked(MouseEvent e) {
             LandPlotBtn landPlotBtn = (LandPlotBtn) e.getSource();
             LandPlot chosenPlot = landPlotBtn.getMyLandPlot();
+            
             if (chosenPlot.isAvailable()) {
-                chosenPlot.setOwner(currentPlayer);
-                currentPlayerIndex++;
+                
+                try {
+                    currentPlayer.buyLandFromSeller(gameModel.getStore(), landPlotPrice);
+                    chosenPlot.setOwner(currentPlayer);
+                    updateViewForNextPlayer();
+                } catch (FailedTransactionException exc) {
+                    myView.flashNotEnoughMoneyMessage();
+                }
+                
             }
             
-            if (allPlayersHaveSelected()){
-                System.out.println("Ending LandSelection Stage");
-            	goNextStage();
-        	}
-            else {  // let the next player go
-                currentPlayer = playerList.get(currentPlayerIndex);
-                String currentName = currentPlayer.getName();
-                myView.setCurrentPlayerName(currentName);
-            }
-        }
-        
-        private boolean allPlayersHaveSelected() {
-            return currentPlayerIndex >= playerList.size();
+            
         }
 
         @Override
@@ -152,5 +175,21 @@ public class LandSelectionStage extends Stage {
             if (highlightedPlot.isAvailable())
                 landPlotBtn.setBorderToDefault();
         }
+    }
+    
+    /**
+     * This class listens to the View for when the user triggers the event
+     * to skip their turn during Land Selection.
+     * 
+     * @author Max
+     *
+     */
+    private class SelectionSkipListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            updateViewForNextPlayer();
+        }
+        
     }
 }
