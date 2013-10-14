@@ -15,6 +15,7 @@ import Models.Player;
 import Views.DevelopmentView;
 import Views.MapPanel;
 import Views.PlayerPawn;
+import Views.TownPanel;
 
 /**
  * Controller for Development Stage
@@ -31,6 +32,9 @@ public class DevelopmentStage extends Stage {
     
     /** The map panel to be displayed in the view. */
     private MapPanel mapPanel;
+    
+    /** The town panel to be displayed in the view. */
+    private TownPanel townPanel;
     
     /** Ordered list of players.  Player at index 0 goes first. */
     private List<Player> playerList;
@@ -63,7 +67,8 @@ public class DevelopmentStage extends Stage {
 		System.out.println("Starting Development Stage");
         Map map = gameModel.getMap();
 		mapPanel = new MapPanel(map, new LandPlotListener());
-		myView = new DevelopmentView(mapPanel, new PlayerPawn(new ImageIcon("buzzite.png"))); // temporary
+		townPanel = new TownPanel();
+		myView = new DevelopmentView(mapPanel, townPanel, new PlayerPawn(new ImageIcon("buzzite.png"))); // temporary
 		displayView(myView);
 	}
 

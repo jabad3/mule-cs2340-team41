@@ -156,7 +156,7 @@ public class PlayerPawnBind extends PlayerPawn {
         pawn.bindRightKey(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
         
         MapPanel mapPanel = new MapPanel(MapFactory.buildMap("Default"), null);
-        DevelopmentView view = new DevelopmentView(mapPanel, pawn);
+        DevelopmentView view = new DevelopmentView(mapPanel, null, pawn);
         
         
         jf.getContentPane().add(view);

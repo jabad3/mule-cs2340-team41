@@ -45,4 +45,8 @@ public class LandPlot {
     public boolean isAvailable() {
         return (owner == null && landType != LandPlotType.TOWN);
     }
+
+    public boolean isTown() {
+        return landType == LandPlotType.TOWN;
+    }
 }

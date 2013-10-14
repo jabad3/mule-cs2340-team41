@@ -3,6 +3,7 @@ package Views;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -66,6 +67,8 @@ public class TownPanel extends JPanel{
         add(pubDisplay);
         
         // Middle row, Left --> Right
+        // create separate instances of path objects, otherwise
+        // LayoutManager just repositions the only pathDisplay
         add(new ResizableIcon(new ImageIcon("path.png")));
         add(new ResizableIcon(new ImageIcon("path.png")));
         add(new ResizableIcon(new ImageIcon("path.png")));
@@ -75,7 +78,6 @@ public class TownPanel extends JPanel{
         add(new ResizableIcon(new ImageIcon("path.png")));
         add(landOfficeDisplay);
         
-        // TODO add contents to panel
         setPreferredSize(preferredSize);
     }
     
@@ -89,14 +91,95 @@ public class TownPanel extends JPanel{
         landOfficeDisplay = new ResizableIcon(new ImageIcon("landOffice.png"));
         pathDisplay = new ResizableIcon(new ImageIcon("path.png"));
     }
+
+    /**
+     * Checks to see whether the given JComponent object has coordinates that
+     * would cause any part of it to be located outside the TownPanel.
+     * 
+     * Pre-condition:  do not call this method with null.
+     * 
+     * @param component The component to check for full-containment inside the
+     * town
+     * @return True if the entire component is inside the TownPanel
+     */
+    public boolean insideTown(JComponent component) {
+        Rectangle componentBounds = component.getBounds();
+        Rectangle townBounds = this.getBounds();
+        
+        return townBounds.contains(componentBounds);
+    }
     
     /**
-     * Sets the PlayerPawn object to be displayed.
+     * Checks whether the given component overlaps any boundaries of the
+     * four shops inside the TownPanel.
      * 
-     * @param currentPlayer
+     * @param component The component we are checking for overlap with shops
+     * @return True if the bounds of the component intersect any of the bounds
+     * for any of four the shops inside the town
      */
-    public void setPlayerPawn(PlayerPawn newPawn) {
-        playerPawn = newPawn;
+    public boolean overlapsTownShops(JComponent component) {
+        Rectangle componentBounds = component.getBounds();
+        Rectangle storeBounds = storeDisplay.getBounds();
+        Rectangle pubBounds = pubDisplay.getBounds();
+        Rectangle assayBounds = assayDisplay.getBounds();
+        Rectangle landOfficeBounds = landOfficeDisplay.getBounds();
+        
+        return componentBounds.intersects(storeBounds)
+                || componentBounds.intersects(pubBounds)
+                || componentBounds.intersects(assayBounds)
+                || componentBounds.intersects(landOfficeBounds);
+    }
+    
+    /**
+     * Checks whether a given component is touching/overlapping with
+     * the entrance of the pub.
+     * 
+     * @param component The component we are checking for overlap with pub
+     * entrance
+     * @return True if the component is overlapping with pub entrance
+     */
+    public boolean overlapsPubEntrance(JComponent component) {
+        // TODO
+        return false;
+    }
+    
+    /**
+     * Checks whether a given component is touching/overlapping with
+     * the entrance of the store.
+     * 
+     * @param component The component we are checking for overlap with store
+     * entrance
+     * @return True if the component is overlapping with store entrance
+     */
+    public boolean overlapsStoreEntrance(JComponent component) {
+        // TODO
+        return false;
+    }
+    
+    /**
+     * Checks whether a given component is touching/overlapping with
+     * the entrance of the assay office.
+     * 
+     * @param component The component we are checking for overlap with assay
+     * office entrance
+     * @return True if the component is overlapping with assay office entrance
+     */
+    public boolean overlapsAssayEntrance(JComponent component) {
+        // TODO
+        return false;
+    }
+    
+    /**
+     * Checks whether a given component is touching/overlapping with
+     * the entrance of the land office.
+     * 
+     * @param component The component we are checking for overlap with land
+     * office entrance
+     * @return True if the component is overlapping with land office entrance
+     */
+    public boolean overlapsLandOfficeEntrance(JComponent component) {
+        // TODO
+        return false;
     }
     
     /**

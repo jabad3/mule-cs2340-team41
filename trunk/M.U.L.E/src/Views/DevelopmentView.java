@@ -1,6 +1,7 @@
 package Views;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -33,24 +34,42 @@ public class DevelopmentView extends JLayeredPane {
     /** Displays the land plots to the user. */
     MapPanel mapPanel;
     
+    /** Displays the town to the user. */
+    TownPanel townPanel;
+    
+    /** A JPanel with card layout to allow easy swapping between town and map. */
+    JPanel cardPanel;
+    
+    /** The CardLayout that is the layout manager of the cardPanel. */
+    CardLayout cardLayout;
+    
     /** The current PlayerPawn object to be displayed to the user. */
     PlayerPawn currentPawn;
     
     /**
      * Create the Development View.
      * 
-     * @param mapPanel The map panel to display to the user
+     * @param mapPanel The map to display to the user
+     * @param townPanel The town to display to the user
      * @param playerPawn The first pawn to display to the user
      */
-    public DevelopmentView(MapPanel mapPanel, PlayerPawn playerPawn) {
+    public DevelopmentView(MapPanel mapPanel, TownPanel townPanel, PlayerPawn playerPawn) {
         playerNameLabel = new JLabel("Whose turn is it?");
         this.mapPanel = mapPanel;
+        this.townPanel = townPanel;
+        this.cardPanel = new JPanel();
         this.currentPawn = playerPawn;
+        
+        // config card panel
+        cardLayout = new CardLayout();
+        cardPanel.setLayout(cardLayout);
+        cardPanel.add(this.mapPanel, "mapPanel");
+        cardPanel.add(this.townPanel, "townPanel");
         
         // Because JLayeredPane layout manager is null, manually set size,
         // location of components to add to it
-        this.mapPanel.setSize(mapPanel.getPreferredSize());
-        this.mapPanel.setLocation(0, 0);
+        cardPanel.setSize(mapPanel.getPreferredSize());
+        cardPanel.setLocation(0, 0);
         
         playerNameLabel.setSize(playerNameLabel.getPreferredSize());
         playerNameLabel.setLocation(0, this.mapPanel.getHeight() - 100);
@@ -58,17 +77,29 @@ public class DevelopmentView extends JLayeredPane {
         currentPawn.setSize(currentPawn.getPreferredSize());
         currentPawn.setLocation(100, 50);
         
-        this.add(mapPanel, new Integer(0));  // place map underneath everything
+        this.add(cardPanel, new Integer(0));  // place map/town underneath everything
         this.add(playerNameLabel, new Integer(1));
         this.add(currentPawn, new Integer(2));
-        this.mapPanel.setFocusable(true);
-        this.mapPanel.requestFocusInWindow();
-        //this.mapPanel.addKeyListener(currentPawn.getListener());
-        System.out.println(this.mapPanel.requestFocusInWindow()); //debug statement, returns false, this is the problem
-        this.setPreferredSize(mapPanel.getPreferredSize());
-        //this.setPreferredSize(new Dimension(400, 300));
-    }
 
+        this.setPreferredSize(mapPanel.getPreferredSize());
+    }
+    
+    /**
+     * Animation of the player pawn and updates to the MULE timer occurs here.
+     * This method handles any swapping of the map/town that is needed.
+     * 
+     * This method should be called on a frequently enough so that the
+     * animation appears smooth.
+     * 
+     * @param duration The duration of the player's turn in milliseconds.
+     */
+    public void update() {
+        // TODO
+        // call pawn.move if new location is valid
+        // swap town/map panel if needed
+        // update the MULE timer
+    }
+    
     /**
      * Set the current Player's name
      * 
@@ -98,14 +129,14 @@ public class DevelopmentView extends JLayeredPane {
      * Display the map to the user.
      */
     public void showMap() {
-        // TODO
+        cardLayout.show(cardPanel, "mapPanel");
     }
     
     /**
      * Display the town to the user.
      */
     public void showTown() {
-        
+        cardLayout.show(cardPanel, "townPanel");
     }
  
     /**
@@ -116,35 +147,16 @@ public class DevelopmentView extends JLayeredPane {
     public static void main(String[] args) {
         JFrame jf = new JFrame("Test Dev't View");
         MapPanel mapPanel = new MapPanel(MapFactory.buildMap("Default"), null);
+        TownPanel townPanel = new TownPanel();
         PlayerPawn pawn = new PlayerPawn(new ImageIcon("Buzzite.png"));
         
-        DevelopmentView dv = new DevelopmentView(mapPanel, pawn);
+        DevelopmentView dv = new DevelopmentView(mapPanel, townPanel, pawn);
         
         jf.getContentPane().add(dv);
         jf.pack();
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);
     }
-    
-    /*
-     JFrame jf = new JFrame("JLayeredPane Test");
-        Map map = MapFactory.buildMap("Default");
-        MapPanel gridpanel = new MapPanel(map, null);
-        gridpanel.setSize(gridpanel.getPreferredSize());
-        gridpanel.setLocation(0,0);
-        JLayeredPane layerpane = new JLayeredPane();
-        JLabel label = new JLabel("I should be on top");
-        label.setSize(label.getPreferredSize());
-        label.setLocation(100, 100);
-        layerpane.add(gridpanel, JLayeredPane.DEFAULT_LAYER);
-        layerpane.add(label, JLayeredPane.PALETTE_LAYER);
-        //layerpane.setPreferredSize(gridpanel.getPreferredSize());
-        //layerpane.add(label, JLayeredPane.PALETTE_LAYER);
-        jf.getContentPane().add(layerpane);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.pack();
-        jf.setVisible(true);
-     */
     
 }
 
