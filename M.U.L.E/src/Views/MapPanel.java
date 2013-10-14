@@ -1,6 +1,7 @@
 package Views;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.MouseListener;
 
 import javax.swing.*;
@@ -15,6 +16,9 @@ import Models.Map;
 
 public class MapPanel extends JPanel {
 	
+    /** Maintains a reference to the component representing the town. */
+    LandPlotBtn townBtn;
+    
 	/**
 	 * Creates the MapPanel containing a 5x9 grid of buttons
 	 * 
@@ -33,42 +37,46 @@ public class MapPanel extends JPanel {
 	            LandPlot plot = landPlots[row][col];
 	            LandPlotBtn plotBtn = new LandPlotBtn(plot, commonPlotListener);
 	            this.add(plotBtn);
+	            
+	            if (plot.isTown())
+	                townBtn = plotBtn;
 	        }
 	    }
-		/*
-		setLayout(new GridLayout(5, 9));
-		for(int i = 0; i < 9*5; i++)
-		{
-				
-			
-			if(i == 25)
-				btttnn.setBorder(BorderFactory.createLineBorder(Color.red, 3));
-			else if(i == 24)
-				btttnn.setBorder(BorderFactory.createLineBorder(Color.green, 3));
-			else if(i == 36)
-				btttnn.setBorder(BorderFactory.createLineBorder(Color.orange, 3));
-			else if(i == 40)
-				btttnn.setBorder(BorderFactory.createLineBorder(Color.orange, 3));
-			else if(i == 41)
-				btttnn.setBorder(BorderFactory.createLineBorder(Color.orange, 3));
-			else
-				btttnn.setBorder(new EmptyBorder(0, 0, 0, 0));
-			if(Math.random() > 0.8)
-				btttnn.setImage(new ImageIcon("m2.png").getImage());
-			else if(Math.random() > 0.5)
-				btttnn.setImage(new ImageIcon("town.png").getImage());
-			else
-				btttnn.setImage(new ImageIcon("river.png").getImage());
-
-			//btttnn.setBorderPainted(false);
-			//btttnn.setContentAreaFilled(false);
-			/*JLabel myLabel = new JLabel();
-			myLabel.setIcon(new ImageIcon("mapPic.png"));
-			btttnn.setLayout(new BorderLayout());
-	        btttnn.add(myLabel, BorderLayout.CENTER);
-	        add(btttnn, BorderLayout.CENTER);*/
-			//add(btttnn);
-		//}
+		
 		this.setPreferredSize(new Dimension(600, 600));
+	}
+	
+	/**
+	 * Checks to see whether the given JComponent object has coordinates that
+	 * would cause it to overlap with the town component in the MapPanel.
+	 * 
+	 * Pre-condition:  do not call this method with null.
+	 * 
+	 * @param component The component to check for overlap with town
+	 * @return True if the bounds specified by the component overlap the bounds
+	 * specified by the town component in the MapPanel
+	 */
+	public boolean overlapsTown(JComponent component) {
+	    Rectangle componentBounds = component.getBounds();
+	    Rectangle townBounds = townBtn.getBounds();
+	    
+	    return (townBounds.intersects(componentBounds));
+	}
+	
+	/**
+	 * Checks to see whether the given JComponent object has coordinates that
+	 * would cause any part of it to be located outside the MapPanel.
+	 * 
+	 * Pre-condition:  do not call this method with null.
+	 * 
+	 * @param component The component to check for full-containment inside the
+	 * map
+	 * @return True if the entire component is inside the MapPanel
+	 */
+	public boolean insideMap(JComponent component) {
+	    Rectangle componentBounds = component.getBounds();
+	    Rectangle mapBounds = this.getBounds();
+	    
+	    return (mapBounds.contains(componentBounds));
 	}
 }
