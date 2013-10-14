@@ -102,15 +102,35 @@ public class PlayerPawnBind extends PlayerPawn {
     /**
      * Binds the given key to the action that moves the pawn left.
      */
-    public void bindLeftKey() {
-        
+    public void bindLeftKey(KeyStroke key) {
+    	InputMap inputMap = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = this.getActionMap();
+        inputMap.put(key, "Left");
+        actionMap.put("Left", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    int x = getX();
+                    int y = getY();
+                    int dx = getHeight() / 10;
+                    setLocation(x - dx, y);
+                }
+            });
     }
     
     /**
      * Binds the given key to the action that moves the pawn right.
      */
-    public void bindRightKey() {
-        
+    public void bindRightKey(KeyStroke key) {
+    	InputMap inputMap = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = this.getActionMap();
+        inputMap.put(key, "Right");
+        actionMap.put("Right", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    int x = getX();
+                    int y = getY();
+                    int dx = getHeight() / 10;
+                    setLocation(x + dx, y);
+                }
+            });
     }
     
     /**
@@ -132,7 +152,8 @@ public class PlayerPawnBind extends PlayerPawn {
         
         pawn.bindUpKey(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0));
         pawn.bindDownKey(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
-        
+        pawn.bindLeftKey(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
+        pawn.bindRightKey(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
         
         MapPanel mapPanel = new MapPanel(MapFactory.buildMap("Default"), null);
         DevelopmentView view = new DevelopmentView(mapPanel, pawn);
