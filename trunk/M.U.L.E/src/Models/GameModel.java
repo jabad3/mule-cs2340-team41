@@ -22,7 +22,7 @@ public class GameModel {
 	private int numPlayers;
 	
 	/** The current round of the game. */
-	public int curRound = 0;
+	private int currentRound = 0;
 	
 	/**
 	 * Add a Player to playerList.
@@ -138,5 +138,19 @@ public class GameModel {
     public Store getStore() {
         return store;
     }
+    
+    /**
+     * Returns the current round number.
+     * 
+     */
+	public int getCurrentRound() {
+	    return currentRound;
+	}
 	
+	/**
+	 * Increments the current round number.
+	 */
+	public void incrementRound() {
+	    currentRound++;
+	}
 }
