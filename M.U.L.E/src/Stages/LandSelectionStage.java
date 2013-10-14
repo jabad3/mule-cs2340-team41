@@ -69,9 +69,23 @@ public class LandSelectionStage extends Stage {
         Map map = gameModel.getMap();
         mapPanel = new MapPanel(map, new LandPlotListener());
         
+        // currently, this is our first stage, so increment round upon start
+        gameModel.incrementRound();
+        
         String currentPlayerName = currentPlayer.getName();
+        calculateLandPlotPrice();
     	myView = new LandSelectionView(mapPanel, landPlotPrice, currentPlayerName, new SelectionSkipListener());
     	displayView(myView);
+    }
+    
+    private void calculateLandPlotPrice() {
+        int round = gameModel.getCurrentRound();
+        if (round <= 2)
+            landPlotPrice = 0;
+        else
+            // TODO
+            // currently - temporary formula
+            landPlotPrice = 500 + round * round * 5;
     }
     
     /**
