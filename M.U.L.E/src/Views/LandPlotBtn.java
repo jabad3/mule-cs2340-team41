@@ -9,12 +9,13 @@ import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import Models.LandPlot;
 
-public class LandPlotBtn extends JButton {
+public class LandPlotBtn extends JComponent {
     
     private ImageIcon imageIcon;
     private LandPlot myLandPlot;
@@ -24,7 +25,6 @@ public class LandPlotBtn extends JButton {
         this.imageIcon = myLandPlot.getLandType().getStockImageIcon();
         this.addMouseListener(buttonListener);
         drawBorder();
-        this.setFocusable(false);
     }
 
     @Override
