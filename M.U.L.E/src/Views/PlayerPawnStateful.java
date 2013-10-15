@@ -151,7 +151,7 @@ public class PlayerPawnStateful extends PlayerPawn {
 		
         public void run() {
         	int speed = 2;
-        	
+        	/*
         	if(playerToMove.leftKey && playerToMove.upKey)
 				playerToMove.setLocation(playerToMove.getX() - speed, playerToMove.getY() - speed);
 			
@@ -163,7 +163,7 @@ public class PlayerPawnStateful extends PlayerPawn {
 			
         	if(playerToMove.rightKey && playerToMove.downKey)
 				playerToMove.setLocation(playerToMove.getX() + speed, playerToMove.getY() + speed);
-        	
+        	*/
         	
         	if(playerToMove.leftKey)
 				playerToMove.setLocation(playerToMove.getX() - speed, playerToMove.getY());

@@ -99,5 +99,14 @@ public class Player extends Trader {
         String s4 = "\nMy inventory info... " + inventory.toString();
         return s1 + s2 + s3 + s4;
     }
+    
+    /**
+     * Returns String representation of inventory.
+     * Intended to be printed for simple testing.
+     * @return String representation of inventory
+     */
+    public String getMyInventoryAsString() {
+        return "\n\n----------" + name + "'s Inventory--------------" + inventory.toString();
+    }
 	
 }
