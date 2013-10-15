@@ -68,7 +68,8 @@ public class DevelopmentStage extends Stage {
         Map map = gameModel.getMap();
 		mapPanel = new MapPanel(map, new LandPlotListener());
 		townPanel = new TownPanel();
-		myView = new DevelopmentView(mapPanel, townPanel, new PlayerPawn(new ImageIcon("buzzite.png"))); // temporary
+		
+		myView = new DevelopmentView(mapPanel, townPanel, new PlayerPawn(new ImageIcon("buzzite.png")), null); // temporary
 		displayView(myView);
 	}
 
