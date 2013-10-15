@@ -46,6 +46,8 @@ public class DevelopmentView extends JLayeredPane {
     /** The current PlayerPawn object to be displayed to the user. */
     PlayerPawn currentPawn;
     
+    MuleTimerPanel muleTimerPanel;
+    
     /**
      * Create the Development View.
      * 
@@ -53,18 +55,20 @@ public class DevelopmentView extends JLayeredPane {
      * @param townPanel The town to display to the user
      * @param playerPawn The first pawn to display to the user
      */
-    public DevelopmentView(MapPanel mapPanel, TownPanel townPanel, PlayerPawn playerPawn) {
+    public DevelopmentView(MapPanel mapPanel, TownPanel townPanel, PlayerPawn playerPawn, MuleTimerPanel muleTimerPanel) {
         playerNameLabel = new JLabel("Whose turn is it?");
         this.mapPanel = mapPanel;
         this.townPanel = townPanel;
         this.cardPanel = new JPanel();
         this.currentPawn = playerPawn;
+        this.muleTimerPanel = muleTimerPanel;	//not functional yet
         
         // config card panel
         cardLayout = new CardLayout();
         cardPanel.setLayout(cardLayout);
         cardPanel.add(this.mapPanel, "mapPanel");
         cardPanel.add(this.townPanel, "townPanel");
+        cardPanel.add(this.muleTimerPanel, "muleTimer");
         
         // Because JLayeredPane layout manager is null, manually set size,
         // location of components to add to it
@@ -77,9 +81,13 @@ public class DevelopmentView extends JLayeredPane {
         currentPawn.setSize(currentPawn.getPreferredSize());
         currentPawn.setLocation(100, 50);
         
+        muleTimerPanel.setSize(muleTimerPanel.getPreferredSize());
+        muleTimerPanel.setLocation(900,0);
+        
         this.add(cardPanel, new Integer(0));  // place map/town underneath everything
         this.add(playerNameLabel, new Integer(1));
         this.add(currentPawn, new Integer(2));
+        this.add(muleTimerPanel, new Integer(3));
 
         this.setPreferredSize(mapPanel.getPreferredSize());
     }
@@ -98,6 +106,10 @@ public class DevelopmentView extends JLayeredPane {
         // call pawn.move if new location is valid
         // swap town/map panel if needed
         // update the MULE timer
+    	if(currentPawn.getLocation().getX() >= 280 && currentPawn.getLocation().getX() <= 350
+    			&& currentPawn.getLocation().getY() >= 250 && currentPawn.getLocation().getY() <= 350){
+    		showTown();
+    	}
     }
     
     /**
@@ -148,9 +160,13 @@ public class DevelopmentView extends JLayeredPane {
         JFrame jf = new JFrame("Test Dev't View");
         MapPanel mapPanel = new MapPanel(MapFactory.buildMap("Default"), null);
         TownPanel townPanel = new TownPanel();
-        PlayerPawn pawn = new PlayerPawn(new ImageIcon("Buzzite.png"));
+        PlayerPawnStateful pawn = new PlayerPawnStateful(new ImageIcon("Buzzite.png"));
+        MuleTimerPanel muleTimerPanel = new MuleTimerPanel(3000);
         
-        DevelopmentView dv = new DevelopmentView(mapPanel, townPanel, pawn);
+        DevelopmentView dv = new DevelopmentView(mapPanel, townPanel, pawn, muleTimerPanel);
+        
+        pawn.listen(dv);
+
         
         jf.getContentPane().add(dv);
         jf.pack();

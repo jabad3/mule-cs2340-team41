@@ -84,6 +84,10 @@ public class PlayerPawnStateful extends PlayerPawn {
     public boolean rightKey = false;
     public boolean upKey = false;
     public boolean downKey = false;
+    public boolean leftUpKey = false;
+    public boolean rightUpKey = false;
+    public boolean LeftDownKey = false;
+    public boolean rightDownKey = false;
 	
 	private class PlayerKeyListener extends KeyAdapter
 	{
@@ -103,6 +107,19 @@ public class PlayerPawnStateful extends PlayerPawn {
                 case KeyEvent.VK_DOWN:
                 downKey = true;
                 break;
+                
+//                case KeyEvent.VK_LEFT && KeyEvent.VK_UP:
+//                leftUpKey = true;
+//                break;
+//                case KeyEvent.VK_RIGHT && KeyEvent.VK_UP:
+//                rightUpKey = true;
+//                break;
+//                case KeyEvent.VK_LEFT && KeyEvent.VK_DOWN:
+//                upKey = true;
+//                break;
+//                case KeyEvent.VK_RIGHT && KeyEvent.VK_DOWN:
+//                downKey = true;
+//                break;
             }
         }
         public void keyReleased(KeyEvent e)
@@ -134,6 +151,20 @@ public class PlayerPawnStateful extends PlayerPawn {
 		
         public void run() {
         	int speed = 2;
+        	
+        	if(playerToMove.leftKey && playerToMove.upKey)
+				playerToMove.setLocation(playerToMove.getX() - speed, playerToMove.getY() - speed);
+			
+        	if(playerToMove.rightKey && playerToMove.upKey)
+				playerToMove.setLocation(playerToMove.getX() + speed, playerToMove.getY() - speed);
+			
+        	if(playerToMove.leftKey && playerToMove.downKey)
+				playerToMove.setLocation(playerToMove.getX() - speed, playerToMove.getY() + speed);
+			
+        	if(playerToMove.rightKey && playerToMove.downKey)
+				playerToMove.setLocation(playerToMove.getX() + speed, playerToMove.getY() + speed);
+        	
+        	
         	if(playerToMove.leftKey)
 				playerToMove.setLocation(playerToMove.getX() - speed, playerToMove.getY());
 			if(playerToMove.rightKey)
@@ -161,7 +192,7 @@ public class PlayerPawnStateful extends PlayerPawn {
         
         MapPanel mapPanel = new MapPanel(MapFactory.buildMap("Default"), null);
         TownPanel townPanel = new TownPanel();
-        DevelopmentView view = new DevelopmentView(mapPanel, townPanel, pawn);
+        DevelopmentView view = new DevelopmentView(mapPanel, townPanel, pawn, null);
         
         pawn.listen(view);
         
