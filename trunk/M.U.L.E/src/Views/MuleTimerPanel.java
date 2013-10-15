@@ -39,6 +39,16 @@ public class MuleTimerPanel extends JPanel {
     /** Time remaining (in milliseconds) until the timer hits zero. */
     int remainingTime;
     
+    /** The default number of milliseconds to decrement the timer with. */
+    int defaultDecrementAmount;
+    
+    /**
+     * Creates a MuleTimerPanel with default duration of 30 seconds and
+     * default  color of red.
+     */
+    public MuleTimerPanel() {
+        this(30);
+    }
     /**
      * Creates a MuleTimerPanel with a specified duration and
      * default bar color of red.
@@ -59,6 +69,7 @@ public class MuleTimerPanel extends JPanel {
         this.duration = duration;
         this.barColor = barColor;
         this.remainingTime = duration;
+        this.defaultDecrementAmount = 33;
         setPreferredSize(new Dimension(50, 400));
     }
     
@@ -78,6 +89,49 @@ public class MuleTimerPanel extends JPanel {
      */
     public void decrement(int delta) {
         remainingTime -= delta;
+    }
+    
+    /**
+     * Decrement the timer using the previously-set value for
+     * defaultDecrementAmount.
+     * 
+     * If defaultDecrementAmount was not previously set to a specified value,
+     * the default value of 33 milliseconds for defaultDecrementAmount will
+     * be used to decrement the timer.
+     */
+    public void decrement() {
+        decrement(defaultDecrementAmount);
+    }
+    
+    /**
+     * Set the timer's duration to the specified amount
+     * 
+     * @param duration The new duration for the MuleTimer
+     */
+    public void setDuration(int duration) {
+        if (duration <= 0)
+            this.duration = 0;
+        else
+            this.duration = duration;
+    }
+    
+    /**
+     * Resets the timer by setting the time remaining equal to the timer's
+     * duration.
+     */
+    public void reset() {
+        remainingTime = duration;
+    }
+    
+    /**
+     * Resets the timer by setting the time remaining equal to a new duration
+     * for the timer.
+     * 
+     * @param newDuration The new duration to be used for the timer
+     */
+    public void reset(int newDuration) {
+        setDuration(newDuration);
+        reset();
     }
     
     @Override

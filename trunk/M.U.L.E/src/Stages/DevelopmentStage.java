@@ -14,6 +14,7 @@ import Models.Map;
 import Models.Player;
 import Views.DevelopmentView;
 import Views.MapPanel;
+import Views.MuleTimerPanel;
 import Views.PlayerPawn;
 import Views.TownPanel;
 
@@ -69,7 +70,7 @@ public class DevelopmentStage extends Stage {
 		mapPanel = new MapPanel(map, new LandPlotListener());
 		townPanel = new TownPanel();
 		
-		myView = new DevelopmentView(mapPanel, townPanel, new PlayerPawn(new ImageIcon("buzzite.png")), null); // temporary
+		myView = new DevelopmentView(mapPanel, townPanel, new PlayerPawn(new ImageIcon("buzzite.png")), new MuleTimerPanel(10000)); // temporary
 		displayView(myView);
 	}
 

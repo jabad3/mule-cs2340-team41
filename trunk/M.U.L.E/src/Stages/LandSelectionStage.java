@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import Models.FailedTransactionException;
 import Models.GameModel;
@@ -99,15 +100,29 @@ public class LandSelectionStage extends Stage {
         currentPlayerIndex++;
         
         if (allPlayersHaveSelected()){
-            System.out.println("Ending LandSelection Stage");
-            System.out.println("\n\n Current state of the model:  \n");
-            System.out.println(gameModel);
+            showStatusDialog();
             goNextStage();
         } else {  // let the next player go
             currentPlayer = playerList.get(currentPlayerIndex);
             String currentName = currentPlayer.getName();
             myView.setCurrentPlayerName(currentName);
         }
+    }
+    
+    /**
+     * For demoing purposes to show the state of the model after
+     * land selection is over
+     */
+    private void showStatusDialog() {
+        String playerInfo = "";
+        for (Player player:  playerList)
+            playerInfo += player.getMyInventoryAsString();
+        JOptionPane.showMessageDialog(mainFrame,
+                "Land Selection is Over For Round + " + gameModel.getCurrentRound()
+                + "\n------Current State of Player Objects----\n" + playerInfo);
+        System.out.println("Ending LandSelection Stage");
+        System.out.println("\n\n Current state of the model:  \n");
+        System.out.println(gameModel);
     }
     
     private boolean allPlayersHaveSelected() {

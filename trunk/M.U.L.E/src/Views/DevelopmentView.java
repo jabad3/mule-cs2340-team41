@@ -54,6 +54,7 @@ public class DevelopmentView extends JLayeredPane {
      * @param mapPanel The map to display to the user
      * @param townPanel The town to display to the user
      * @param playerPawn The first pawn to display to the user
+     * @param muleTimerPanel The timer bar to display to the user
      */
     public DevelopmentView(MapPanel mapPanel, TownPanel townPanel, PlayerPawn playerPawn, MuleTimerPanel muleTimerPanel) {
         playerNameLabel = new JLabel("Whose turn is it?");
@@ -61,35 +62,40 @@ public class DevelopmentView extends JLayeredPane {
         this.townPanel = townPanel;
         this.cardPanel = new JPanel();
         this.currentPawn = playerPawn;
-        this.muleTimerPanel = muleTimerPanel;	//not functional yet
+        this.muleTimerPanel = muleTimerPanel;
         
         // config card panel
         cardLayout = new CardLayout();
         cardPanel.setLayout(cardLayout);
         cardPanel.add(this.mapPanel, "mapPanel");
         cardPanel.add(this.townPanel, "townPanel");
-        cardPanel.add(this.muleTimerPanel, "muleTimer");
+        //cardPanel.add(this.muleTimerPanel, "muleTimer");
+        
+        // place cardPanel and muleTimerPanel in same container so that
+        // a layout manager positions them correctly relative to one another
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(cardPanel, BorderLayout.CENTER);
+        mainPanel.add(this.muleTimerPanel, BorderLayout.EAST);
+        
         
         // Because JLayeredPane layout manager is null, manually set size,
         // location of components to add to it
-        cardPanel.setSize(mapPanel.getPreferredSize());
-        cardPanel.setLocation(0, 0);
+        mainPanel.setSize(new Dimension(600, 400));
+        mainPanel.setLocation(0, 0);
         
         playerNameLabel.setSize(playerNameLabel.getPreferredSize());
-        playerNameLabel.setLocation(0, this.mapPanel.getHeight() - 100);
+        playerNameLabel.setLocation(0, mainPanel.getHeight() - 100);
         
         currentPawn.setSize(currentPawn.getPreferredSize());
         currentPawn.setLocation(100, 50);
-        
-        muleTimerPanel.setSize(muleTimerPanel.getPreferredSize());
-        muleTimerPanel.setLocation(900,0);
-        
-        this.add(cardPanel, new Integer(0));  // place map/town underneath everything
+
+        // Add to JLayeredPane.  Lower numbers are drawn behind high numbers.
+        this.add(mainPanel, new Integer(0));  // map is behind everything
         this.add(playerNameLabel, new Integer(1));
         this.add(currentPawn, new Integer(2));
-        this.add(muleTimerPanel, new Integer(3));
 
-        this.setPreferredSize(mapPanel.getPreferredSize());
+        this.setPreferredSize(mainPanel.getSize());
     }
     
     /**
