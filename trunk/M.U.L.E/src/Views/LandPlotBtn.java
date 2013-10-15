@@ -15,14 +15,13 @@ import javax.swing.border.EmptyBorder;
 
 import Models.LandPlot;
 
-public class LandPlotBtn extends JComponent {
+public class LandPlotBtn extends ResizableIcon {
     
-    private ImageIcon imageIcon;
     private LandPlot myLandPlot;
 
     public LandPlotBtn(LandPlot landPlot, MouseListener buttonListener) {
+        super(landPlot.getLandType().getStockImageIcon());
         this.myLandPlot = landPlot;
-        this.imageIcon = myLandPlot.getLandType().getStockImageIcon();
         this.addMouseListener(buttonListener);
         drawBorder();
     }
@@ -30,8 +29,7 @@ public class LandPlotBtn extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image image = imageIcon.getImage();
-        g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
+        // TODO needed later for painting mule, resource
     }
 
     private void drawBorder() {
@@ -45,10 +43,6 @@ public class LandPlotBtn extends JComponent {
     
     public LandPlot getMyLandPlot() {
         return myLandPlot;
-    }
-    
-    public void changeImageIcon() {
-        this.imageIcon = new ImageIcon("flapper.png");
     }
 
     public void setBorderToDefault() {
