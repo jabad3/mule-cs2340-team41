@@ -192,7 +192,7 @@ public class PlayerPawnStateful extends PlayerPawn {
         
         MapPanel mapPanel = new MapPanel(MapFactory.buildMap("Default"), null);
         TownPanel townPanel = new TownPanel();
-        DevelopmentView view = new DevelopmentView(mapPanel, townPanel, pawn, null);
+        DevelopmentView view = new DevelopmentView(mapPanel, townPanel, pawn, new MuleTimerPanel(10000));
         
         pawn.listen(view);
         

@@ -45,6 +45,8 @@ public class PlayerPawnBind extends PlayerPawn {
         this.setIcon(pawnIcon);
         this.setPreferredSize(new Dimension(50, 50));
     }*/
+    public boolean rightKey = false;
+    public boolean upKey = false;
     
     /**
      * Create a PlayerPawn object to represent a Player using the Player's
@@ -61,8 +63,19 @@ public class PlayerPawnBind extends PlayerPawn {
      * 
      * @param key Specifies the direction to move the pawn
      */
-    public void move(InputType key) {
-        // TODO
+    public void move() {
+        if (upKey) {
+            int x = getX();
+            int y = getY();
+            int dy = getHeight() / 30;
+            setLocation(x, y - dy);
+        }
+        if (rightKey) {
+            int x = getX();
+            int y = getY();
+            int dx = getWidth() / 20;
+            setLocation(x + dx, y);
+        }
     }
     
     /**
@@ -74,10 +87,18 @@ public class PlayerPawnBind extends PlayerPawn {
         inputMap.put(key, "Up");
         actionMap.put("Up", new AbstractAction() {
                 public void actionPerformed(ActionEvent e) {
-                    int x = getX();
-                    int y = getY();
-                    int dy = getHeight() / 10;
-                    setLocation(x, y - dy);
+                    upKey = true;
+                }
+            });
+    }
+    
+    public void bindUpKeyRelease(KeyStroke key) {
+        InputMap inputMap = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = this.getActionMap();
+        inputMap.put(key, "UpRel");
+        actionMap.put("UpRel", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    upKey = false;
                 }
             });
     }
@@ -125,10 +146,18 @@ public class PlayerPawnBind extends PlayerPawn {
         inputMap.put(key, "Right");
         actionMap.put("Right", new AbstractAction() {
                 public void actionPerformed(ActionEvent e) {
-                    int x = getX();
-                    int y = getY();
-                    int dx = getHeight() / 10;
-                    setLocation(x + dx, y);
+                    rightKey = true;
+                }
+            });
+    }
+    
+    public void bindRightKeyRelease(KeyStroke key) {
+        InputMap inputMap = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = this.getActionMap();
+        inputMap.put(key, "RightRel");
+        actionMap.put("RightRel", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    rightKey = false;
                 }
             });
     }
@@ -147,16 +176,29 @@ public class PlayerPawnBind extends PlayerPawn {
 
     public static void main(String[] args) {
         JFrame jf = new JFrame("Display a pawn");
-        PlayerPawnBind pawn = new PlayerPawnBind(new ImageIcon("buzzite.png"));
+        final PlayerPawnBind pawn = new PlayerPawnBind(new ImageIcon("buzzite.png"));
         
         
-        pawn.bindUpKey(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0));
+        pawn.bindUpKey(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false));
+        pawn.bindUpKeyRelease(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true));
         pawn.bindDownKey(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
         pawn.bindLeftKey(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
-        pawn.bindRightKey(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
+        pawn.bindRightKey(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, false));
+        pawn.bindRightKeyRelease(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true));
         
         MapPanel mapPanel = new MapPanel(MapFactory.buildMap("Default"), null);
-        DevelopmentView view = new DevelopmentView(mapPanel, new TownPanel(), pawn, null);
+        DevelopmentView view = new DevelopmentView(mapPanel, new TownPanel(), pawn, new MuleTimerPanel(10000));
+
+        pawn.setLocation(100, 400);
+        java.util.Timer timer = new java.util.Timer();
+        timer.schedule(new java.util.TimerTask() {
+
+            @Override
+            public void run() {
+                pawn.move();
+            }
+                
+        }, 0, 10);
         
         
         jf.getContentPane().add(view);
