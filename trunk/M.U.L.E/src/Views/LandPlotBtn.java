@@ -24,6 +24,7 @@ public class LandPlotBtn extends JButton {
         this.imageIcon = myLandPlot.getLandType().getStockImageIcon();
         this.addMouseListener(buttonListener);
         drawBorder();
+        this.setFocusable(false);
     }
 
     @Override
