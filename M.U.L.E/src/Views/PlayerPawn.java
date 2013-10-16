@@ -6,16 +6,21 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Models.InputType;
+import Models.MapFactory;
 import Models.RaceType;
 
 /**
@@ -24,11 +29,6 @@ import Models.RaceType;
  */
 public class PlayerPawn extends ResizableIcon {
 
-    /** The Point representing the top-right-most position of the PlayerPawn */
-	Point location = new Point(280,265);	//change back to private
-	//private KeyListener directionListener = new DirectionListener();
-	
-	
 	/**
 	 * Create a PlayerPawn object to represent a Player.
 	 * 
@@ -59,22 +59,18 @@ public class PlayerPawn extends ResizableIcon {
 	 * 
 	 * @param key Specifies the direction to move the pawn
 	 */
-	public void move(InputType key) {
-	    // TODO
+	public void move() {
+	    int speed = 2;
+        
+        if(leftKey)
+            setLocation(getX() - speed, getY());
+        if(rightKey)
+            setLocation(getX() + speed, getY());
+        if(upKey)
+            setLocation(getX(), getY() - speed);
+        if(downKey)
+            setLocation(getX(), getY() + speed);
 	}
-	
-	/**
-	 * Manually position the pawn to the desired location.
-	 * 
-	 * @param newLocation The new location to place the pawn
-	 */
-	public void setLocation(Point newLocation) {
-	    location = newLocation;
-	    this.setLocation((int)newLocation.getX(), (int)newLocation.getY());
-	}
-	public Point getLocation() {
-		return location;
-		}
 	
 	/**
 	 * Sets the given input type to be either on or off.
@@ -87,76 +83,99 @@ public class PlayerPawn extends ResizableIcon {
 	public void setInputStatus(InputType input, boolean on) {
 	    // TODO
 	}
-	
-	
-	protected void paintComponenet(Graphics g) {
-		super.paintComponent(g);
-		g.fillOval((int)location.getX(),(int)location.getY(),1000,1000);
-		System.out.println("playerPawn");
-	}
-	
-	
-	/**
-	 * Returns the KeyListener of the PlayerPawn so other classes can use it
-	 * 
-	 * @return the pawn's keylistener
-	 */
-	/*public KeyListener getListener()
-	{
-		return directionListener;
-	}*/
-	
-//	public static void main(String[] args) {
-//	    JFrame jf = new JFrame("Display a pawn");
-//	    JPanel panel = new JPanel();
-//	    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-//	    panel.add(new PlayerPawn(new ImageIcon("Buzzite.png")));
-//	    panel.add(new ResizableIcon(new ImageIcon("flapper.png")));
-//	    panel.add(new JLabel(new ImageIcon("bonzoid.png")));
-//	    panel.setPreferredSize(new Dimension(300, 200));
-//	    jf.getContentPane().add(panel);
-//	    jf.pack();
-//	    jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//	    jf.setVisible(true);
-//	}
+    
+    public boolean leftKey = false;
+    public boolean rightKey = false;
+    public boolean upKey = false;
+    public boolean downKey = false;
+    
+    private class PlayerKeyListener extends KeyAdapter
+    {
+        public void keyPressed(KeyEvent e)
+        {
+            switch (e.getKeyCode())
+            {
+                case KeyEvent.VK_LEFT:
+                leftKey = true;
+                break;
+                case KeyEvent.VK_RIGHT:
+                rightKey = true;
+                break;
+                case KeyEvent.VK_UP:
+                upKey = true;
+                break;
+                case KeyEvent.VK_DOWN:
+                downKey = true;
+                break;
+            }
+        }
+        public void keyReleased(KeyEvent e)
+        {
+            switch (e.getKeyCode())
+            {
+                case KeyEvent.VK_LEFT:
+                leftKey = false;
+                break;
+                case KeyEvent.VK_RIGHT:
+                rightKey = false;
+                break;
+                case KeyEvent.VK_UP:
+                upKey = false;
+                break;
+                case KeyEvent.VK_DOWN:
+                downKey = false;
+                break;
+            }
+        }
+    }
+    
+    class MoveTask extends TimerTask {
+        private PlayerPawn playerToMove;
+        
+        public MoveTask(PlayerPawn playerToMove) {
+            this.playerToMove = playerToMove;
+        }
+        
+        public void run() {
+            int speed = 2;
+            
+            if(playerToMove.leftKey)
+                playerToMove.setLocation(playerToMove.getX() - speed, playerToMove.getY());
+            if(playerToMove.rightKey)
+                playerToMove.setLocation(playerToMove.getX() + speed, playerToMove.getY());
+            if(playerToMove.upKey)
+                playerToMove.setLocation(playerToMove.getX(), playerToMove.getY() - speed);
+            if(playerToMove.downKey)
+                playerToMove.setLocation(playerToMove.getX(), playerToMove.getY() + speed);
+        }
+    }
+    
+    public void enableMovement(JComponent listenToThis)
+    {
+        listenToThis.setFocusable(true);
+        listenToThis.addKeyListener(new PlayerKeyListener());
+        
+        //Timer fires every 16ms
+        //Timer timer = new Timer();
+        //timer.schedule(new MoveTask(this), 0, 16);
+    }
 
-	
-	
-	
-	/**
-	 * @author epramer3
-	 *
-	 */
-	/*private class DirectionListener implements KeyListener
-	{
-	
-/**
- * Moves the player according to which key was pressed
- * @param event The key that was pressed
- */
-		/*public void keyPressed (KeyEvent event)
-		{
-			switch (event.getKeyCode())
-			{
-				case KeyEvent.VK_UP:
-					System.out.println("up"); //debug statement
-					location.translate(0,-30);
-					break;
-				case KeyEvent.VK_DOWN:
-					location.translate(0,30);
-					break;
-				case KeyEvent.VK_LEFT:
-					location.translate(-30,0);
-					break;
-				case KeyEvent.VK_RIGHT:
-					location.translate(0,30);
-					break;
-			}
-			repaint();
-		
-		}
-		public void keyReleased(KeyEvent event) {}
-		public void keyTyped(KeyEvent event) {}
-	}*/
+    public static void main(String[] args) {
+        JFrame jf = new JFrame("Display a pawn");
+        PlayerPawn pawn = new PlayerPawn(new ImageIcon("buzzite.png"));
+        
+        MapPanel mapPanel = new MapPanel(MapFactory.buildMap("Default"), null);
+        TownPanel townPanel = new TownPanel();
+        DevelopmentView view = new DevelopmentView(mapPanel, townPanel, pawn, new MuleTimerPanel(10000));
+        
+        pawn.enableMovement(view);
+        
+        
+        
+        jf.getContentPane().add(view);
+        jf.pack();
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf.setVisible(true);
+    }
 
 }
