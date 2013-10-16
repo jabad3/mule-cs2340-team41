@@ -150,6 +150,18 @@ public class MuleTimerPanel extends JPanel {
     }
     
     /**
+     * to delete
+     */
+    public String toString() {
+        int width = getWidth();
+        int height = getHeight();
+        double fractionRemaining = ((double) remainingTime) / ((double) duration);
+        int barHeight = (int) (fractionRemaining * ((double) height));
+        return ("duration/remaining/defaultDec = " + duration + "/" + remainingTime + "/" + defaultDecrementAmount
+                + "\n" + "barheight/width/height:  " + barHeight + "/" + width + "/" + height);
+    }
+    
+    /**
      * Main method for testing.
      * 
      * @param args
@@ -161,7 +173,7 @@ public class MuleTimerPanel extends JPanel {
         centerp.setPreferredSize(new Dimension(600, 400));
         centerp.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         
-        final MuleTimerPanel tp = new MuleTimerPanel(20000);
+        final MuleTimerPanel tp = new MuleTimerPanel(3000);
         
         jf.add(centerp, BorderLayout.CENTER);
         jf.add(tp, BorderLayout.EAST);
@@ -172,7 +184,7 @@ public class MuleTimerPanel extends JPanel {
         timer.schedule(new java.util.TimerTask() { 
                 public void run() {
                     if (!tp.isFinished()) {
-                        tp.decrement(50);
+                        tp.decrement(10);
                         tp.repaint();
                     }
                     else {
@@ -183,6 +195,6 @@ public class MuleTimerPanel extends JPanel {
                         g.dispose();
                     }
                 }
-            }, 0, 100);
+            }, 0, 10);
     }
 }

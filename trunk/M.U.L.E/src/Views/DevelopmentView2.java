@@ -32,9 +32,9 @@ public class DevelopmentView2 extends JLayeredPane implements KeyListener {
         playerNameLabel.setLocation(0, this.mapPanel.getHeight() - 100);
         currentPawn.setSize(currentPawn.getPreferredSize());
         
-        System.out.println((int)currentPawn.location.getX() +", "+ (int)currentPawn.location.getY());
-        currentPawn.setLocation(new Point((int)currentPawn.location.getX(), (int)currentPawn.location.getY()));
-        System.out.println((int)currentPawn.location.getX() +", "+ (int)currentPawn.location.getY());
+        //System.out.println((int)currentPawn.location.getX() +", "+ (int)currentPawn.location.getY());
+        //currentPawn.setLocation(new Point((int)currentPawn.location.getX(), (int)currentPawn.location.getY()));
+        //System.out.println((int)currentPawn.location.getX() +", "+ (int)currentPawn.location.getY());
         //currentPawn.setLocation(280,265);
         
         this.add(mapPanel, new Integer(0));  // place map underneath everything
@@ -79,9 +79,9 @@ public class DevelopmentView2 extends JLayeredPane implements KeyListener {
 			int keyCode = e.getKeyCode();
 			String keyWord = e.getKeyText(keyCode);
 			System.out.println("omg it works, key pressed: " + keyWord);
-			double x = currentPawn.location.getX();
-			double y = currentPawn.location.getY();
-			currentPawn.setLocation(new Point((int)x+3,(int)y+3));
+			//double x = currentPawn.location.getX();
+			//double y = currentPawn.location.getY();
+			//currentPawn.setLocation(new Point((int)x+3,(int)y+3));
 			System.out.println(currentPawn.getLocation());
 			
 			this.validate();

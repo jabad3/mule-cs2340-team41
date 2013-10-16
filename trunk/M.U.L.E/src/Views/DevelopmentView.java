@@ -29,24 +29,25 @@ import Models.MapFactory;
 public class DevelopmentView extends JLayeredPane {
     
     /** Label to display the current Player's name. */
-    JLabel playerNameLabel;
+    private JLabel playerNameLabel;
     
     /** Displays the land plots to the user. */
-    MapPanel mapPanel;
+    private MapPanel mapPanel;
     
     /** Displays the town to the user. */
-    TownPanel townPanel;
+    private TownPanel townPanel;
     
     /** A JPanel with card layout to allow easy swapping between town and map. */
-    JPanel cardPanel;
+    private JPanel cardPanel;
     
     /** The CardLayout that is the layout manager of the cardPanel. */
-    CardLayout cardLayout;
+    private CardLayout cardLayout;
     
     /** The current PlayerPawn object to be displayed to the user. */
-    PlayerPawn currentPawn;
+    private PlayerPawn currentPawn;
     
-    MuleTimerPanel muleTimerPanel;
+    /** Displays a bar representing the time left in the current turn. */
+    private MuleTimerPanel muleTimerPanel;
     
     /**
      * Create the Development View.
@@ -99,23 +100,91 @@ public class DevelopmentView extends JLayeredPane {
     }
     
     /**
+     * This method begins a player's turn by allowing them to move their pawn
+     * and interact with the store and town until they are out of time.
+     */
+    public void beginPlayerTurn() {
+        final int period = 16;  // call task.run() every 16 ms
+        
+        currentPawn.enableMovement(this);
+        
+        java.util.Timer timer = new java.util.Timer();
+        java.util.TimerTask task = new java.util.TimerTask() {
+                public void run() {
+                    if (!muleTimerPanel.isFinished()) {
+                        animateView(period);
+                    } else {
+                        this.cancel();
+                    }
+                }
+            };
+        timer.schedule(task, 0, period);
+    }
+    
+    /**
      * Animation of the player pawn and updates to the MULE timer occurs here.
      * This method handles any swapping of the map/town that is needed.
      * 
      * This method should be called on a frequently enough so that the
      * animation appears smooth.
      * 
-     * @param duration The duration of the player's turn in milliseconds.
+     * @param period The number of milliseconds between each call of the update
+     * method.  This is needed so that the mule timer panel is updated at the
+     * correct rate.
      */
-    public void update() {
+    public void animateView(int period) {
         // TODO
         // call pawn.move if new location is valid
         // swap town/map panel if needed
         // update the MULE timer
-    	if(currentPawn.getLocation().getX() >= 280 && currentPawn.getLocation().getX() <= 350
-    			&& currentPawn.getLocation().getY() >= 250 && currentPawn.getLocation().getY() <= 350){
-    		showTown();
-    	}
+
+        currentPawn.move();
+        
+        if (mapPanel.isVisible())
+            performMapCollisionEvents();   
+        else
+            performTownCollisionEvents();
+            
+        muleTimerPanel.decrement(period);
+        muleTimerPanel.repaint();
+        setFocusable(true);  // if not called, then muleTimerPanel.repaint() messes up focus
+    }
+    
+    /**
+     * In the map, take action if the current pawn...
+     *   1) Collides with the town, or
+     *   2) Collides with the map border
+     */
+    private void performMapCollisionEvents() {
+        
+        if (!mapPanel.insideMap(currentPawn)) {
+            // TODO
+            // means the moved pawn is out of bounds, so either put it back
+            // in bounds, or maybe we need to update the pawns coordinates
+            // in a slightly different way
+        }
+                
+        if (mapPanel.overlapsTown(currentPawn))
+            showTown();
+    }
+    
+    /**
+     * In the map, take action if the current pawn..
+     *   1) Collides with the town border,
+     *   2) Collides with an entrance to a shop, or
+     *   3) Collides with a shop border that is not an entrance
+     */
+    private void performTownCollisionEvents() {
+        if (!townPanel.insideTown(currentPawn))
+            showMap();
+        
+        // TODO
+        // check if pawn enters a store
+        
+        // TODO
+        // keep pawn from going out of bounds while still inside the town
+        // like above, we probably can move it back in bounds, or update
+        // the coordinates in a different way
     }
     
     /**
@@ -164,20 +233,24 @@ public class DevelopmentView extends JLayeredPane {
      */
     public static void main(String[] args) {
         JFrame jf = new JFrame("Test Dev't View");
-        MapPanel mapPanel = new MapPanel(MapFactory.buildMap("Default"), null);
-        TownPanel townPanel = new TownPanel();
-        PlayerPawnStateful pawn = new PlayerPawnStateful(new ImageIcon("Buzzite.png"));
-        MuleTimerPanel muleTimerPanel = new MuleTimerPanel(3000);
+        final MapPanel mapPanel = new MapPanel(MapFactory.buildMap("Default"), null);
+        final TownPanel townPanel = new TownPanel();
+        final PlayerPawn pawn = new PlayerPawn(new ImageIcon("buzzite.png"));
+        final MuleTimerPanel muleTimerPanel = new MuleTimerPanel(25000);
         
-        DevelopmentView dv = new DevelopmentView(mapPanel, townPanel, pawn, muleTimerPanel);
+        final DevelopmentView dv = new DevelopmentView(mapPanel, townPanel, pawn, muleTimerPanel);
         
-        pawn.listen(dv);
+        
 
         
         jf.getContentPane().add(dv);
         jf.pack();
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);
+        
+        dv.beginPlayerTurn();
+        
+        
     }
     
 }
