@@ -113,6 +113,7 @@ public class DevelopmentView extends JLayeredPane {
         int period = 16;  // call task.run() every 16 ms
         
         currentPawn.enableMovement(this);
+        currentPawn.setLocation(mapPanel.getX() + mapPanel.getWidth()/2, mapPanel.getY() + mapPanel.getHeight()/2);
         muleTimerPanel.reset(duration);
         muleTimerPanel.setDefaultDecrementAmount(period);
         
@@ -186,7 +187,6 @@ public class DevelopmentView extends JLayeredPane {
             {
             	pawnPos.x = mapPanelOrigin.x+mapPanelSize.width-pawnSize.width;
             }
-            System.out.println(pawnPos.y +  "    " + mapPanelOrigin.y);
             if(pawnPos.y < mapPanelOrigin.y)
             {
             	pawnPos.y = mapPanelOrigin.y;
