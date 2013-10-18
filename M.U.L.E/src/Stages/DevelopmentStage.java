@@ -21,7 +21,6 @@ import Views.MapPanel;
 import Views.MuleTimerListener;
 import Views.MuleTimerPanel;
 import Views.PlayerPawn;
-import Views.PlayerPawnBind;
 import Views.TownPanel;
 
 /**
