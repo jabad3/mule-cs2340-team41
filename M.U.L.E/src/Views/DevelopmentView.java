@@ -171,7 +171,7 @@ public class DevelopmentView extends JLayeredPane {
             // in bounds, or maybe we need to update the pawns coordinates
             // in a slightly different way
         	
-        	/*Point pawnPos = currentPawn.getLocation();
+        	Point pawnPos = currentPawn.getLocation();
         	Dimension pawnSize = currentPawn.getSize();
             Dimension mapPanelSize = this.mapPanel.getSize();
             Point cardPanelOrigin = this.cardPanel.getLocation();
@@ -195,11 +195,11 @@ public class DevelopmentView extends JLayeredPane {
             {
             	pawnPos.y = mapPanelOrigin.y+mapPanelSize.height-pawnSize.height;
             }
-            currentPawn.setLocation(pawnPos);*/
-            currentPawn.setIcon(new ImageIcon("buzzite.png"));
+            currentPawn.setLocation(pawnPos);
+            //currentPawn.setIcon(new ImageIcon("buzzite.png"));
         }
-        else
-        	currentPawn.setIcon(new ImageIcon("flapper.png"));
+        //else
+        //	currentPawn.setIcon(new ImageIcon("flapper.png"));
                 
         if (mapPanel.overlapsTown(currentPawn))
             showTown();
