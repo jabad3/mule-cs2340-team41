@@ -49,6 +49,7 @@ public class Game {
 	    gameConfigStage.setNextStage(playerConfigStage);
 	    playerConfigStage.setNextStage(landSelectionStage);
 	    landSelectionStage.setNextStage(developmentStage);
+	    developmentStage.setNextStage(landSelectionStage);  // just for M6
 	    
 	    gameConfigStage.start();
 	}

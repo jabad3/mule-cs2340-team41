@@ -9,6 +9,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * This class displays a timer in the Mule game.
  * A timer acts as a visual cue to the user to let them know how much time
@@ -42,6 +46,9 @@ public class MuleTimerPanel extends JPanel {
     /** The default number of milliseconds to decrement the timer with. */
     int defaultDecrementAmount;
     
+    /** All mule timer listeners listening to this object. */
+    Collection<MuleTimerListener> muleTimerListeners;
+    
     /**
      * Creates a MuleTimerPanel with default duration of 30 seconds and
      * default  color of red.
@@ -70,7 +77,18 @@ public class MuleTimerPanel extends JPanel {
         this.barColor = barColor;
         this.remainingTime = duration;
         this.defaultDecrementAmount = 33;
+        muleTimerListeners = new ArrayList<>(3);  // not many expected
+        
         setPreferredSize(new Dimension(50, 400));
+    }
+    
+    /**
+     * Add a listener to this MuleTimerPanel.
+     * 
+     * @param listener A new MuleTimerListener to send notifications to
+     */
+    public void addMuleTimerListener(MuleTimerListener listener) {
+        muleTimerListeners.add(listener);
     }
     
     /**
@@ -80,15 +98,6 @@ public class MuleTimerPanel extends JPanel {
      */
     public boolean isFinished() {
         return remainingTime <= 0;
-    }
-    
-    /**
-     * Decrement the timer by a specified amount of time.
-     * 
-     * @param delta The number of milliseconds to decrement the timer
-     */
-    public void decrement(int delta) {
-        remainingTime -= delta;
     }
     
     /**
@@ -104,6 +113,22 @@ public class MuleTimerPanel extends JPanel {
     }
     
     /**
+     * Decrement the timer by a specified amount of time.
+     * 
+     * @param delta The number of milliseconds to decrement the timer
+     */
+    public void decrement(int delta) {
+        remainingTime -= delta;
+        if (isFinished())
+            sendMuleTimerFinishedNotifications();
+    }
+    
+    private void sendMuleTimerFinishedNotifications() {
+        for (MuleTimerListener mtl: muleTimerListeners)
+            mtl.muleTimerFinished();
+    }
+    
+    /**
      * Set the timer's duration to the specified amount
      * 
      * @param duration The new duration for the MuleTimer
@@ -113,6 +138,16 @@ public class MuleTimerPanel extends JPanel {
             this.duration = 0;
         else
             this.duration = duration;
+    }
+   
+    /**
+     * Set the timer's default decrement amount.
+     * 
+     * @param amount A positive number of milliseconds to decrement the timer
+     * each time decrement() is called
+     */
+    public void setDefaultDecrementAmount(int amount) {
+        defaultDecrementAmount = amount;
     }
     
     /**

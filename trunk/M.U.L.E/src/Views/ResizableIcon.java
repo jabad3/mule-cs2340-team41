@@ -26,7 +26,8 @@ import javax.swing.JPanel;
 public class ResizableIcon extends JComponent {
 
     /** The image to be displayed in the resizable icon. */
-    private Image image;
+    //private Image image;
+    Image image;
     
     /**
      * Create a ResizableIcon to display the given ImageIcon object.
@@ -54,11 +55,30 @@ public class ResizableIcon extends JComponent {
      * Set the displayed icon and automatically updates the component to
      * display the new icon.
      * 
-     * @param icon The new icon to be displayed
+     * @param icon ImageIcon containing the icon to be displayed
      */
     public void setIcon(ImageIcon icon) {
-        this.image = icon.getImage();
+        setImage(icon.getImage());
+    }
+    
+    /**
+     * Set the displayed image and automatically updates the component to
+     * display the new icon.
+     * 
+     * @param icon Image object containing the icon to be displayed
+     */
+    public void setImage(Image image) {
+        this.image = image;
         repaint();
+    }
+    
+    /**
+     * Get the Image object that is being displayed inside the component.
+     * 
+     * @return The image object being displayed
+     */
+    public Image getImage() {
+        return image;
     }
     
     @Override

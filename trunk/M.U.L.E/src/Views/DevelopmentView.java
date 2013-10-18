@@ -5,6 +5,8 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -49,6 +51,9 @@ public class DevelopmentView extends JLayeredPane {
     /** Displays a bar representing the time left in the current turn. */
     private MuleTimerPanel muleTimerPanel;
     
+    /** The timer object used to animate the view. */
+    private Timer animationTimer;
+    
     /**
      * Create the Development View.
      * 
@@ -58,19 +63,18 @@ public class DevelopmentView extends JLayeredPane {
      * @param muleTimerPanel The timer bar to display to the user
      */
     public DevelopmentView(MapPanel mapPanel, TownPanel townPanel, PlayerPawn playerPawn, MuleTimerPanel muleTimerPanel) {
-        playerNameLabel = new JLabel("Whose turn is it?");
         this.mapPanel = mapPanel;
         this.townPanel = townPanel;
-        this.cardPanel = new JPanel();
-        this.currentPawn = playerPawn;
         this.muleTimerPanel = muleTimerPanel;
+        playerNameLabel = new JLabel("Whose turn is it?");
+        cardPanel = new JPanel();
+        currentPawn = playerPawn;
         
-        // config card panel
+        // configure card panel
         cardLayout = new CardLayout();
         cardPanel.setLayout(cardLayout);
         cardPanel.add(this.mapPanel, "mapPanel");
         cardPanel.add(this.townPanel, "townPanel");
-        //cardPanel.add(this.muleTimerPanel, "muleTimer");
         
         // place cardPanel and muleTimerPanel in same container so that
         // a layout manager positions them correctly relative to one another
@@ -78,6 +82,7 @@ public class DevelopmentView extends JLayeredPane {
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(cardPanel, BorderLayout.CENTER);
         mainPanel.add(this.muleTimerPanel, BorderLayout.EAST);
+        mainPanel.add(playerNameLabel, BorderLayout.NORTH);
         
         
         // Because JLayeredPane layout manager is null, manually set size,
@@ -85,40 +90,46 @@ public class DevelopmentView extends JLayeredPane {
         mainPanel.setSize(new Dimension(600, 400));
         mainPanel.setLocation(0, 0);
         
-        playerNameLabel.setSize(playerNameLabel.getPreferredSize());
-        playerNameLabel.setLocation(0, mainPanel.getHeight() - 100);
-        
         currentPawn.setSize(currentPawn.getPreferredSize());
         currentPawn.setLocation(100, 50);
 
         // Add to JLayeredPane.  Lower numbers are drawn behind high numbers.
-        this.add(mainPanel, new Integer(0));  // map is behind everything
-        this.add(playerNameLabel, new Integer(1));
-        this.add(currentPawn, new Integer(2));
+        this.add(mainPanel, new Integer(0));  // map is behind pawn
+        this.add(currentPawn, new Integer(1));
 
         this.setPreferredSize(mainPanel.getSize());
+        
+        animationTimer = new Timer();
     }
     
     /**
      * This method begins a player's turn by allowing them to move their pawn
      * and interact with the store and town until they are out of time.
+     * 
+     * @param duration The duration of the turn in milliseconds
      */
-    public void beginPlayerTurn() {
-        final int period = 16;  // call task.run() every 16 ms
+    public void beginPlayerTurn(int duration) {
+        int period = 16;  // call task.run() every 16 ms
         
         currentPawn.enableMovement(this);
+        muleTimerPanel.reset(duration);
+        muleTimerPanel.setDefaultDecrementAmount(period);
         
-        java.util.Timer timer = new java.util.Timer();
-        java.util.TimerTask task = new java.util.TimerTask() {
+        TimerTask task = new TimerTask() {
                 public void run() {
-                    if (!muleTimerPanel.isFinished()) {
-                        animateView(period);
-                    } else {
-                        this.cancel();
-                    }
+                    animateView();
                 }
             };
-        timer.schedule(task, 0, period);
+        animationTimer = new Timer();
+        animationTimer.schedule(task, 0, period);
+    }
+    
+    /**
+     * This method ends a player's turn by preventer further interaction
+     * with the View.
+     */
+    public void endPlayerTurn() {
+        animationTimer.cancel();  // view animation will stop
     }
     
     /**
@@ -127,12 +138,8 @@ public class DevelopmentView extends JLayeredPane {
      * 
      * This method should be called on a frequently enough so that the
      * animation appears smooth.
-     * 
-     * @param period The number of milliseconds between each call of the update
-     * method.  This is needed so that the mule timer panel is updated at the
-     * correct rate.
      */
-    public void animateView(int period) {
+    public void animateView() {
         // TODO
         // call pawn.move if new location is valid
         // swap town/map panel if needed
@@ -145,7 +152,7 @@ public class DevelopmentView extends JLayeredPane {
         else
             performTownCollisionEvents();
             
-        muleTimerPanel.decrement(period);
+        muleTimerPanel.decrement();
         muleTimerPanel.repaint();
         setFocusable(true);  // if not called, then muleTimerPanel.repaint() messes up focus
     }
@@ -202,7 +209,7 @@ public class DevelopmentView extends JLayeredPane {
      * @param newPawn The new PlayerPawn to be displayed
      */
     public void setCurrentPawn(PlayerPawn newPawn) {
-        currentPawn = newPawn;
+        currentPawn.setImage(newPawn.getImage());
     }
     
     /**
@@ -248,9 +255,7 @@ public class DevelopmentView extends JLayeredPane {
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);
         
-        dv.beginPlayerTurn();
-        
-        
+        dv.beginPlayerTurn(25000);
     }
     
 }
