@@ -74,15 +74,6 @@ public class PlayerPawn extends ResizableIcon {
         if(downKey)
         	postmovePos.y += speed;
         
-        /*if(postmovePos.x < 0)
-        	postmovePos.x = 0;
-        else if(postmovePos.x > 600)
-        	postmovePos.x = 600;
-        if(postmovePos.y < 0)
-        	postmovePos.y = 0;
-        else if(postmovePos.y > 400)
-        	postmovePos.y = 400;*/
-        
         setLocation(postmovePos);
 	}
 	
