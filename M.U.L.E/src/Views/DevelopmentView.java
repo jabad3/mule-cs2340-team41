@@ -3,6 +3,7 @@ package Views;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
@@ -169,7 +170,36 @@ public class DevelopmentView extends JLayeredPane {
             // means the moved pawn is out of bounds, so either put it back
             // in bounds, or maybe we need to update the pawns coordinates
             // in a slightly different way
+        	
+        	/*Point pawnPos = currentPawn.getLocation();
+        	Dimension pawnSize = currentPawn.getSize();
+            Dimension mapPanelSize = this.mapPanel.getSize();
+            Point cardPanelOrigin = this.cardPanel.getLocation();
+            Point mapPanelOrigin = this.mapPanel.getLocation();
+            Point mapPanelRealOrigin = mapPanelOrigin;
+            mapPanelRealOrigin.translate(cardPanelOrigin.x, cardPanelOrigin.y);
+            if(pawnPos.x < mapPanelOrigin.x)
+            {
+            	pawnPos.x = mapPanelOrigin.x;
+            }
+            else if(pawnPos.x+pawnSize.width > mapPanelOrigin.x+mapPanelSize.width)
+            {
+            	pawnPos.x = mapPanelOrigin.x+mapPanelSize.width-pawnSize.width;
+            }
+            System.out.println(pawnPos.y +  "    " + mapPanelOrigin.y);
+            if(pawnPos.y < mapPanelOrigin.y)
+            {
+            	pawnPos.y = mapPanelOrigin.y;
+            }
+            else if(pawnPos.y+pawnSize.height > mapPanelOrigin.y+mapPanelSize.height)
+            {
+            	pawnPos.y = mapPanelOrigin.y+mapPanelSize.height-pawnSize.height;
+            }
+            currentPawn.setLocation(pawnPos);*/
+            currentPawn.setIcon(new ImageIcon("buzzite.png"));
         }
+        else
+        	currentPawn.setIcon(new ImageIcon("flapper.png"));
                 
         if (mapPanel.overlapsTown(currentPawn))
             showTown();
