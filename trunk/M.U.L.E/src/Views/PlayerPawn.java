@@ -62,15 +62,28 @@ public class PlayerPawn extends ResizableIcon {
 	 */
 	public void move() {
 	    int speed = 2;
+	    Point premovePos = getLocation();
+	    Point postmovePos = premovePos;
         
         if(leftKey)
-            setLocation(getX() - speed, getY());
+        	postmovePos.x -= speed;
         if(rightKey)
-            setLocation(getX() + speed, getY());
+        	postmovePos.x += speed;
         if(upKey)
-            setLocation(getX(), getY() - speed);
+        	postmovePos.y -= speed;
         if(downKey)
-            setLocation(getX(), getY() + speed);
+        	postmovePos.y += speed;
+        
+        /*if(postmovePos.x < 0)
+        	postmovePos.x = 0;
+        else if(postmovePos.x > 600)
+        	postmovePos.x = 600;
+        if(postmovePos.y < 0)
+        	postmovePos.y = 0;
+        else if(postmovePos.y > 400)
+        	postmovePos.y = 400;*/
+        
+        setLocation(postmovePos);
 	}
 	
 	/**
