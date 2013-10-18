@@ -3,6 +3,8 @@ package Models;
 import java.awt.Color;
 import java.util.EnumMap;
 
+import javax.swing.ImageIcon;
+
 
 public class Player extends Trader {
     
@@ -107,6 +109,16 @@ public class Player extends Trader {
      */
     public String getMyInventoryAsString() {
         return "\n\n----------" + name + "'s Inventory--------------" + inventory.toString();
+    }
+
+    /**
+     * Get the icon associated with this player.
+     * 
+     * @return The image icon for the player
+     */
+    public ImageIcon getIcon() {
+        // TODO At one point may want to customize each icon according to color
+        return race.getStockImageIcon();
     }
 	
 }

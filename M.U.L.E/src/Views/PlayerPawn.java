@@ -1,6 +1,7 @@
 package Views;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -150,7 +151,7 @@ public class PlayerPawn extends ResizableIcon {
         }
     }
     
-    public void enableMovement(JComponent listenToThis)
+    public void enableMovement(Component listenToThis)
     {
         listenToThis.setFocusable(true);
         listenToThis.addKeyListener(new PlayerKeyListener());
