@@ -2,6 +2,7 @@ package Models;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -27,6 +28,26 @@ public class GameModel {
 	
 	/** The current round of the game. */
 	private int currentRound = 0;
+	
+	/** The food requirement for players each round. */
+	private java.util.Map<Integer,Integer> foodRequirements;
+	
+	public void GameModel()
+	{
+		foodRequirements = new HashMap<Integer,Integer>();
+		foodRequirements.put(1, 3); //key = round, value = # of foods
+		foodRequirements.put(2, 3);
+		foodRequirements.put(3, 3);
+		foodRequirements.put(4, 3);
+		foodRequirements.put(5, 4);
+		foodRequirements.put(6, 4);
+		foodRequirements.put(7, 4);
+		foodRequirements.put(8, 4);
+		foodRequirements.put(9, 5);
+		foodRequirements.put(10, 5);
+		foodRequirements.put(11, 5);
+		foodRequirements.put(12, 5);
+	}
 	
 	/**
 	 * Add a Player to playerList.
@@ -158,6 +179,16 @@ public class GameModel {
 	    currentRound++;
 	}
 
+	/**
+	 * Increments the current round number.
+	 */
+	public int calculateTurnTime() {
+		//get player food, compare to current round's corresponding food
+		//if >= round's amount, return 50
+		//if >0 but <round's amount return 30
+		//else return 5
+		return 0;
+	}
     public boolean gameIsOver() {
         return currentRound > FINAL_ROUND;
     }
