@@ -211,8 +211,9 @@ public class DevelopmentView extends JPanel {
      *   3) Collides with a shop border that is not an entrance
      */
     private void performTownCollisionEvents() {
-        if (!townPanel.insideTown(currentPawn))
+        if (!townPanel.insideTown(currentPawn)) {
             showMap();
+        }
         
         // TODO
         // check if pawn is close enough to interact with store
