@@ -8,7 +8,6 @@ public class LandPlot {
 	private Player owner;
     private LandPlotType landType;
     private Mule mule;
-    private int totalPlotScore;
     private Resource resource;
     private int resourceCount;
     private int productionRate;
@@ -55,16 +54,13 @@ public class LandPlot {
         return landType == LandPlotType.TOWN;
     }
     
-    private void calculateTotalPlotScore() {
+    public int getScore() {
+    	int totalPlotScore = 0;
     	if(mule == null) {
     		totalPlotScore = 500;
     	}
     	else
     		totalPlotScore = mule.getScoreValue();
-    }
-    
-    public int getScore() {
-    	calculateTotalPlotScore();
     	return totalPlotScore;
     }
 }

@@ -24,8 +24,6 @@ public class Player extends Trader implements Comparable<Player> {
 	
 	private List<LandPlot> landPlotList = new ArrayList<>();
 	
-	private int score;
-	
 	/**
 	 * Create a Player object using a name, a RaceType, a Color, and Difficulty.
 	 * The Player will have its inventory set to the proper initial amounts,
@@ -138,6 +136,7 @@ public class Player extends Trader implements Comparable<Player> {
 	}
 
 	private int getScore() {
+		int score = 0;
 		for(LandPlot plot : landPlotList) {
 			score += plot.getScore();
 		}

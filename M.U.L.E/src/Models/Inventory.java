@@ -13,8 +13,6 @@ public class Inventory {
     /** Holds quantities for:  Food, Energy, Ore, Money, Mule */
     EnumMap<Resource, Integer> resourceCounts;
     
-    private int totalInventoryScore;
-    
     /**
      * Create an Inventory object.
      * 
@@ -106,13 +104,9 @@ public class Inventory {
     }
 
 	public int getScore() {
-		setTotalInventoryScore();
-		return totalInventoryScore;
-	}
-
-	private void setTotalInventoryScore() {
+		int totalInventoryScore = 0;
 		totalInventoryScore += resourceCounts.get(Resource.MONEY);
 		//totalInventoryScore += resource.getCurrentPrice() for each resource
-		
+		return totalInventoryScore;
 	}
 }
