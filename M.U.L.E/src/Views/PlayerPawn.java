@@ -93,6 +93,7 @@ public class PlayerPawn extends ResizableIcon {
     public boolean rightKey = false;
     public boolean upKey = false;
     public boolean downKey = false;
+    public boolean actionKey = false;
     
     private class PlayerKeyListener extends KeyAdapter
     {
@@ -112,6 +113,9 @@ public class PlayerPawn extends ResizableIcon {
                 case KeyEvent.VK_DOWN:
                 downKey = true;
                 break;
+                case KeyEvent.VK_SPACE:
+                actionKey = true;
+                break;
             }
         }
         public void keyReleased(KeyEvent e)
@@ -130,11 +134,14 @@ public class PlayerPawn extends ResizableIcon {
                 case KeyEvent.VK_DOWN:
                 downKey = false;
                 break;
+                case KeyEvent.VK_SPACE:
+                actionKey = false;
+                break;
             }
         }
     }
     
-    class MoveTask extends TimerTask {
+    /*class MoveTask extends TimerTask {
         private PlayerPawn playerToMove;
         
         public MoveTask(PlayerPawn playerToMove) {
@@ -153,7 +160,7 @@ public class PlayerPawn extends ResizableIcon {
             if(playerToMove.downKey)
                 playerToMove.setLocation(playerToMove.getX(), playerToMove.getY() + speed);
         }
-    }
+    }*/
     
     public void enableMovement(Component listenToThis)
     {
