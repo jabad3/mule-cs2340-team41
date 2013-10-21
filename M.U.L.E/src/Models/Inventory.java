@@ -13,6 +13,8 @@ public class Inventory {
     /** Holds quantities for:  Food, Energy, Ore, Money, Mule */
     EnumMap<Resource, Integer> resourceCounts;
     
+    private int totalInventoryScore;
+    
     /**
      * Create an Inventory object.
      * 
@@ -39,9 +41,9 @@ public class Inventory {
      * 
      * @param resource The resource to decrement
      */
-    public void removeResource(Resource resource) {
+    public void removeResource(Resource resource, int resourceCount) {
         int currentCount = resourceCounts.get(resource);
-        resourceCounts.put(resource, currentCount--);
+        resourceCounts.put(resource, resourceCount);
     }
 
     /**
@@ -49,9 +51,9 @@ public class Inventory {
      * 
      * @param resource The resource to increment
      */
-    public void addResource(Resource resource) {
+    public void addResource(Resource resource, int resourceCount) {
     	int currentCount = resourceCounts.get(resource);
-        resourceCounts.put(resource, currentCount++);
+        resourceCounts.put(resource, resourceCount);
         
     }
     
@@ -102,4 +104,15 @@ public class Inventory {
         String s5 = "\nMules:  " + getResourceCount(Resource.MULE);
         return s1 + s2 + s3 + s4 + s5;
     }
+
+	public int getScore() {
+		setTotalInventoryScore();
+		return totalInventoryScore;
+	}
+
+	private void setTotalInventoryScore() {
+		totalInventoryScore += resourceCounts.get(Resource.MONEY);
+		//totalInventoryScore += resource.getCurrentPrice() for each resource
+		
+	}
 }

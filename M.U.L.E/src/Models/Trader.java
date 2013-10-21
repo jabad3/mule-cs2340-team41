@@ -28,11 +28,11 @@ public abstract class Trader {
      *          Thrown when a buyer (this) does not have enough money,
      *          or when the seller does not have the resource in stock.
      */
-    public void buyResourceFromSeller(Trader seller, Resource rType, int price) throws FailedTransactionException {
+    public void buyResourceFromSeller(Trader seller, Resource rType, int price, int resourceCount) throws FailedTransactionException {
         try {
-            seller.removeResource(rType);
+            seller.removeResource(rType, resourceCount);
             this.paySeller(seller, price);
-            this.addResource(rType);
+            this.addResource(rType, resourceCount);
         }
         catch (FailedTransactionException e) {
             throw e;
@@ -47,11 +47,11 @@ public abstract class Trader {
      *          Thrown when the Trader does not have any units of the resource,
      *          in which case it is impossible to remove a unit of the resource.
      */
-    public void removeResource(Resource rType) throws FailedTransactionException {
+    public void removeResource(Resource rType, int resourceCount) throws FailedTransactionException {
         if (inventory.getResourceCount(rType) == 0) 
             throw new FailedTransactionException("Not in stock.");
         else
-            inventory.removeResource(rType);
+            inventory.removeResource(rType, resourceCount);
     }
     
     /**
@@ -59,8 +59,8 @@ public abstract class Trader {
      * 
      * @param rType The type of Resource to add
      */
-    public void addResource(Resource rType) {
-        inventory.addResource(rType);
+    public void addResource(Resource rType, int resourceCount) {
+        inventory.addResource(rType, resourceCount);
     }
 
     /**

@@ -1,6 +1,7 @@
 package Models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -94,8 +95,9 @@ public class GameModel {
      * Sort the list of Players based on score.
      * The Player with the highest score will be first in the list.
      */
+	@SuppressWarnings("unchecked")
 	private void sortPlayerList() {
-		// TODO
+		Collections.sort(playerList);
 	}
 
 	/**

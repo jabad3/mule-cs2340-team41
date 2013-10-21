@@ -1,12 +1,14 @@
 package Models;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
 
-public class Player extends Trader {
+public class Player extends Trader implements Comparable<Player> {
     
     /** The player's chosen name */
 	private String name;
@@ -19,6 +21,10 @@ public class Player extends Trader {
 	
 	/** Holds the up/down status for each possible player key input */
 	private EnumMap<InputType, Boolean> keyStates;
+	
+	private List<LandPlot> landPlotList = new ArrayList<>();
+	
+	private int score;
 	
 	/**
 	 * Create a Player object using a name, a RaceType, a Color, and Difficulty.
@@ -120,5 +126,23 @@ public class Player extends Trader {
         // TODO At one point may want to customize each icon according to color
         return race.getStockImageIcon();
     }
+
+	@Override
+	public int compareTo(Player otherPlayer) {
+		if(this.getScore() > otherPlayer.getScore()) 
+			return 1;
+		else if(this.getScore() == otherPlayer.getScore())
+			return 0;
+		else 
+			return -1;
+	}
+
+	private int getScore() {
+		for(LandPlot plot : landPlotList) {
+			score += plot.getScore();
+		}
+		score += inventory.getScore();
+		return score;
+	}
 	
 }
