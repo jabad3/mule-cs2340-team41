@@ -95,7 +95,6 @@ public class GameModel {
      * Sort the list of Players based on score.
      * The Player with the highest score will be first in the list.
      */
-	@SuppressWarnings("unchecked")
 	private void sortPlayerList() {
 		Collections.sort(playerList);
 	}
