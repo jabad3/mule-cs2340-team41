@@ -180,15 +180,28 @@ public class GameModel {
 	}
 
 	/**
-	 * Increments the current round number.
+	 * Calculates the current player's turn time for the current round
+	 * 
+	 * @param player The current player
+	 * 
+	 * @return the number of seconds a player's turn should last
 	 */
-	public int calculateTurnTime() {
-		//get player food, compare to current round's corresponding food
-		//if >= round's amount, return 50
-		//if >0 but <round's amount return 30
-		//else return 5
-		return 0;
+	public int calculateTurnTime(Player player) {
+		int playerFood = player.getFood();
+		int requiredFood = foodRequirements.get(currentRound);
+		if(playerFood >= requiredFood)
+			return 50;
+		else if(playerFood == 0)
+			return 5;
+		else
+			return 30;
 	}
+	
+	/**
+	 * determines whether or not the game is over
+	 * 
+	 * @return true if the game is over
+	 */
     public boolean gameIsOver() {
         return currentRound > FINAL_ROUND;
     }
