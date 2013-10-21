@@ -95,7 +95,7 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 	    PlayerPawn currentPawn = new PlayerPawn(currentPlayer.getIcon());
 	    myView.setCurrentPawn(currentPawn);
 	    myView.setCurrentPlayerName(currentPlayer.getName());
-	    myView.beginPlayerTurn(7500);  // temporary fixed time
+	    myView.beginPlayerTurn(gameModel.calculateTurnTime(currentPlayer));
 	    myView.showTown();
 	}
 	
