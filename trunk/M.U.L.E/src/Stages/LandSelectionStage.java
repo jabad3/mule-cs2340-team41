@@ -73,9 +73,21 @@ public class LandSelectionStage extends Stage {
         // currently, this is our first stage, so increment round upon start
         gameModel.incrementRound();
         
+        // TODO
+        // Temporary until we have a proper summary/end screen
+        if (gameModel.gameIsOver()) {
+            JOptionPane.showMessageDialog(myView, "Congratulations, you actually"
+                                          + " made it to the end!!!\n\n"
+                    + "Click okay to see the final results, then the game will end.");
+            showStatusDialog();
+            System.out.println("Exiting game...");
+            System.exit(0);
+        }
+        
         String currentPlayerName = currentPlayer.getName();
         calculateLandPlotPrice();
     	myView = new LandSelectionView(mapPanel, landPlotPrice, currentPlayerName, new SelectionSkipListener());
+    	
     	displayView(myView);
     }
     
@@ -116,9 +128,9 @@ public class LandSelectionStage extends Stage {
     private void showStatusDialog() {
         String playerInfo = "";
         for (Player player:  playerList)
-            playerInfo += player.getMyInventoryAsString();
+            playerInfo += player.getMyInventoryAsString() + "\n";
         JOptionPane.showMessageDialog(mainFrame,
-                "Land Selection is Over For Round + " + gameModel.getCurrentRound()
+                "Land Selection is Over For Round #" + gameModel.getCurrentRound()
                 + "\n------Current State of Player Objects----\n" + playerInfo);
         System.out.println("Ending LandSelection Stage");
         System.out.println("\n\n Current state of the model:  \n");

@@ -6,6 +6,9 @@ import java.util.List;
 
 public class GameModel {
     
+    /** The round number of the final round. */
+    private final int FINAL_ROUND = 12;
+    
     /** Holds all Player objects in the game. */
 	private List<Player> playerList = new ArrayList<>();
 	
@@ -153,4 +156,8 @@ public class GameModel {
 	public void incrementRound() {
 	    currentRound++;
 	}
+
+    public boolean gameIsOver() {
+        return currentRound > FINAL_ROUND;
+    }
 }
