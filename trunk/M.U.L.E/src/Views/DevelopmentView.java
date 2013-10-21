@@ -161,6 +161,38 @@ public class DevelopmentView extends JPanel {
         setFocusable(true);  // if not called, then muleTimerPanel.repaint() messes up focus
     }
     
+    /** Moves the pawn to be inside the given panel
+     * 
+     * @param toPanel The panel to contain the pawn
+     */
+    
+    private void constrainPawn(JPanel toPanel) {
+    	Point pawnPos = currentPawn.getLocation();
+    	Dimension pawnSize = currentPawn.getSize();
+        Dimension panelSize = this.mapPanel.getSize();
+        Point panelOrigin = this.townPanel.getLocation();
+        
+        if(pawnPos.x < panelOrigin.x)
+        {
+        	pawnPos.x = panelOrigin.x;
+        }
+        else if(pawnPos.x+pawnSize.width > panelOrigin.x+panelSize.width)
+        {
+        	pawnPos.x = panelOrigin.x+panelSize.width-pawnSize.width;
+        }
+        
+        if(pawnPos.y < panelOrigin.y)
+        {
+        	pawnPos.y = panelOrigin.y;
+        }
+        else if(pawnPos.y+pawnSize.height > panelOrigin.y+panelSize.height)
+        {
+        	pawnPos.y = panelOrigin.y+panelSize.height-pawnSize.height;
+        }
+        
+        currentPawn.setLocation(pawnPos);
+    }
+    
     /**
      * In the map, take action if the current pawn...
      *   1) Collides with the town, or
@@ -169,35 +201,7 @@ public class DevelopmentView extends JPanel {
     private void performMapCollisionEvents() {
         
         if (!mapPanel.insideMap(currentPawn)) {
-            // TODO
-            // means the moved pawn is out of bounds, so either put it back
-            // in bounds, or maybe we need to update the pawns coordinates
-            // in a slightly different way
-        	
-        	Point pawnPos = currentPawn.getLocation();
-        	Dimension pawnSize = currentPawn.getSize();
-            Dimension mapPanelSize = this.mapPanel.getSize();
-            Point cardPanelOrigin = this.cardPanel.getLocation();
-            Point mapPanelOrigin = this.mapPanel.getLocation();
-            Point mapPanelRealOrigin = mapPanelOrigin;
-            mapPanelRealOrigin.translate(cardPanelOrigin.x, cardPanelOrigin.y);
-            if(pawnPos.x < mapPanelOrigin.x)
-            {
-            	pawnPos.x = mapPanelOrigin.x;
-            }
-            else if(pawnPos.x+pawnSize.width > mapPanelOrigin.x+mapPanelSize.width)
-            {
-            	pawnPos.x = mapPanelOrigin.x+mapPanelSize.width-pawnSize.width;
-            }
-            if(pawnPos.y < mapPanelOrigin.y)
-            {
-            	pawnPos.y = mapPanelOrigin.y;
-            }
-            else if(pawnPos.y+pawnSize.height > mapPanelOrigin.y+mapPanelSize.height)
-            {
-            	pawnPos.y = mapPanelOrigin.y+mapPanelSize.height-pawnSize.height;
-            }
-            currentPawn.setLocation(pawnPos);
+        	constrainPawn(mapPanel);
         }
                 
         if (mapPanel.overlapsTown(currentPawn))
@@ -212,17 +216,16 @@ public class DevelopmentView extends JPanel {
      */
     private void performTownCollisionEvents() {
         if (!townPanel.insideTown(currentPawn)) {
-            showMap();
+        	if(!townPanel.overlapsTownShops(currentPawn))
+        	{
+        		showMap();
+        	}
+        	else
+        	{
+        		constrainPawn(townPanel);
+        	}
         }
         
-        // TODO
-        // check if pawn is close enough to interact with store
-        // AND attempted to interact with store (action button)
-        
-        // TODO
-        // keep pawn from going out of bounds while still inside the town
-        // like above, we probably can move it back in bounds, or update
-        // the coordinates in a different way
         if(townPanel.overlapsPubEntrance(currentPawn) && currentPawn.actionKey)
         {
         	//TODO: give player cash
