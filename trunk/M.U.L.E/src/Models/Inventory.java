@@ -9,7 +9,7 @@ import java.util.EnumMap;
  *
  */
 public class Inventory {
-
+	
     /** Holds quantities for:  Food, Energy, Ore, Money, Mule */
     EnumMap<Resource, Integer> resourceCounts;
     
@@ -103,7 +103,7 @@ public class Inventory {
         return s1 + s2 + s3 + s4 + s5;
     }
 
-	public int getScore() {
+	public int calculateScore() {
 		int totalInventoryScore = 0;
 		totalInventoryScore += resourceCounts.get(Resource.MONEY);
 		//totalInventoryScore += resource.getCurrentPrice() for each resource

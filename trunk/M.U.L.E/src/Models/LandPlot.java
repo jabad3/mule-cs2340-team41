@@ -54,7 +54,7 @@ public class LandPlot {
         return landType == LandPlotType.TOWN;
     }
     
-    public int getScore() {
+    public int calculateScore() {
     	int totalPlotScore = 0;
     	if(mule == null) {
     		totalPlotScore = 500;
