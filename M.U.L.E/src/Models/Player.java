@@ -49,6 +49,16 @@ public class Player extends Trader implements Comparable<Player> {
 	    this.inventory = new Inventory(food, energy, ore, money, mules);
 	}
 	
+	/**
+	 * finds the amount of food in a player's inventory
+	 * 
+	 * @return The amount of food resource in the player's inventory
+	 */
+	public int getFood() {
+		int food = this.inventory.getResourceCount(Resource.FOOD);
+		return food; 
+	}
+	
 	@Override
 	public void buyMuleFromSeller(Trader seller, Resource muleConfig, int price)
 			throws FailedTransactionException {
