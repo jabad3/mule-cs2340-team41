@@ -1,6 +1,7 @@
 package Views;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
@@ -62,6 +63,7 @@ public class LandSelectionView extends JPanel {
         skipButton.addActionListener(skipListener);
         
         this.mapPanel = mapPanel;
+        this.mapPanel.setPreferredSize(new Dimension(600, 400));
         JPanel infoPanel = buildInfoPanel(landPlotPrice);
         
         // TODO
@@ -115,6 +117,7 @@ public class LandSelectionView extends JPanel {
      */
     public void flashNotEnoughMoneyMessage() {
         notEnoughMoneyLabel.setForeground(Color.RED);
+        notEnoughMoneyLabel.setVisible(true);
         Timer eraser = new Timer();
         eraser.schedule(new TimerTask() {
                 public void run() {

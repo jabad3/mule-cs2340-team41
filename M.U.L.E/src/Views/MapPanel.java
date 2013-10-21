@@ -75,15 +75,9 @@ public class MapPanel extends JPanel {
 	 * @return True if the entire component is inside the MapPanel
 	 */
 	public boolean insideMap(JComponent component) {
-	    Dimension componentSize = component.getSize();
-	    Dimension mapSize = this.getSize();
-	    
-	    Point componentLoc = component.getLocationOnScreen();
-	    Point mapLoc = this.getLocationOnScreen();
-	    
-	    Rectangle componentBounds = new Rectangle(componentLoc.x, componentLoc.y, componentSize.width, componentSize.height);
-	    Rectangle mapBounds = new Rectangle(mapLoc.x, mapLoc.y, mapSize.width, mapSize.height);
-	    
-	    return (mapBounds.contains(componentBounds));
+	    Rectangle componentBounds = component.getBounds();
+        Rectangle mapBounds = this.getBounds();
+        
+        return (mapBounds.contains(componentBounds));
 	}
 }
