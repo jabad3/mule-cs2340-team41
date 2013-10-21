@@ -21,6 +21,7 @@ import Views.MapPanel;
 import Views.MuleTimerListener;
 import Views.MuleTimerPanel;
 import Views.PlayerPawn;
+import Views.ShopEntryListener;
 import Views.TownPanel;
 
 /**
@@ -31,7 +32,7 @@ import Views.TownPanel;
  * @author jabad3
  *
  */
-public class DevelopmentStage extends Stage implements MuleTimerListener {
+public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEntryListener {
 
     /** The view to be controlled by this stage. */
     private DevelopmentView myView;
@@ -97,6 +98,17 @@ public class DevelopmentStage extends Stage implements MuleTimerListener {
 	    myView.beginPlayerTurn(7500);  // temporary fixed time
 	    myView.showTown();
 	}
+	
+	/**
+	 * Advance the stage one turn.  Either start the next player's turn, or,
+	 * if there is no next player, start the next stage.
+	 */
+	private void advanceOneTurn() {currentPlayerIndex++;
+        if (currentPlayerIndex >= playerList.size())
+            goNextStage();
+        else
+            beginCurrentPlayerTurn();
+	}
 
     @Override
     /**
@@ -104,12 +116,43 @@ public class DevelopmentStage extends Stage implements MuleTimerListener {
      */
     public void muleTimerFinished() {
         myView.endPlayerTurn();
+        advanceOneTurn();
+    }
+
+    @Override
+    public void enteredMuleStore() {
+        // TODO
+        // User will buy/sell a mule to the store, or error if not enough money
+        // Update View to indicate pawn has/does not have a mule
         
-        currentPlayerIndex++;
-        if (currentPlayerIndex >= playerList.size())
-            goNextStage();
-        else
-            beginCurrentPlayerTurn();
+    }
+
+    @Override
+    public void enteredLandOffice() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void enteredPub() {
+        // TODO
+        // User will be paid an appropriate amount of money, then their turn ends
+        // Update View to indicate next player's turn
+        
+        /*int timeRemaining = myView.getTurnTimeRemaining();
+        int pubPayment = gameModel.calcPubPayment(timeRemaining);
+        gameModel.getStore().paySeller(currentPlayer, pubPayment);
+        myView.displayMessageWhileSleeping(
+                "You were paid " + pubPayment + " by the Pub.  "
+                + "\nYour turn is now over.", 3000);
+        advanceOneTurn();*/
+    }
+
+    @Override
+    public void enteredAssayOffice() {
+        // TODO
+        // Only if crystite resource is added
+        
     }
 
 }
