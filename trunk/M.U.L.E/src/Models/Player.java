@@ -49,16 +49,6 @@ public class Player extends Trader implements Comparable<Player> {
 	    this.inventory = new Inventory(food, energy, ore, money, mules);
 	}
 	
-	/**
-	 * Calculates and returns the Player's current score.
-	 * 
-	 * @return The Player's current score
-	 */
-	public int calculateScore() {
-		// TODO
-		return 0; 
-	}
-	
 	@Override
 	public void buyMuleFromSeller(Trader seller, Resource muleConfig, int price)
 			throws FailedTransactionException {
@@ -127,15 +117,15 @@ public class Player extends Trader implements Comparable<Player> {
 
 	@Override
 	public int compareTo(Player otherPlayer) {
-		if(this.getScore() > otherPlayer.getScore()) 
+		if(this.calculateScore() > otherPlayer.calculateScore()) 
 			return 1;
-		else if(this.getScore() == otherPlayer.getScore())
+		else if(this.calculateScore() == otherPlayer.calculateScore())
 			return 0;
 		else 
 			return -1;
 	}
 
-	private int getScore() {
+	public int calculateScore() {
 		int score = 0;
 		for(LandPlot plot : landPlotList) {
 			score += plot.getScore();
