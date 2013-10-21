@@ -73,7 +73,7 @@ public abstract class Trader {
      *          Thrown when the buyer (this) does not have enough money to
      *          make the payment.
      */
-    protected void paySeller(Trader seller, int price) throws FailedTransactionException {
+    public void paySeller(Trader seller, int price) throws FailedTransactionException {
         // TODO
         int currentFunds = inventory.getResourceCount(Resource.MONEY);
         if (currentFunds < price)
