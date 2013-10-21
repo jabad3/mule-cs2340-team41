@@ -223,10 +223,16 @@ public class DevelopmentView extends JPanel {
         // keep pawn from going out of bounds while still inside the town
         // like above, we probably can move it back in bounds, or update
         // the coordinates in a different way
-        if (townPanel.overlapsTownShops(currentPawn)) {
+        if(townPanel.overlapsPubEntrance(currentPawn) && currentPawn.actionKey)
+        {
+        	//TODO: give player cash
+        	//TODO: display "you gambled and won $___!"
+        	muleTimerPanel.remainingTime = 0;
+        }
+        /*if (townPanel.overlapsTownShops(currentPawn)) {
             Point newPawnLocation = townPanel.calcInBoundsLocation(currentPawn);
             currentPawn.setLocation(newPawnLocation);
-        }
+        }*/
         
     }
     
