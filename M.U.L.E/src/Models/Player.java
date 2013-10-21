@@ -128,9 +128,9 @@ public class Player extends Trader implements Comparable<Player> {
 	public int calculateScore() {
 		int score = 0;
 		for(LandPlot plot : landPlotList) {
-			score += plot.getScore();
+			score += plot.calculateScore();
 		}
-		score += inventory.getScore();
+		score += inventory.calculateScore();
 		return score;
 	}
 	
