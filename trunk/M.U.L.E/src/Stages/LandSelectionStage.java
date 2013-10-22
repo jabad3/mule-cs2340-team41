@@ -62,16 +62,16 @@ public class LandSelectionStage extends Stage {
      * price, then configure and display the View using this information.
      */
     public void start() {
+        // currently, this is our first stage, so increment round upon start
+        gameModel.incrementRound();
+        gameModel.updatePlayerOrder();  // player order used for rest of round
+        
         playerList = gameModel.getSortedPlayerList();
         currentPlayerIndex = 0;
         currentPlayer = playerList.get(currentPlayerIndex);
         
         Map map = gameModel.getMap();
         mapPanel = new MapPanel(map, new LandPlotListener());
-        
-        // currently, this is our first stage, so increment round upon start
-        gameModel.incrementRound();
-        gameModel.updatePlayerOrder();  // player order used for rest of round
         
         // TODO
         // Temporary until we have a proper summary/end screen
