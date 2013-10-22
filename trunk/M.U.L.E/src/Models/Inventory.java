@@ -41,7 +41,8 @@ public class Inventory {
      */
     public void removeResource(Resource resource, int resourceCount) {
         int currentCount = resourceCounts.get(resource);
-        resourceCounts.put(resource, resourceCount);
+        int newCount = currentCount - resourceCount;
+        resourceCounts.put(resource, newCount);
     }
 
     /**
@@ -51,7 +52,8 @@ public class Inventory {
      */
     public void addResource(Resource resource, int resourceCount) {
     	int currentCount = resourceCounts.get(resource);
-        resourceCounts.put(resource, resourceCount);
+    	int newCount = currentCount + resourceCount;
+        resourceCounts.put(resource, newCount);
         
     }
     

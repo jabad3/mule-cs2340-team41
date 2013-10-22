@@ -48,7 +48,7 @@ public abstract class Trader {
      *          in which case it is impossible to remove a unit of the resource.
      */
     public void removeResource(Resource rType, int resourceCount) throws FailedTransactionException {
-        if (inventory.getResourceCount(rType) == 0) 
+        if (inventory.getResourceCount(rType) < resourceCount) 
             throw new FailedTransactionException("Not in stock.");
         else
             inventory.removeResource(rType, resourceCount);
