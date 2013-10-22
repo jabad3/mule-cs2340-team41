@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -142,11 +143,45 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
         // Update View to indicate next player's turn
         
         myView.endPlayerTurn();  // stop timer, pawn movement
-        int pubPayment = 250;  // TODO temp placeholder
+        int pubPayment = calculatePubPayment();  
         currentPlayer.addResource(Resource.MONEY, pubPayment);
         myView.displayMessageDialog("You won $" + pubPayment + " from the Pub."
                                     + "\nYour turn is now over.");
         advanceOneTurn();
+    }
+    
+    @SuppressWarnings("unused")
+	private int calculatePubPayment() {
+    	Random rand = new Random();
+    	int roundBonus = 0;
+    	int timeBonus = 0;
+    	int totalPubPayment = 0;
+    	
+    	if(gameModel.getCurrentRound() < 4)
+    		roundBonus = 50;
+    	else if(gameModel.getCurrentRound() < 8 && gameModel.getCurrentRound() > 3)
+    		roundBonus = 100;
+    	else if(gameModel.getCurrentRound() < 12 && gameModel.getCurrentRound() > 7)
+    		roundBonus = 150;
+    	else if(gameModel.getCurrentRound() == 12)
+    		roundBonus = 200;
+    	else
+    		roundBonus = 0;
+    		
+    	if(muleTimerPanel.getRemainingTime() > 36)
+    		timeBonus = 200;
+    	else if(muleTimerPanel.getRemainingTime() < 38 && muleTimerPanel.getRemainingTime() > 24)
+    		timeBonus = 150;
+    	else if(muleTimerPanel.getRemainingTime() < 26 && muleTimerPanel.getRemainingTime() > 11)
+    		timeBonus = 100;
+    	else if(muleTimerPanel.getRemainingTime() < 13)
+    		timeBonus = 50;
+    		
+    	totalPubPayment = roundBonus * (rand.nextInt(timeBonus + 1));
+    	if(totalPubPayment <= 250)
+    		return totalPubPayment;
+    	else
+    		return 250;
     }
 
     @Override

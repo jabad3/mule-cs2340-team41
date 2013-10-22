@@ -183,18 +183,9 @@ public class MuleTimerPanel extends JPanel {
         g.fillRect(0, height - barHeight, width, barHeight);
     }
     
-    /**
-     * to delete
-     */
-    public String toString() {
-        int width = getWidth();
-        int height = getHeight();
-        double fractionRemaining = ((double) remainingTime) / ((double) duration);
-        int barHeight = (int) (fractionRemaining * ((double) height));
-        return ("duration/remaining/defaultDec = " + duration + "/" + remainingTime + "/" + defaultDecrementAmount
-                + "\n" + "barheight/width/height:  " + barHeight + "/" + width + "/" + height);
+    public int getRemainingTime() {
+    	return remainingTime;
     }
-    
     /**
      * Main method for testing.
      * 
