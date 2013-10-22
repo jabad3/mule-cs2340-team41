@@ -210,8 +210,9 @@ public class DevelopmentView extends JPanel {
         	constrainPawn(mapPanel);
         }
                 
-        if (mapPanel.overlapsTown(currentPawn))
+        if (mapPanel.overlapsTown(currentPawn)) {
             showTown();
+        }
     }
     
     /**
@@ -224,6 +225,7 @@ public class DevelopmentView extends JPanel {
         if (!townPanel.insideTown(currentPawn)) {
         	if(!townPanel.overlapsTownShops(currentPawn))
         	{
+        		currentPawn.setLocation(new Point(283,245));	//here
         		showMap();
         	}
         	else
