@@ -15,21 +15,21 @@ import Models.MapFactory;
  */
 public class PlayerPawn extends ResizableIcon {
 
-	/**
-	 * Create a PlayerPawn object to represent a Player.
-	 * 
-	 * @param myRace The RaceType of the Player object represented by this pawn
-	 * @param myColor The ownership color of the Player object represented by this pawn
-	 */
-	/*public PlayerPawn(RaceType myRace, Color myColor){
-		ImageIcon stockIcon = myRace.getStockImageIcon();
-		// TODO
-		// Color the appropriate parts of the stockIcon with the player's color
-		pawnIcon = stockIcon;
-		this.setIcon(pawnIcon);
-		this.setPreferredSize(new Dimension(50, 50));
-	}*/
-	
+    /** True if left key is pressed. */
+    public boolean leftKey = false;
+    
+    /** True if right key is pressed. */
+    public boolean rightKey = false;
+    
+    /** True if up key is pressed. */
+    public boolean upKey = false;
+    
+    /** True if down key is pressed. */
+    public boolean downKey = false;
+    
+    /** True if the action key is pressed. */
+    public boolean actionKey = false;
+    
 	/**
 	 * Create a PlayerPawn object to represent a Player using the Player's
 	 * icon.
@@ -71,24 +71,6 @@ public class PlayerPawn extends ResizableIcon {
 	    downKey = false;
 	    actionKey = false;
 	}
-	
-	/**
-	 * Sets the given input type to be either on or off.
-	 * 
-	 * @param input The input type to update
-	 * 
-	 * @param on The state that the input type will be set to.  True means the
-	 * input should be turned on
-	 */
-	public void setInputStatus(InputType input, boolean on) {
-	    // TODO
-	}
-    
-    public boolean leftKey = false;
-    public boolean rightKey = false;
-    public boolean upKey = false;
-    public boolean downKey = false;
-    public boolean actionKey = false;
     
     private class PlayerKeyListener extends KeyAdapter
     {

@@ -63,8 +63,7 @@ public class LandSelectionView extends JPanel {
         this.mapPanel = mapPanel;
         this.mapPanel.setPreferredSize(new Dimension(600, 400));
         JPanel infoPanel = buildInfoPanel(landPlotPrice);
-        
-        // TODO
+
         this.setLayout(new BorderLayout());
         this.add(infoPanel, BorderLayout.NORTH);
         this.add(mapPanel, BorderLayout.CENTER);
