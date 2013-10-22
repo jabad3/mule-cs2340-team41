@@ -32,7 +32,7 @@ public class GameModel {
 	/** The food requirement for players each round. */
 	private java.util.Map<Integer,Integer> foodRequirements;
 	
-	public void GameModel()
+	public GameModel()
 	{
 		foodRequirements = new HashMap<Integer,Integer>();
 		foodRequirements.put(1, 3); //key = round, value = # of foods
@@ -187,14 +187,17 @@ public class GameModel {
 	 * @return the number of seconds a player's turn should last
 	 */
 	public int calculateTurnTime(Player player) {
+		int returnval = 0;
 		int playerFood = player.getFood();
+		System.out.println(foodRequirements);
 		int requiredFood = foodRequirements.get(currentRound);
 		if(playerFood >= requiredFood)
-			return 50;
+			returnval = 50;
 		else if(playerFood == 0)
-			return 5;
+			returnval = 5;
 		else
-			return 30;
+			returnval = 30;
+		return returnval * 1000;
 	}
 	
 	/**
