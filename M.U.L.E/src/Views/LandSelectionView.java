@@ -109,9 +109,8 @@ public class LandSelectionView extends JPanel {
     }
     
     /**
-     * Displays a given message near the top of the map for 575 milliseconds.
-     * 
-     * @param message
+     * Displays a message near the top of the map for one second
+     * that states there is not enough money.
      */
     public void flashNotEnoughMoneyMessage() {
         notEnoughMoneyLabel.setForeground(Color.RED);
@@ -123,37 +122,6 @@ public class LandSelectionView extends JPanel {
                     notEnoughMoneyLabel.setForeground(new Color(0, 0, 0, 0));
                 }
             }, 1000);
-        
-        /* old code I used to draw onto the mappanel.  The issue was,
-         * highlighting over the panels I draw on caused repaint to occur
-         * prematurely (used to have string param for message to flash
-         * 
-         * 
-        Graphics g = this.getGraphics();
-        
-        int x = (int) (((double) this.getWidth()) / 3.5);
-        int y = (int) (((double) this.getHeight()) / 2.75);
-        
-        int preferredArea = this.getPreferredSize().width * this.getPreferredSize().height;
-        int actualArea = this.getWidth() * this.getHeight();
-        
-        // have fontSize scale if panel is resized
-        int defaultSize = 18;
-        int fontSize = (int) (defaultSize * (((double) actualArea) / ((double) preferredArea)));
-        Font font = new Font(Font.SANS_SERIF, Font.BOLD, fontSize);
-        
-        g.setColor(Color.red);
-        g.setFont(font);
-        g.drawString(message.toUpperCase(), x, y);
-        
-        // trying it out...
-        Timer eraser = new Timer();
-        eraser.schedule(new TimerTask() {
-                public void run() {
-                    repaint();
-                }
-            }, 1000);
-       */
     }
 
 }

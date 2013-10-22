@@ -127,7 +127,6 @@ public class GameModel {
 	 * @return Sorted players
 	 */
 	public List<Player> getSortedPlayerList() {
-		sortPlayerList();
 		return playerList;
 	}
 
@@ -177,6 +176,13 @@ public class GameModel {
 	 */
 	public void incrementRound() {
 	    currentRound++;
+	}
+	
+	/**
+	 * Update the player order by sorting according to score.
+	 */
+	public void updatePlayerOrder() {
+	    sortPlayerList();
 	}
 
 	/**

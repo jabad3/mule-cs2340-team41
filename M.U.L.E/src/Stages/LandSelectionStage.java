@@ -71,6 +71,7 @@ public class LandSelectionStage extends Stage {
         
         // currently, this is our first stage, so increment round upon start
         gameModel.incrementRound();
+        gameModel.updatePlayerOrder();  // player order used for rest of round
         
         // TODO
         // Temporary until we have a proper summary/end screen
@@ -90,6 +91,9 @@ public class LandSelectionStage extends Stage {
     	displayView(myView);
     }
     
+    /**
+     * Determines the price of land for the current round.
+     */
     private void calculateLandPlotPrice() {
         int round = gameModel.getCurrentRound();
         if (round <= 2)
@@ -98,6 +102,20 @@ public class LandSelectionStage extends Stage {
             // TODO
             // currently - temporary formula
             landPlotPrice = 500 + round * round * 5;
+    }
+    
+    /**
+     * Assign plots to appropriate owners.  Both the plot and the owner
+     * must be aware of one another.
+     * 
+     * Pre-condition:  plot must be available to be owned by another player
+     * 
+     * @param plot Unowned plot that will become owned
+     * @param owner The new owner of the plot
+     */
+    private void assignPlotToOwner(LandPlot plot, Player owner) {
+        plot.setOwner(owner);
+        owner.addLandPlot(plot);
     }
     
     /**
@@ -110,7 +128,7 @@ public class LandSelectionStage extends Stage {
     public void updateViewForNextPlayer() {
         currentPlayerIndex++;
         
-        if (allPlayersHaveSelected()){
+        if (allPlayersHaveSelected()) {
             showStatusDialog();
             goNextStage();
         } else {  // let the next player go
@@ -169,7 +187,7 @@ public class LandSelectionStage extends Stage {
                 
                 try {
                     currentPlayer.buyLandFromSeller(gameModel.getStore(), landPlotPrice);
-                    chosenPlot.setOwner(currentPlayer);
+                    assignPlotToOwner(chosenPlot, currentPlayer);
                     updateViewForNextPlayer();
                 } catch (FailedTransactionException exc) {
                     myView.flashNotEnoughMoneyMessage();
