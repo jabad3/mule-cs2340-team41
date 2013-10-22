@@ -16,6 +16,7 @@ import javax.swing.KeyStroke;
 import Models.GameModel;
 import Models.Map;
 import Models.Player;
+import Models.Resource;
 import Views.DevelopmentView;
 import Views.MapPanel;
 import Views.MuleTimerListener;
@@ -83,6 +84,7 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 		muleTimerPanel.addMuleTimerListener(this);
 		
 		myView = new DevelopmentView(mapPanel, townPanel, new PlayerPawn(new ImageIcon("buzzite.png")), muleTimerPanel); // temporary
+		myView.addShopEntryListener(this);
 		displayView(myView);
 		
 		currentPlayerIndex = 0;
@@ -139,13 +141,12 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
         // User will be paid an appropriate amount of money, then their turn ends
         // Update View to indicate next player's turn
         
-        /*int timeRemaining = myView.getTurnTimeRemaining();
-        int pubPayment = gameModel.calcPubPayment(timeRemaining);
-        gameModel.getStore().paySeller(currentPlayer, pubPayment);
-        myView.displayMessageWhileSleeping(
-                "You were paid " + pubPayment + " by the Pub.  "
-                + "\nYour turn is now over.", 3000);
-        advanceOneTurn();*/
+        myView.endPlayerTurn();  // stop timer, pawn movement
+        int pubPayment = 250;  // TODO temp placeholder
+        currentPlayer.addResource(Resource.MONEY, pubPayment);
+        myView.displayMessageDialog("You won $" + pubPayment + " from the Pub."
+                                    + "\nYour turn is now over.");
+        advanceOneTurn();
     }
 
     @Override

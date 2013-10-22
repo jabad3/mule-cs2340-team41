@@ -63,6 +63,17 @@ public class PlayerPawn extends ResizableIcon {
 	}
 	
 	/**
+	 * Reset all key states back to zero.
+	 */
+	public void resetStates() {
+	    leftKey = false;
+	    rightKey = false;
+	    upKey = false;
+	    downKey = false;
+	    actionKey = false;
+	}
+	
+	/**
 	 * Sets the given input type to be either on or off.
 	 * 
 	 * @param input The input type to update

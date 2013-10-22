@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Models.MapFactory;
@@ -138,6 +139,7 @@ public class DevelopmentView extends JPanel {
      */
     public void endPlayerTurn() {
         animationTimer.cancel();  // view animation will stop
+        currentPawn.resetStates();  // turn off all key states
     }
     
     /**
@@ -326,6 +328,16 @@ public class DevelopmentView extends JPanel {
         jf.setVisible(true);
         
         dv.beginPlayerTurn(25000);
+    }
+
+    /**
+     * Displays a simple dialog box to the user containing a message.
+     * This message has no effect other than relaying a message to the user.
+     * 
+     * @param message The message to display to the user
+     */
+    public void displayMessageDialog(String message) {
+        JOptionPane.showInternalMessageDialog(this, message);
     }
     
 }
