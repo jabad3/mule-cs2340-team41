@@ -7,7 +7,6 @@ import Models.RaceType;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
-import java.util.Map;
 /**
  * This class allows for configuration of the player including race, name, and color
  * @author Erica Pramer

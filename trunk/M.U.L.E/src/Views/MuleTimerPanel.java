@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.ArrayList;
 
 /**

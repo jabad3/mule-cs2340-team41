@@ -1,18 +1,9 @@
 package Views;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
-
 import Models.LandPlot;
 
 public class LandPlotBtn extends ResizableIcon {

@@ -2,7 +2,6 @@ package Views;
 import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.*;
 /**
  * This class lets the user enter their name
  * @author Erica Pramer
