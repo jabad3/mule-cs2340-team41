@@ -124,6 +124,10 @@ public class Player extends Trader implements Comparable<Player> {
         // TODO At one point may want to customize each icon according to color
         return race.getStockImageIcon();
     }
+    
+    public void addLandPlot(LandPlot landPlot) {
+    	landPlotList.add(landPlot);
+    }
 
 	@Override
 	public int compareTo(Player otherPlayer) {
