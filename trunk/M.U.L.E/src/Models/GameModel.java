@@ -189,7 +189,6 @@ public class GameModel {
 	public int calculateTurnTime(Player player) {
 		int returnval = 0;
 		int playerFood = player.getFood();
-		System.out.println(foodRequirements);
 		int requiredFood = foodRequirements.get(currentRound);
 		if(playerFood >= requiredFood)
 			returnval = 50;
