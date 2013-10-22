@@ -130,7 +130,7 @@ public class LandSelectionStage extends Stage {
             playerInfo += player.getMyInventoryAsString() + "\n";
         JOptionPane.showMessageDialog(mainFrame,
                 "Land Selection is Over For Round #" + gameModel.getCurrentRound()
-                + "\n------Current State of Player Objects----\n" + playerInfo);
+                + "\n\n" + playerInfo);
         System.out.println("Ending LandSelection Stage");
         System.out.println("\n\n Current state of the model:  \n");
         System.out.println(gameModel);
