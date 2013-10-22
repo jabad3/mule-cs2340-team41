@@ -41,9 +41,8 @@ public class PlayerPawn extends ResizableIcon {
 	}
 	
 	/**
-	 * Move the pawn left, right, up, or down.
-	 * 
-	 * @param key Specifies the direction to move the pawn
+	 * Move the pawn left, right, up, and/or down depending on which keys
+	 * are currently pressed.
 	 */
 	public void move() {
 	    int speed = 2;

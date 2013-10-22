@@ -207,8 +207,8 @@ public class TownPanel extends JPanel{
      * Pre-condition:  the given component is overlapping one of the town shops
      *  (i.e. the component is inside the town, but out-of-bounds)
      * 
-     * @param currentPawn
-     * @return
+     * @param component The component to calculate a new location for
+     * @return Point representing the new in-bounds position of the component
      */
     public Point calcInBoundsLocation(JComponent component) {
         if (areOverlapping(component, storeDisplay))

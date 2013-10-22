@@ -64,7 +64,7 @@ public class ResizableIcon extends JComponent {
      * Set the displayed image and automatically updates the component to
      * display the new icon.
      * 
-     * @param icon Image object containing the icon to be displayed
+     * @param image Image object containing the icon to be displayed
      */
     public void setImage(Image image) {
         this.image = image;
