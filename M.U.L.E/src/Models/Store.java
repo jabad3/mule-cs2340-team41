@@ -11,6 +11,10 @@ package Models;
  */
 public class Store extends Trader {
     
+	
+	public static final int foodPrice = 30;
+	public static final int energyPrice = 25;
+	public static final int orePrice = 50;
     /**
      * Creates a store with the proper initial inventory based on a difficulty.
      * The store is given an arbitrarily large number for its initial money
@@ -62,7 +66,7 @@ public class Store extends Trader {
     public void buildMulesWithOre() {
         // TODO
     }
-
+    
     /**
      * Prints the Store's inventory information.
      * Intended to be printed to the console for testing.
