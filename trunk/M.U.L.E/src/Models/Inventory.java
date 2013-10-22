@@ -108,7 +108,9 @@ public class Inventory {
 	public int calculateScore() {
 		int totalInventoryScore = 0;
 		totalInventoryScore += resourceCounts.get(Resource.MONEY);
-		//totalInventoryScore += resource.getCurrentPrice() for each resource
+		totalInventoryScore += (resourceCounts.get(Resource.FOOD) * Store.foodPrice);
+		totalInventoryScore += (resourceCounts.get(Resource.ENERGY) * Store.energyPrice);
+		totalInventoryScore += (resourceCounts.get(Resource.ORE) * Store.orePrice);
 		return totalInventoryScore;
 	}
 }
