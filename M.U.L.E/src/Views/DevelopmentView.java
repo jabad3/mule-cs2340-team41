@@ -225,7 +225,7 @@ public class DevelopmentView extends JPanel {
         if (!townPanel.insideTown(currentPawn)) {
         	if(!townPanel.overlapsTownShops(currentPawn))
         	{
-        		currentPawn.setLocation(new Point(283,245));	//here
+        		currentPawn.setLocation(new Point(283,260));	//here
         		showMap();
         	}
         	else
