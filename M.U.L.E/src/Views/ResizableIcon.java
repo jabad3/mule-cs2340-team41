@@ -25,7 +25,6 @@ import javax.swing.JPanel;
 public class ResizableIcon extends JComponent {
 
     /** The image to be displayed in the resizable icon. */
-    //private Image image;
     Image image;
     
     /**

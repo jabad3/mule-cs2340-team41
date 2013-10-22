@@ -22,6 +22,7 @@ public class Player extends Trader implements Comparable<Player> {
 	/** Holds the up/down status for each possible player key input */
 	private EnumMap<InputType, Boolean> keyStates;
 	
+	/** Holds the land plots that belong to this player. */
 	private List<LandPlot> landPlotList = new ArrayList<>();
 	
 	/**
@@ -125,6 +126,13 @@ public class Player extends Trader implements Comparable<Player> {
         return race.getStockImageIcon();
     }
     
+    /**
+     * Add a land plot to this player's list of land plots.
+     * 
+     * Pre-condition:  this player must be the owner of the land plot.
+     * 
+     * @param landPlot The landplot to add to the player's land plot list
+     */
     public void addLandPlot(LandPlot landPlot) {
     	landPlotList.add(landPlot);
     }

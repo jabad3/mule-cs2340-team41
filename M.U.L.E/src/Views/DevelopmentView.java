@@ -306,6 +306,16 @@ public class DevelopmentView extends JPanel {
     public void addShopEntryListener(ShopEntryListener sel) {
         shopEntryListeners.add(sel);
     }
+
+    /**
+     * Displays a simple dialog box to the user containing a message.
+     * This message has no effect other than relaying a message to the user.
+     * 
+     * @param message The message to display to the user
+     */
+    public void displayMessageDialog(String message) {
+        JOptionPane.showInternalMessageDialog(this, message);
+    }
  
     /**
      * To test the development view.
@@ -330,16 +340,6 @@ public class DevelopmentView extends JPanel {
         jf.setVisible(true);
         
         dv.beginPlayerTurn(25000);
-    }
-
-    /**
-     * Displays a simple dialog box to the user containing a message.
-     * This message has no effect other than relaying a message to the user.
-     * 
-     * @param message The message to display to the user
-     */
-    public void displayMessageDialog(String message) {
-        JOptionPane.showInternalMessageDialog(this, message);
     }
     
 }
