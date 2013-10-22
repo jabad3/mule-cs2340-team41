@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -55,6 +55,9 @@ public class DevelopmentView extends JPanel {
     /** The timer object used to animate the view. */
     private Timer animationTimer;
     
+    /** Keeps track of all ShopEntryListeners listening to the view. */
+    private Collection<ShopEntryListener> shopEntryListeners;
+    
     /**
      * Create the Development View.
      * 
@@ -70,6 +73,7 @@ public class DevelopmentView extends JPanel {
         playerNameLabel = new JLabel("Whose turn is it?");
         cardPanel = new JPanel();
         currentPawn = playerPawn;
+        shopEntryListeners = new ArrayList<>();
         
         // configure card panel
         cardLayout = new CardLayout();
@@ -230,7 +234,8 @@ public class DevelopmentView extends JPanel {
         {
         	//TODO: give player cash
         	//TODO: display "you gambled and won $___!"
-        	muleTimerPanel.remainingTime = 0;
+        	//muleTimerPanel.remainingTime = 0;
+            sendEnteredPubNotifications();
         }
         /*if (townPanel.overlapsTownShops(currentPawn)) {
             Point newPawnLocation = townPanel.calcInBoundsLocation(currentPawn);
@@ -239,6 +244,14 @@ public class DevelopmentView extends JPanel {
         
     }
     
+    /**
+     * Notify appropriate listeners that the user interacted with the pub.
+     */
+    private void sendEnteredPubNotifications() {
+        for (ShopEntryListener sel: shopEntryListeners)
+            sel.enteredPub();
+    }
+
     /**
      * Set the current Player's name
      * 
@@ -276,6 +289,18 @@ public class DevelopmentView extends JPanel {
      */
     public void showTown() {
         cardLayout.show(cardPanel, "townPanel");
+    }
+    
+    /**
+     * Adds the ShopEntryListener to the view.
+     * 
+     * The ShopEntryListener will be notified when the user interacts with
+     * one of the shops during development.
+     * 
+     * @param sel The ShopEntryListener to add to the view
+     */
+    public void addShopEntryListener(ShopEntryListener sel) {
+        shopEntryListeners.add(sel);
     }
  
     /**
