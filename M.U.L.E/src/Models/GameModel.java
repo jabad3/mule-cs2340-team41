@@ -34,6 +34,14 @@ public class GameModel {
 	
 	public GameModel()
 	{
+		buildFoodRequirements();
+	}
+	
+	/** Build Map with food requirements per round
+	 * 
+	 * 
+	 */
+	public void buildFoodRequirements() {
 		foodRequirements = new HashMap<Integer,Integer>();
 		foodRequirements.put(1, 3); //key = round, value = # of foods
 		foodRequirements.put(2, 3);
@@ -48,6 +56,7 @@ public class GameModel {
 		foodRequirements.put(11, 5);
 		foodRequirements.put(12, 5);
 	}
+	
 	
 	/**
 	 * Add a Player to playerList.

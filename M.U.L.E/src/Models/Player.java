@@ -104,7 +104,8 @@ public class Player extends Trader implements Comparable<Player> {
         String s2 = "\nRace: " + race.name();
         String s3 = "\nColor:  " + color;
         String s4 = "\nMy inventory info... " + inventory.toString();
-        return s1 + s2 + s3 + s4;
+        String s5 = "\nMy Score is: " + calculateScore();
+        return s1 + s2 + s3 + s4 + s5;
     }
     
     /**
@@ -153,6 +154,7 @@ public class Player extends Trader implements Comparable<Player> {
 			score += plot.calculateScore();
 		}
 		score += inventory.calculateScore();
+		System.out.println("Current Player Score is:" + score);
 		return score;
 	}
 	
