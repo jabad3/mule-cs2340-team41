@@ -106,7 +106,8 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 	 * Advance the stage one turn.  Either start the next player's turn, or,
 	 * if there is no next player, start the next stage.
 	 */
-	private void advanceOneTurn() {currentPlayerIndex++;
+	private void advanceOneTurn() {
+		currentPlayerIndex++;
         if (currentPlayerIndex >= playerList.size())
             goNextStage();
         else
