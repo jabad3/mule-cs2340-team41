@@ -154,6 +154,12 @@ public class LandSelectionStage extends Stage {
         System.out.println(gameModel);
     }
     
+    /**
+     * Determines whether or not all players have had a turn during
+     * land selection.
+     * 
+     * @return True if all players have had a turn during land selection
+     */
     private boolean allPlayersHaveSelected() {
         return currentPlayerIndex >= playerList.size();
     }

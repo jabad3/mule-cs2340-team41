@@ -60,6 +60,12 @@ public class PlayerPawn extends ResizableIcon {
         
         setLocation(postmovePos);
 	}
+    
+    public void enableMovement(Component listenToThis)
+    {
+        listenToThis.setFocusable(true);
+        listenToThis.addKeyListener(new PlayerKeyListener());
+    }
 	
 	/**
 	 * Reset all key states back to zero.
@@ -72,8 +78,32 @@ public class PlayerPawn extends ResizableIcon {
 	    actionKey = false;
 	}
     
+	/**
+	 * PlayerKeyListener updates key states in PlayerPawn depending on which
+	 * keys the user presses.  It is responsible for setting the following
+	 * directions to either true or false:  up, down, left, and right.
+	 * 
+	 * If a key corresponding to a direction is pressed, then that direction
+	 * should be set to true.  Similarly, if a key corresponding to a direction
+	 * is not pressed, then that direction should be false.
+	 * 
+	 * The arrow keys on the keyboard are used to control the different
+	 * direction states.
+	 * 
+     * This key listener should be added to a component that will stay in
+     * focus.
+	 * 
+	 * @author Max
+	 *
+	 */
     private class PlayerKeyListener extends KeyAdapter
     {
+        /**
+         * If any of the four arrow keys are pressed, sets the corresponding
+         * direction state of the pawn to true.
+         * 
+         * @param e The key event fired by the component being listened to
+         */
         public void keyPressed(KeyEvent e)
         {
             switch (e.getKeyCode())
@@ -95,6 +125,14 @@ public class PlayerPawn extends ResizableIcon {
                 break;
             }
         }
+        
+        /**
+         * If any of the four arrow keys are released after being pressed,
+         * then reset the corresponding direction state of the pawn back to
+         * false.
+         * 
+         * @param e The key event fired by the component being listened to
+         */
         public void keyReleased(KeyEvent e)
         {
             switch (e.getKeyCode())
@@ -116,37 +154,6 @@ public class PlayerPawn extends ResizableIcon {
                 break;
             }
         }
-    }
-    
-    /*class MoveTask extends TimerTask {
-        private PlayerPawn playerToMove;
-        
-        public MoveTask(PlayerPawn playerToMove) {
-            this.playerToMove = playerToMove;
-        }
-        
-        public void run() {
-            int speed = 2;
-            
-            if(playerToMove.leftKey)
-                playerToMove.setLocation(playerToMove.getX() - speed, playerToMove.getY());
-            if(playerToMove.rightKey)
-                playerToMove.setLocation(playerToMove.getX() + speed, playerToMove.getY());
-            if(playerToMove.upKey)
-                playerToMove.setLocation(playerToMove.getX(), playerToMove.getY() - speed);
-            if(playerToMove.downKey)
-                playerToMove.setLocation(playerToMove.getX(), playerToMove.getY() + speed);
-        }
-    }*/
-    
-    public void enableMovement(Component listenToThis)
-    {
-        listenToThis.setFocusable(true);
-        listenToThis.addKeyListener(new PlayerKeyListener());
-        
-        //Timer fires every 16ms
-        //Timer timer = new Timer();
-        //timer.schedule(new MoveTask(this), 0, 16);
     }
 
     public static void main(String[] args) {
