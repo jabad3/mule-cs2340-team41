@@ -25,6 +25,8 @@ public class Player extends Trader implements Comparable<Player> {
 	/** Holds the land plots that belong to this player. */
 	private List<LandPlot> landPlotList = new ArrayList<>();
 	
+	private boolean isHoldingMule;
+	
 	/**
 	 * Create a Player object using a name, a RaceType, a Color, and Difficulty.
 	 * The Player will have its inventory set to the proper initial amounts,
@@ -64,6 +66,12 @@ public class Player extends Trader implements Comparable<Player> {
 	public void buyMuleFromSeller(Trader seller, Resource muleConfig, int price)
 			throws FailedTransactionException {
 		// TODO Auto-generated method stub
+		
+		//check for enough money
+		//deduct money
+		//add mule to inventory
+		
+		
 		
 	}
 	
@@ -157,5 +165,14 @@ public class Player extends Trader implements Comparable<Player> {
 		System.out.println("Current Player Score is:" + score);
 		return score;
 	}
+	
+	public boolean getMuleHolder() {
+		return isHoldingMule;
+	}
+	
+	public void setMuleHolder(boolean isHolding) {
+		isHoldingMule = isHolding;
+	}
+
 	
 }

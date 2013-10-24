@@ -128,6 +128,22 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
         // TODO
         // User will buy/sell a mule to the store, or error if not enough money
         // Update View to indicate pawn has/does not have a mule
+    	
+    	//if player is already holding a mule, can't buy another one
+    	if(currentPlayer.getMuleHolder() == true) {
+    		//myView.displayMessageDialog("Already holding mule!");
+    		return;
+    	}
+
+    	/*
+    	try {
+    		currentPlayer.buyMuleFromSeller(StoreMISS store)
+    		}
+    	catch (failed transaction event ) {
+    		myView.displayMessageDialog("Not enough money!");
+    		//show mule picture, play mule sound, ////probably not, but possibly animate trailing mule
+    		}
+    	*/
         
     }
 
