@@ -1,11 +1,14 @@
 package Stages;
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.util.List;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 
 import Models.GameModel;
 import Models.LandPlot;
@@ -19,6 +22,7 @@ import Views.MuleTimerListener;
 import Views.MuleTimerPanel;
 import Views.PlayerPawn;
 import Views.ShopEntryListener;
+import Views.StorePanel;
 import Views.TownPanel;
 
 /**
@@ -124,7 +128,14 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
         // User will buy/sell a mule to the store, or error if not enough money
         // Update View to indicate pawn has/does not have a mule
     	
-    	myView.displayMessageDialog("Tims panel here");    	
+    	//myView.displayMessageDialog("Tims panel here");
+    	
+    	StorePanel storepanel = new StorePanel();
+    	JDialog dialog = new JDialog();
+    	dialog.setContentPane(storepanel);
+    	dialog.pack();
+    	dialog.setVisible(true);
+    	
     	//once finished buying from store, reset location to coordinates outside of store
     	myView.currentPawn.resetStates();
     	myView.currentPawn.setLocation(new Point(80,140));	//location outside store
