@@ -19,12 +19,10 @@ public class Player extends Trader implements Comparable<Player> {
 	/** The color that the Player uses to mark land that it owns */
 	private Color color;
 	
-	/** Holds the up/down status for each possible player key input */
-	private EnumMap<InputType, Boolean> keyStates;
-	
 	/** Holds the land plots that belong to this player. */
 	private List<LandPlot> landPlotList = new ArrayList<>();
 	
+	/** True if the Player has a mule that has not been installed on a plot. */
 	private boolean isHoldingMule;
 	
 	/**
@@ -67,19 +65,9 @@ public class Player extends Trader implements Comparable<Player> {
 			throws FailedTransactionException {
 		// TODO Auto-generated method stub
 		
-		//check for enough money
-		//deduct money
-		//add mule to inventory
-		
-		
-		
-	}
-	
-	@Override
-	public void buyLandFromSeller(Trader seller, int price)
-			throws FailedTransactionException {
-		paySeller(seller, price);
-		
+	    // check for enough money
+	    // deduct money
+	    // add mule to inventory
 	}
 	
 	/**
@@ -98,31 +86,6 @@ public class Player extends Trader implements Comparable<Player> {
 	 */
     public Color getColor() {
         return color;
-    }
-    
-    /**
-     * Returns a String containing information for the Player's instance
-     * data, as well as information concerning its inventory.
-     * Intended to be printed to the console for testing.
-     * 
-     * @return The Player's information
-     */
-    public String toString() {
-        String s1 = "\nPlayer Name:  " + name;
-        String s2 = "\nRace: " + race.name();
-        String s3 = "\nColor:  " + color;
-        String s4 = "\nMy inventory info... " + inventory.toString();
-        String s5 = "\nMy Score is: " + calculateScore();
-        return s1 + s2 + s3 + s4 + s5;
-    }
-    
-    /**
-     * Returns String representation of inventory.
-     * Intended to be printed for simple testing.
-     * @return String representation of inventory
-     */
-    public String getMyInventoryAsString() {
-        return "----------" + name + "'s Inventory--------------" + inventory.toString();
     }
 
     /**
@@ -148,31 +111,60 @@ public class Player extends Trader implements Comparable<Player> {
 
 	@Override
 	public int compareTo(Player otherPlayer) {
-		if(this.calculateScore() > otherPlayer.calculateScore()) 
-			return 1;
-		else if(this.calculateScore() == otherPlayer.calculateScore())
-			return 0;
-		else 
-			return -1;
+	    return this.calculateScore() - otherPlayer.calculateScore();
 	}
 
+	/**
+	 * Calculates and returns the player's current score using the original
+	 * score formula for MULE.
+	 * 
+	 * Score is dependent on the status of the Player's plots and inventory.
+	 * 
+	 * @return The player's current score.
+	 */
 	public int calculateScore() {
 		int score = 0;
 		for(LandPlot plot : landPlotList) {
 			score += plot.calculateScore();
 		}
 		score += inventory.calculateScore();
-		System.out.println("Current Player Score is:" + score);
 		return score;
 	}
 	
+	/**
+	 * Checks whether or not the current Player is holding a mule.
+	 * 
+	 * @return True if the Player is holding a mule;
+	 */
 	public boolean getMuleHolder() {
-		return isHoldingMule;
+	    return isHoldingMule;
 	}
 	
-	public void setMuleHolder(boolean isHolding) {
-		isHoldingMule = isHolding;
-	}
-
+	
+    /**
+     * Returns a String containing information for the Player's instance
+     * data, as well as information concerning its inventory.
+     * Intended to be printed to the console for testing.
+     * 
+     * @return The Player's information
+     */
+    public String toString() {
+        String s1 = "\nPlayer Name:  " + name;
+        String s2 = "\nRace: " + race.name();
+        String s3 = "\nColor:  " + color;
+        String s4 = "\nMy inventory info... " + inventory.toString();
+        String s5 = "\nMy Score is: " + calculateScore();
+        return s1 + s2 + s3 + s4 + s5;
+    }
+    
+    /**
+     * Returns String representation of inventory.
+     * Intended to be printed for simple testing.
+     * 
+     * @return String representation of inventory
+     */
+    public String getMyInventoryAsString() {
+        return "----------" + name + "'s Inventory--------------" + inventory.toString();
+    }
 	
 }

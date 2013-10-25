@@ -192,7 +192,7 @@ public class LandSelectionStage extends Stage {
             if (chosenPlot.isAvailable()) {
                 
                 try {
-                    currentPlayer.buyLandFromSeller(gameModel.getStore(), landPlotPrice);
+                    currentPlayer.paySeller(gameModel.getStore(), landPlotPrice);
                     assignPlotToOwner(chosenPlot, currentPlayer);
                     updateViewForNextPlayer();
                 } catch (FailedTransactionException exc) {

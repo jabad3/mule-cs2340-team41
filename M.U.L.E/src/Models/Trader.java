@@ -105,17 +105,4 @@ public abstract class Trader {
      *          to pay for the mule, or if the seller has no mules to sell
      */
     public abstract void buyMuleFromSeller(Trader seller, Resource muleConfig, int price) throws FailedTransactionException;
-    
-    /**
-     * Carries out the transaction when a Trader purchases a LandPlot.
-     * LandPlot sales can occur during Land Auctions or during Development
-     * by visiting the Land Office.
-     * 
-     * @param seller The Trader who is selling the land
-     * @param price The amount this Trader (the buyer) must pay
-     * @throws FailedTransactionException
-     *          Thrown if the buyer cannot afford the price
-     */
-    public abstract void buyLandFromSeller(Trader seller, int price) throws FailedTransactionException; 
-    /* DO WE WANT THIS? */
 }
