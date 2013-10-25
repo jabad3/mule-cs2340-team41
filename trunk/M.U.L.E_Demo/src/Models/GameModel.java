@@ -1,10 +1,15 @@
 package Models;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class GameModel {
+    
+    /** The round number of the final round. */
+    private final int FINAL_ROUND = 12;
     
     /** Holds all Player objects in the game. */
 	private List<Player> playerList = new ArrayList<>();
@@ -23,6 +28,39 @@ public class GameModel {
 	
 	/** The current round of the game. */
 	private int currentRound = 0;
+	
+	/** The food requirement for players each round. */
+	private java.util.Map<Integer,Integer> foodRequirements;
+	
+	/**
+	 * Create a new GameModel.
+     * Must manually set all fields except for foodRequirements.
+	 */
+	public GameModel()
+	{
+		buildFoodRequirements();
+	}
+	
+	/** Build Map with food requirements per round
+	 * 
+	 * 
+	 */
+	public void buildFoodRequirements() {
+		foodRequirements = new HashMap<Integer,Integer>();
+		foodRequirements.put(1, 3); //key = round, value = # of foods
+		foodRequirements.put(2, 3);
+		foodRequirements.put(3, 3);
+		foodRequirements.put(4, 3);
+		foodRequirements.put(5, 4);
+		foodRequirements.put(6, 4);
+		foodRequirements.put(7, 4);
+		foodRequirements.put(8, 4);
+		foodRequirements.put(9, 5);
+		foodRequirements.put(10, 5);
+		foodRequirements.put(11, 5);
+		foodRequirements.put(12, 5);
+	}
+	
 	
 	/**
 	 * Add a Player to playerList.
@@ -92,7 +130,7 @@ public class GameModel {
      * The Player with the highest score will be first in the list.
      */
 	private void sortPlayerList() {
-		// TODO
+		Collections.sort(playerList);
 	}
 
 	/**
@@ -102,7 +140,6 @@ public class GameModel {
 	 * @return Sorted players
 	 */
 	public List<Player> getSortedPlayerList() {
-		sortPlayerList();
 		return playerList;
 	}
 
@@ -153,4 +190,40 @@ public class GameModel {
 	public void incrementRound() {
 	    currentRound++;
 	}
+	
+	/**
+	 * Update the player order by sorting according to score.
+	 */
+	public void updatePlayerOrder() {
+	    sortPlayerList();
+	}
+
+	/**
+	 * Calculates the current player's turn time for the current round
+	 * 
+	 * @param player The current player
+	 * 
+	 * @return the number of seconds a player's turn should last
+	 */
+	public int calculateTurnTime(Player player) {
+		int returnval = 0;
+		int playerFood = player.getFood();
+		int requiredFood = foodRequirements.get(currentRound);
+		if(playerFood >= requiredFood)
+			returnval = 50;
+		else if(playerFood == 0)
+			returnval = 5;
+		else
+			returnval = 30;
+		return returnval * 1000;
+	}
+	
+	/**
+	 * determines whether or not the game is over
+	 * 
+	 * @return true if the game is over
+	 */
+    public boolean gameIsOver() {
+        return currentRound > FINAL_ROUND;
+    }
 }

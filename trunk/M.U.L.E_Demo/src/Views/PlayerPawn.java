@@ -1,28 +1,12 @@
 package Views;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import Models.InputType;
 import Models.MapFactory;
-import Models.RaceType;
 
 /**
  * @author jabad3
@@ -30,21 +14,21 @@ import Models.RaceType;
  */
 public class PlayerPawn extends ResizableIcon {
 
-	/**
-	 * Create a PlayerPawn object to represent a Player.
-	 * 
-	 * @param myRace The RaceType of the Player object represented by this pawn
-	 * @param myColor The ownership color of the Player object represented by this pawn
-	 */
-	/*public PlayerPawn(RaceType myRace, Color myColor){
-		ImageIcon stockIcon = myRace.getStockImageIcon();
-		// TODO
-		// Color the appropriate parts of the stockIcon with the player's color
-		pawnIcon = stockIcon;
-		this.setIcon(pawnIcon);
-		this.setPreferredSize(new Dimension(50, 50));
-	}*/
-	
+    /** True if left key is pressed. */
+    public boolean leftKey = false;
+    
+    /** True if right key is pressed. */
+    public boolean rightKey = false;
+    
+    /** True if up key is pressed. */
+    public boolean upKey = false;
+    
+    /** True if down key is pressed. */
+    public boolean downKey = false;
+    
+    /** True if the action key is pressed. */
+    public boolean actionKey = false;
+    
 	/**
 	 * Create a PlayerPawn object to represent a Player using the Player's
 	 * icon.
@@ -56,9 +40,8 @@ public class PlayerPawn extends ResizableIcon {
 	}
 	
 	/**
-	 * Move the pawn left, right, up, or down.
-	 * 
-	 * @param key Specifies the direction to move the pawn
+	 * Move the pawn left, right, up, and/or down depending on which keys
+	 * are currently pressed.
 	 */
 	public void move() {
 	    int speed = 2;
@@ -76,26 +59,50 @@ public class PlayerPawn extends ResizableIcon {
         
         setLocation(postmovePos);
 	}
+    
+    public void enableMovement(Component listenToThis)
+    {
+        listenToThis.setFocusable(true);
+        listenToThis.addKeyListener(new PlayerKeyListener());
+    }
 	
 	/**
-	 * Sets the given input type to be either on or off.
-	 * 
-	 * @param input The input type to update
-	 * 
-	 * @param on The state that the input type will be set to.  True means the
-	 * input should be turned on
+	 * Reset all key states back to zero.
 	 */
-	public void setInputStatus(InputType input, boolean on) {
-	    // TODO
+	public void resetStates() {
+	    leftKey = false;
+	    rightKey = false;
+	    upKey = false;
+	    downKey = false;
+	    actionKey = false;
 	}
     
-    public boolean leftKey = false;
-    public boolean rightKey = false;
-    public boolean upKey = false;
-    public boolean downKey = false;
-    
+	/**
+	 * PlayerKeyListener updates key states in PlayerPawn depending on which
+	 * keys the user presses.  It is responsible for setting the following
+	 * directions to either true or false:  up, down, left, and right.
+	 * 
+	 * If a key corresponding to a direction is pressed, then that direction
+	 * should be set to true.  Similarly, if a key corresponding to a direction
+	 * is not pressed, then that direction should be false.
+	 * 
+	 * The arrow keys on the keyboard are used to control the different
+	 * direction states.
+	 * 
+     * This key listener should be added to a component that will stay in
+     * focus.
+	 * 
+	 * @author Max
+	 *
+	 */
     private class PlayerKeyListener extends KeyAdapter
     {
+        /**
+         * If any of the four arrow keys are pressed, sets the corresponding
+         * direction state of the pawn to true.
+         * 
+         * @param e The key event fired by the component being listened to
+         */
         public void keyPressed(KeyEvent e)
         {
             switch (e.getKeyCode())
@@ -112,8 +119,19 @@ public class PlayerPawn extends ResizableIcon {
                 case KeyEvent.VK_DOWN:
                 downKey = true;
                 break;
+                case KeyEvent.VK_SPACE:
+                actionKey = true;
+                break;
             }
         }
+        
+        /**
+         * If any of the four arrow keys are released after being pressed,
+         * then reset the corresponding direction state of the pawn back to
+         * false.
+         * 
+         * @param e The key event fired by the component being listened to
+         */
         public void keyReleased(KeyEvent e)
         {
             switch (e.getKeyCode())
@@ -130,39 +148,11 @@ public class PlayerPawn extends ResizableIcon {
                 case KeyEvent.VK_DOWN:
                 downKey = false;
                 break;
+                case KeyEvent.VK_SPACE:
+                actionKey = false;
+                break;
             }
         }
-    }
-    
-    class MoveTask extends TimerTask {
-        private PlayerPawn playerToMove;
-        
-        public MoveTask(PlayerPawn playerToMove) {
-            this.playerToMove = playerToMove;
-        }
-        
-        public void run() {
-            int speed = 2;
-            
-            if(playerToMove.leftKey)
-                playerToMove.setLocation(playerToMove.getX() - speed, playerToMove.getY());
-            if(playerToMove.rightKey)
-                playerToMove.setLocation(playerToMove.getX() + speed, playerToMove.getY());
-            if(playerToMove.upKey)
-                playerToMove.setLocation(playerToMove.getX(), playerToMove.getY() - speed);
-            if(playerToMove.downKey)
-                playerToMove.setLocation(playerToMove.getX(), playerToMove.getY() + speed);
-        }
-    }
-    
-    public void enableMovement(Component listenToThis)
-    {
-        listenToThis.setFocusable(true);
-        listenToThis.addKeyListener(new PlayerKeyListener());
-        
-        //Timer fires every 16ms
-        //Timer timer = new Timer();
-        //timer.schedule(new MoveTask(this), 0, 16);
     }
 
     public static void main(String[] args) {

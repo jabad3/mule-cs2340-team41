@@ -1,7 +1,6 @@
 package Models;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import Stages.DevelopmentStage;
 import Stages.GameConfigStage;

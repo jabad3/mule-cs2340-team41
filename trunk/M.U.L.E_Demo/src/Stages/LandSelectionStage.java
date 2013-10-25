@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -63,6 +62,10 @@ public class LandSelectionStage extends Stage {
      * price, then configure and display the View using this information.
      */
     public void start() {
+        // currently, this is our first stage, so increment round upon start
+        gameModel.incrementRound();
+        gameModel.updatePlayerOrder();  // player order used for rest of round
+        
         playerList = gameModel.getSortedPlayerList();
         currentPlayerIndex = 0;
         currentPlayer = playerList.get(currentPlayerIndex);
@@ -70,15 +73,27 @@ public class LandSelectionStage extends Stage {
         Map map = gameModel.getMap();
         mapPanel = new MapPanel(map, new LandPlotListener());
         
-        // currently, this is our first stage, so increment round upon start
-        gameModel.incrementRound();
+        // TODO
+        // Temporary until we have a proper summary/end screen
+        if (gameModel.gameIsOver()) {
+            JOptionPane.showMessageDialog(myView, "Congratulations, you actually"
+                                          + " made it to the end!!!\n\n"
+                    + "Click okay to see the final results, then the game will end.");
+            showStatusDialog();
+            System.out.println("Exiting game...");
+            System.exit(0);
+        }
         
         String currentPlayerName = currentPlayer.getName();
         calculateLandPlotPrice();
     	myView = new LandSelectionView(mapPanel, landPlotPrice, currentPlayerName, new SelectionSkipListener());
+    	
     	displayView(myView);
     }
     
+    /**
+     * Determines the price of land for the current round.
+     */
     private void calculateLandPlotPrice() {
         int round = gameModel.getCurrentRound();
         if (round <= 2)
@@ -87,6 +102,20 @@ public class LandSelectionStage extends Stage {
             // TODO
             // currently - temporary formula
             landPlotPrice = 500 + round * round * 5;
+    }
+    
+    /**
+     * Assign plots to appropriate owners.  Both the plot and the owner
+     * must be aware of one another.
+     * 
+     * Pre-condition:  plot must be available to be owned by another player
+     * 
+     * @param plot Unowned plot that will become owned
+     * @param owner The new owner of the plot
+     */
+    private void assignPlotToOwner(LandPlot plot, Player owner) {
+        plot.setOwner(owner);
+        owner.addLandPlot(plot);
     }
     
     /**
@@ -99,7 +128,7 @@ public class LandSelectionStage extends Stage {
     public void updateViewForNextPlayer() {
         currentPlayerIndex++;
         
-        if (allPlayersHaveSelected()){
+        if (allPlayersHaveSelected()) {
             showStatusDialog();
             goNextStage();
         } else {  // let the next player go
@@ -116,15 +145,21 @@ public class LandSelectionStage extends Stage {
     private void showStatusDialog() {
         String playerInfo = "";
         for (Player player:  playerList)
-            playerInfo += player.getMyInventoryAsString();
+            playerInfo += player.getMyInventoryAsString() + "\n";
         JOptionPane.showMessageDialog(mainFrame,
-                "Land Selection is Over For Round + " + gameModel.getCurrentRound()
-                + "\n------Current State of Player Objects----\n" + playerInfo);
+                "Land Selection is Over For Round #" + gameModel.getCurrentRound()
+                + "\n\n" + playerInfo);
         System.out.println("Ending LandSelection Stage");
         System.out.println("\n\n Current state of the model:  \n");
         System.out.println(gameModel);
     }
     
+    /**
+     * Determines whether or not all players have had a turn during
+     * land selection.
+     * 
+     * @return True if all players have had a turn during land selection
+     */
     private boolean allPlayersHaveSelected() {
         return currentPlayerIndex >= playerList.size();
     }
@@ -157,8 +192,8 @@ public class LandSelectionStage extends Stage {
             if (chosenPlot.isAvailable()) {
                 
                 try {
-                    currentPlayer.buyLandFromSeller(gameModel.getStore(), landPlotPrice);
-                    chosenPlot.setOwner(currentPlayer);
+                    currentPlayer.paySeller(gameModel.getStore(), landPlotPrice);
+                    assignPlotToOwner(chosenPlot, currentPlayer);
                     updateViewForNextPlayer();
                 } catch (FailedTransactionException exc) {
                     myView.flashNotEnoughMoneyMessage();

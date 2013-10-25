@@ -3,7 +3,6 @@ package Views;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -26,7 +25,6 @@ import javax.swing.JPanel;
 public class ResizableIcon extends JComponent {
 
     /** The image to be displayed in the resizable icon. */
-    //private Image image;
     Image image;
     
     /**
@@ -65,7 +63,7 @@ public class ResizableIcon extends JComponent {
      * Set the displayed image and automatically updates the component to
      * display the new icon.
      * 
-     * @param icon Image object containing the icon to be displayed
+     * @param image Image object containing the icon to be displayed
      */
     public void setImage(Image image) {
         this.image = image;

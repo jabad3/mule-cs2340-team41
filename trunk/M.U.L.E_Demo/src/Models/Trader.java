@@ -28,11 +28,11 @@ public abstract class Trader {
      *          Thrown when a buyer (this) does not have enough money,
      *          or when the seller does not have the resource in stock.
      */
-    public void buyResourceFromSeller(Trader seller, Resource rType, int price) throws FailedTransactionException {
+    public void buyResourceFromSeller(Trader seller, Resource rType, int price, int resourceCount) throws FailedTransactionException {
         try {
-            seller.removeResource(rType);
+            seller.removeResource(rType, resourceCount);
             this.paySeller(seller, price);
-            this.addResource(rType);
+            this.addResource(rType, resourceCount);
         }
         catch (FailedTransactionException e) {
             throw e;
@@ -47,11 +47,11 @@ public abstract class Trader {
      *          Thrown when the Trader does not have any units of the resource,
      *          in which case it is impossible to remove a unit of the resource.
      */
-    public void removeResource(Resource rType) throws FailedTransactionException {
-        if (inventory.getResourceCount(rType) == 0) 
+    public void removeResource(Resource rType, int resourceCount) throws FailedTransactionException {
+        if (inventory.getResourceCount(rType) < resourceCount) 
             throw new FailedTransactionException("Not in stock.");
         else
-            inventory.removeResource(rType);
+            inventory.removeResource(rType, resourceCount);
     }
     
     /**
@@ -59,8 +59,8 @@ public abstract class Trader {
      * 
      * @param rType The type of Resource to add
      */
-    public void addResource(Resource rType) {
-        inventory.addResource(rType);
+    public void addResource(Resource rType, int resourceCount) {
+        inventory.addResource(rType, resourceCount);
     }
 
     /**
@@ -73,7 +73,7 @@ public abstract class Trader {
      *          Thrown when the buyer (this) does not have enough money to
      *          make the payment.
      */
-    protected void paySeller(Trader seller, int price) throws FailedTransactionException {
+    public void paySeller(Trader seller, int price) throws FailedTransactionException {
         // TODO
         int currentFunds = inventory.getResourceCount(Resource.MONEY);
         if (currentFunds < price)
@@ -105,17 +105,4 @@ public abstract class Trader {
      *          to pay for the mule, or if the seller has no mules to sell
      */
     public abstract void buyMuleFromSeller(Trader seller, Resource muleConfig, int price) throws FailedTransactionException;
-    
-    /**
-     * Carries out the transaction when a Trader purchases a LandPlot.
-     * LandPlot sales can occur during Land Auctions or during Development
-     * by visiting the Land Office.
-     * 
-     * @param seller The Trader who is selling the land
-     * @param price The amount this Trader (the buyer) must pay
-     * @throws FailedTransactionException
-     *          Thrown if the buyer cannot afford the price
-     */
-    public abstract void buyLandFromSeller(Trader seller, int price) throws FailedTransactionException; 
-    /* DO WE WANT THIS? */
 }
