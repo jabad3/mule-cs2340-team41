@@ -17,9 +17,9 @@ public interface ShopEntryListener {
 
     /**
      * This method is called whenever the user attempts to interact with
-     * the mule store.
+     * the store.
      */
-    public void enteredMuleStore();
+    public void enteredStore();
     
     /**
      * This method is called whenever the user attempts to interact with

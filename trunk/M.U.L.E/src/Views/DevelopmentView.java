@@ -241,6 +241,15 @@ public class DevelopmentView extends JPanel {
         	//muleTimerPanel.remainingTime = 0;
             sendEnteredPubNotifications();
         }
+        
+        if(townPanel.overlapsStoreEntrance(currentPawn) && currentPawn.actionKey)
+        {
+        	//TODO: give player cash
+        	//TODO: display "you gambled and won $___!"
+        	//muleTimerPanel.remainingTime = 0;
+            sendEnteredStoreNotifications();
+        }
+        
         /*if (townPanel.overlapsTownShops(currentPawn)) {
             Point newPawnLocation = townPanel.calcInBoundsLocation(currentPawn);
             currentPawn.setLocation(newPawnLocation);
@@ -256,6 +265,11 @@ public class DevelopmentView extends JPanel {
             sel.enteredPub();
     }
 
+    private void sendEnteredStoreNotifications() {
+        for (ShopEntryListener sel: shopEntryListeners)
+            sel.enteredStore();
+    }
+    
     /**
      * Set the current Player's name
      * 
