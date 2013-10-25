@@ -22,8 +22,7 @@ public class Player extends Trader implements Comparable<Player> {
 	/** Holds the land plots that belong to this player. */
 	private List<LandPlot> landPlotList = new ArrayList<>();
 	
-	/** True if the Player has a mule that has not been installed on a plot. */
-	private boolean isHoldingMule;
+	private Mule mule;
 	
 	/**
 	 * Create a Player object using a name, a RaceType, a Color, and Difficulty.
@@ -132,12 +131,34 @@ public class Player extends Trader implements Comparable<Player> {
 	}
 	
 	/**
+	 * Gives player a mule
+	 * 
+	 * @param mule
+	 */
+	public void addMule(Mule mule) {
+		this.mule = mule;
+	}
+	
+	/**
+	 * removes player's mule
+	 * 
+	 * @param mule
+	 */
+	private void removeMule(Mule mule) {
+		this.mule = null;
+	}
+	
+	public void muleRunsAway() {
+		removeMule(mule);
+	}
+	
+	/**
 	 * Checks whether or not the current Player is holding a mule.
 	 * 
 	 * @return True if the Player is holding a mule;
 	 */
-	public boolean getMuleHolder() {
-	    return isHoldingMule;
+	public boolean hasMule() {
+	    return mule != null;
 	}
 	
 	
