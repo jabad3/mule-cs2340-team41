@@ -111,7 +111,7 @@ public class LandPlot {
     	if(mule == null)
     		totalPlotScore = 500;
     	else
-    		totalPlotScore = mule.getScoreValue();
+    		totalPlotScore = 500 + mule.getScoreValue();
     	return totalPlotScore;
     }
 }

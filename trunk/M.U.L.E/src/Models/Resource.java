@@ -12,9 +12,9 @@ package Models;
  *
  */
 public enum Resource {
-    FOOD(525),
-    ENERGY(550),
-    ORE(575),
+    FOOD(25),
+    ENERGY(50),
+    ORE(75),
     MONEY(0),
     MULE(0);
     
