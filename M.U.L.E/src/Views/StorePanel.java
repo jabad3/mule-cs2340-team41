@@ -57,7 +57,7 @@ public class StorePanel extends JPanel{
 		ChangeListener updateListener = new ChangeListener() {
 	        @Override
 	        public void stateChanged(ChangeEvent e) {
-	            Update((JSpinner)e.getSource());
+	            updateStorePanel((JSpinner)e.getSource());
 	        }
 	    };
     	
@@ -85,13 +85,13 @@ public class StorePanel extends JPanel{
 		this.add(subtotalLabel);
 		this.add(buySellButton);
 		
-		Update(null);
+		updateStorePanel(null);
 	}
 	
 	/**
 	 * Updates spinners and JLabels to reflect model
 	 */	
-	public void Update(JSpinner source)
+	public void updateStorePanel(JSpinner source)
 	{
 		int storerescount[] = {10, 111, 12};
 		int playerrescount[] = {7, 8, 9};
