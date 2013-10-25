@@ -203,6 +203,7 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
             swapMules(currentPlayer, plot);
         else if (currentPlayer.hasMule())
             muleRunsAway();
+        System.out.println("Entered LandPlot");
     }
     
     /**

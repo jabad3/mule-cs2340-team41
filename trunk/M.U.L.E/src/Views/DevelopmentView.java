@@ -213,7 +213,10 @@ public class DevelopmentView extends JPanel {
             showTown();
         } else if (currentPawn.actionKey) {
             Point currentLocation = currentPawn.getLocation();
-            LandPlot enteredPlot = mapPanel.getLandPlotAt(currentLocation);
+            int centerX = currentLocation.x + currentPawn.getWidth() / 2;
+            int centerY = currentLocation.y + currentPawn.getHeight() / 2;
+            Point centerOfPawn = new Point(centerX, centerY);
+            LandPlot enteredPlot = mapPanel.getLandPlotAt(centerOfPawn);
             sendEnteredLandPlotNotifications(enteredPlot);
         }
     }
