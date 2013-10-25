@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 import Models.GameModel;
+import Models.LandPlot;
 import Models.Map;
 import Models.Player;
 import Models.Resource;
@@ -200,6 +201,12 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     public void enteredAssayOffice() {
         // TODO
         // Only if crystite resource is added
+        
+    }
+
+    @Override
+    public void enteredLandPlot(LandPlot plot) {
+        // TODO Auto-generated method stub
         
     }
 

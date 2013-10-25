@@ -16,6 +16,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Models.LandPlot;
 import Models.MapFactory;
 
 
@@ -208,13 +209,15 @@ public class DevelopmentView extends JPanel {
         
         if (!mapPanel.insideMap(currentPawn)) {
         	constrainPawn(mapPanel);
-        }
-                
-        if (mapPanel.overlapsTown(currentPawn)) {
+        } else if (mapPanel.overlapsTown(currentPawn)) {
             showTown();
+        } else if (currentPawn.actionKey) {
+            Point currentLocation = currentPawn.getLocation();
+            LandPlot enteredPlot = mapPanel.getLandPlotAt(currentLocation);
+            sendEnteredLandPlotNotifications(enteredPlot);
         }
     }
-    
+
     /**
      * In the map, take action if the current pawn..
      *   1) Collides with the town border,
@@ -236,9 +239,6 @@ public class DevelopmentView extends JPanel {
         
         if(townPanel.overlapsPubEntrance(currentPawn) && currentPawn.actionKey)
         {
-        	//TODO: give player cash
-        	//TODO: display "you gambled and won $___!"
-        	//muleTimerPanel.remainingTime = 0;
             sendEnteredPubNotifications();
         }
         
@@ -263,6 +263,17 @@ public class DevelopmentView extends JPanel {
     private void sendEnteredPubNotifications() {
         for (ShopEntryListener sel: shopEntryListeners)
             sel.enteredPub();
+    }
+    
+    /**
+     * Notify appropriate listeners that the user interacted with a land plot.
+     * 
+     * @param enteredPlot The LandPlot that the user interacted with
+     */
+    private void sendEnteredLandPlotNotifications(LandPlot enteredPlot) {
+        for (ShopEntryListener sel: shopEntryListeners)
+            sel.enteredLandPlot(enteredPlot);
+        
     }
 
     private void sendEnteredStoreNotifications() {
