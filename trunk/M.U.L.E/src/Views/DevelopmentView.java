@@ -60,6 +60,12 @@ public class DevelopmentView extends JPanel {
     /** Keeps track of all ShopEntryListeners listening to the view. */
     private Collection<ShopEntryListener> shopEntryListeners;
     
+    /** Holds the previous state of the action key during animation. */
+    private boolean previousActionKeyState;
+    
+    /** Holds the current state of the action key during animation. */
+    private boolean currentActionKeyState;
+    
     /**
      * Create the Development View.
      * 
@@ -155,7 +161,7 @@ public class DevelopmentView extends JPanel {
         // call pawn.move if new location is valid
         // swap town/map panel if needed
         // update the MULE timer
-
+        updateActionKeyState();
         currentPawn.move();
         
         if (mapPanel.isVisible())
@@ -168,6 +174,15 @@ public class DevelopmentView extends JPanel {
         setFocusable(true);  // if not called, then muleTimerPanel.repaint() messes up focus
     }
     
+    /**
+     * Updates previousActionKeyState and currentActionKeyState according
+     * to what the user has pressed at this point in time.
+     */
+    private void updateActionKeyState() {
+        previousActionKeyState = currentActionKeyState;
+        currentActionKeyState = currentPawn.actionKey;
+    }
+
     /** Moves the pawn to be inside the given panel
      * 
      * @param toPanel The panel to contain the pawn
@@ -211,7 +226,7 @@ public class DevelopmentView extends JPanel {
         	constrainPawn(mapPanel);
         } else if (mapPanel.overlapsTown(currentPawn)) {
             showTown();
-        } else if (currentPawn.actionKey) {
+        } else if (actionKeyWasHit()) {
             Point currentLocation = currentPawn.getLocation();
             int centerX = currentLocation.x + currentPawn.getWidth() / 2;
             int centerY = currentLocation.y + currentPawn.getHeight() / 2;
@@ -219,6 +234,17 @@ public class DevelopmentView extends JPanel {
             LandPlot enteredPlot = mapPanel.getLandPlotAt(centerOfPawn);
             sendEnteredLandPlotNotifications(enteredPlot);
         }
+    }
+
+    /**
+     * Checks whether or not the user has just hit the action key.
+     * A hit key is defined as a key that is pressed now that was previously
+     * unpressed.
+     * 
+     * @return True if the action key has just been hit
+     */
+    private boolean actionKeyWasHit() {
+        return (!previousActionKeyState && currentActionKeyState);
     }
 
     /**
