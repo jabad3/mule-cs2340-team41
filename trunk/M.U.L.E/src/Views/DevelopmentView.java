@@ -48,7 +48,7 @@ public class DevelopmentView extends JPanel {
     private CardLayout cardLayout;
     
     /** The current PlayerPawn object to be displayed to the user. */
-    private PlayerPawn currentPawn;
+    public PlayerPawn currentPawn;												//temp
     
     /** Displays a bar representing the time left in the current turn. */
     private MuleTimerPanel muleTimerPanel;
