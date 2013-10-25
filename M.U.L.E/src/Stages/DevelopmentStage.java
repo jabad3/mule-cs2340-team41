@@ -1,6 +1,7 @@
 package Stages;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -129,23 +130,16 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
         // User will buy/sell a mule to the store, or error if not enough money
         // Update View to indicate pawn has/does not have a mule
     	
-    	//if player is already holding a mule, can't buy another one
-    	myView.displayMessageDialog("Tims panel here");
-    	if(currentPlayer.getMuleHolder() == true) {
-    		myView.displayMessageDialog("Already holding mule!");
-    		return;
-    	}
-
+    	myView.displayMessageDialog("Tims panel here");    	
+    	//once finished buying from store, reset location to coordinates outside of store
+    	myView.currentPawn.setLocation(new Point(283,260));
     	
-//    	try {
-//    		currentPlayer.buyMuleFromSeller(store);
-//    		}
-//    	catch (FailedTransactionException e ) {
-//    		myView.displayMessageDialog("Not enough money!");
-//    		//show mule picture, play mule sound, ////probably not, but possibly animate trailing mule
-//    		}
     	
-        
+//    	if(currentPlayer.getMuleHolder() == true) {
+//		myView.displayMessageDialog("Already holding mule!");
+//		return;
+//	}
+    	
     }
 
     @Override
