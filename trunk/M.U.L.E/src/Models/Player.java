@@ -122,25 +122,21 @@ public class Player extends Trader implements Comparable<Player> {
 	}
 	
 	/**
-	 * Gives player a mule
+	 * Sets the player's mule.
 	 * 
-	 * @param mule
+	 * @param mule The new mule for the Player
 	 */
-	public void addMule(Mule mule) {
+	public void setMule(Mule mule) {
 		this.mule = mule;
 	}
 	
 	/**
-	 * removes player's mule
+	 * Gets the player's mule.
 	 * 
-	 * @param mule
+	 * @return The mule that the Player currently has.  Null if no mule.
 	 */
-	private void removeMule(Mule mule) {
-		this.mule = null;
-	}
-	
-	public void muleRunsAway() {
-		removeMule(mule);
+	public Mule getMule() {
+	    return mule;
 	}
 	
 	/**
