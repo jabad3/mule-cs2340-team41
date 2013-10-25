@@ -1,13 +1,17 @@
 package Views;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseListener;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import Models.LandPlot;
 import Models.Map;
+import Models.MapFactory;
 /**
  * This class is the view for the map screen
  * @author Tim Farley
@@ -15,6 +19,12 @@ import Models.Map;
  */
 
 public class MapPanel extends JPanel {
+    
+    /** The number of rows in the grid of land plots. */
+    private final int ROWS = 5;
+    
+    /** The number of columns in the grid of land plots. */
+    private final int COLS = 9;
 	
     /** Maintains a reference to the component representing the town. */
     LandPlotBtn townBtn;
@@ -30,7 +40,7 @@ public class MapPanel extends JPanel {
 	{
 	    LandPlot[][] landPlots = map.landPlotArray();
 	    
-	    setLayout(new GridLayout(5, 9));
+	    setLayout(new GridLayout(ROWS, COLS));
 	    
 	    for (int row = 0; row < landPlots.length; row++) {
 	        for (int col = 0; col < landPlots[0].length; col++) {
@@ -78,5 +88,29 @@ public class MapPanel extends JPanel {
         Rectangle mapBounds = this.getBounds();
         
         return (mapBounds.contains(componentBounds));
+	}
+	
+	/**
+	 * Returns the land plot associated with the LandPlotBtn at the given
+	 * location.
+	 * 
+	 * Pre-condition:  location must be within the map panel boundary
+	 * 
+	 * @param location The
+	 * @return The land plot model object found at the given location.
+	 */
+	public LandPlot getLandPlotAt(Point location) {
+	    LandPlotBtn lpb = (LandPlotBtn) this.getComponentAt(location);
+	    return lpb.getMyLandPlot();
+	}
+	
+	public static void main(String[] args) {
+	    MapPanel mp = new MapPanel(MapFactory.buildMap("Default"), null);
+	    JFrame frame = new JFrame("MapPanel Test");
+	    frame.add(mp);
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.pack();
+	    frame.setVisible(true);
+	    System.out.println("half and half:  " + mp.getLandPlotAt(new Point(mp.getWidth()/2, mp.getHeight()/2)));
 	}
 }
