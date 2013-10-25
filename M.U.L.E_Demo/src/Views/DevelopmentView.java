@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Models.MapFactory;
@@ -29,7 +30,7 @@ import Models.MapFactory;
  * @author jabad3
  *
  */
-public class DevelopmentView extends JLayeredPane {
+public class DevelopmentView extends JPanel {
     
     /** Label to display the current Player's name. */
     private JLabel playerNameLabel;
@@ -55,6 +56,9 @@ public class DevelopmentView extends JLayeredPane {
     /** The timer object used to animate the view. */
     private Timer animationTimer;
     
+    /** Keeps track of all ShopEntryListeners listening to the view. */
+    private Collection<ShopEntryListener> shopEntryListeners;
+    
     /**
      * Create the Development View.
      * 
@@ -70,6 +74,7 @@ public class DevelopmentView extends JLayeredPane {
         playerNameLabel = new JLabel("Whose turn is it?");
         cardPanel = new JPanel();
         currentPawn = playerPawn;
+        shopEntryListeners = new ArrayList<>();
         
         // configure card panel
         cardLayout = new CardLayout();
@@ -77,28 +82,30 @@ public class DevelopmentView extends JLayeredPane {
         cardPanel.add(this.mapPanel, "mapPanel");
         cardPanel.add(this.townPanel, "townPanel");
         
-        // place cardPanel and muleTimerPanel in same container so that
-        // a layout manager positions them correctly relative to one another
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(cardPanel, BorderLayout.CENTER);
-        mainPanel.add(this.muleTimerPanel, BorderLayout.EAST);
-        mainPanel.add(playerNameLabel, BorderLayout.NORTH);
+        // JLayeredPane allows pawn to be shown on top of map/own
+        // Add map/town and pawn together so that they share the same
+        // coordinate system
+        JLayeredPane layeredPane = new JLayeredPane();
         
         
         // Because JLayeredPane layout manager is null, manually set size,
         // location of components to add to it
-        mainPanel.setSize(new Dimension(600, 400));
-        mainPanel.setLocation(0, 0);
+        cardPanel.setSize(new Dimension(600, 400));
+        cardPanel.setLocation(0, 0);
         
         currentPawn.setSize(currentPawn.getPreferredSize());
         currentPawn.setLocation(100, 50);
 
         // Add to JLayeredPane.  Lower numbers are drawn behind high numbers.
-        this.add(mainPanel, new Integer(0));  // map is behind pawn
-        this.add(currentPawn, new Integer(1));
-
-        this.setPreferredSize(mainPanel.getSize());
+        layeredPane.add(cardPanel, new Integer(0));  // map is behind pawn
+        layeredPane.add(currentPawn, new Integer(1));
+        layeredPane.setPreferredSize(cardPanel.getSize());
+        
+        // Add all components to the view in a border-layout
+        this.setLayout(new BorderLayout());
+        this.add(layeredPane, BorderLayout.CENTER);
+        this.add(this.muleTimerPanel, BorderLayout.EAST);
+        this.add(playerNameLabel, BorderLayout.NORTH);
         
         animationTimer = new Timer();
     }
@@ -132,6 +139,7 @@ public class DevelopmentView extends JLayeredPane {
      */
     public void endPlayerTurn() {
         animationTimer.cancel();  // view animation will stop
+        currentPawn.resetStates();  // turn off all key states
     }
     
     /**
@@ -159,6 +167,38 @@ public class DevelopmentView extends JLayeredPane {
         setFocusable(true);  // if not called, then muleTimerPanel.repaint() messes up focus
     }
     
+    /** Moves the pawn to be inside the given panel
+     * 
+     * @param toPanel The panel to contain the pawn
+     */
+    
+    private void constrainPawn(JPanel toPanel) {
+    	Point pawnPos = currentPawn.getLocation();
+    	Dimension pawnSize = currentPawn.getSize();
+        Dimension panelSize = this.mapPanel.getSize();
+        Point panelOrigin = this.townPanel.getLocation();
+        
+        if(pawnPos.x < panelOrigin.x)
+        {
+        	pawnPos.x = panelOrigin.x;
+        }
+        else if(pawnPos.x+pawnSize.width > panelOrigin.x+panelSize.width)
+        {
+        	pawnPos.x = panelOrigin.x+panelSize.width-pawnSize.width;
+        }
+        
+        if(pawnPos.y < panelOrigin.y)
+        {
+        	pawnPos.y = panelOrigin.y;
+        }
+        else if(pawnPos.y+pawnSize.height > panelOrigin.y+panelSize.height)
+        {
+        	pawnPos.y = panelOrigin.y+panelSize.height-pawnSize.height;
+        }
+        
+        currentPawn.setLocation(pawnPos);
+    }
+    
     /**
      * In the map, take action if the current pawn...
      *   1) Collides with the town, or
@@ -167,42 +207,12 @@ public class DevelopmentView extends JLayeredPane {
     private void performMapCollisionEvents() {
         
         if (!mapPanel.insideMap(currentPawn)) {
-            // TODO
-            // means the moved pawn is out of bounds, so either put it back
-            // in bounds, or maybe we need to update the pawns coordinates
-            // in a slightly different way
-        	
-        	Point pawnPos = currentPawn.getLocation();
-        	Dimension pawnSize = currentPawn.getSize();
-            Dimension mapPanelSize = this.mapPanel.getSize();
-            Point cardPanelOrigin = this.cardPanel.getLocation();
-            Point mapPanelOrigin = this.mapPanel.getLocation();
-            Point mapPanelRealOrigin = mapPanelOrigin;
-            mapPanelRealOrigin.translate(cardPanelOrigin.x, cardPanelOrigin.y);
-            if(pawnPos.x < mapPanelOrigin.x)
-            {
-            	pawnPos.x = mapPanelOrigin.x;
-            }
-            else if(pawnPos.x+pawnSize.width > mapPanelOrigin.x+mapPanelSize.width)
-            {
-            	pawnPos.x = mapPanelOrigin.x+mapPanelSize.width-pawnSize.width;
-            }
-            if(pawnPos.y < mapPanelOrigin.y)
-            {
-            	pawnPos.y = mapPanelOrigin.y;
-            }
-            else if(pawnPos.y+pawnSize.height > mapPanelOrigin.y+mapPanelSize.height)
-            {
-            	pawnPos.y = mapPanelOrigin.y+mapPanelSize.height-pawnSize.height;
-            }
-            currentPawn.setLocation(pawnPos);
-            //currentPawn.setIcon(new ImageIcon("buzzite.png"));
+        	constrainPawn(mapPanel);
         }
-        //else
-        //	currentPawn.setIcon(new ImageIcon("flapper.png"));
                 
-        if (mapPanel.overlapsTown(currentPawn))
+        if (mapPanel.overlapsTown(currentPawn)) {
             showTown();
+        }
     }
     
     /**
@@ -212,18 +222,40 @@ public class DevelopmentView extends JLayeredPane {
      *   3) Collides with a shop border that is not an entrance
      */
     private void performTownCollisionEvents() {
-        if (!townPanel.insideTown(currentPawn))
-            showMap();
+        if (!townPanel.insideTown(currentPawn)) {
+        	if(!townPanel.overlapsTownShops(currentPawn))
+        	{
+        		currentPawn.setLocation(new Point(283,260));	//here
+        		showMap();
+        	}
+        	else
+        	{
+        		constrainPawn(townPanel);
+        	}
+        }
         
-        // TODO
-        // check if pawn enters a store
+        if(townPanel.overlapsPubEntrance(currentPawn) && currentPawn.actionKey)
+        {
+        	//TODO: give player cash
+        	//TODO: display "you gambled and won $___!"
+        	//muleTimerPanel.remainingTime = 0;
+            sendEnteredPubNotifications();
+        }
+        /*if (townPanel.overlapsTownShops(currentPawn)) {
+            Point newPawnLocation = townPanel.calcInBoundsLocation(currentPawn);
+            currentPawn.setLocation(newPawnLocation);
+        }*/
         
-        // TODO
-        // keep pawn from going out of bounds while still inside the town
-        // like above, we probably can move it back in bounds, or update
-        // the coordinates in a different way
     }
     
+    /**
+     * Notify appropriate listeners that the user interacted with the pub.
+     */
+    private void sendEnteredPubNotifications() {
+        for (ShopEntryListener sel: shopEntryListeners)
+            sel.enteredPub();
+    }
+
     /**
      * Set the current Player's name
      * 
@@ -261,6 +293,28 @@ public class DevelopmentView extends JLayeredPane {
      */
     public void showTown() {
         cardLayout.show(cardPanel, "townPanel");
+    }
+    
+    /**
+     * Adds the ShopEntryListener to the view.
+     * 
+     * The ShopEntryListener will be notified when the user interacts with
+     * one of the shops during development.
+     * 
+     * @param sel The ShopEntryListener to add to the view
+     */
+    public void addShopEntryListener(ShopEntryListener sel) {
+        shopEntryListeners.add(sel);
+    }
+
+    /**
+     * Displays a simple dialog box to the user containing a message.
+     * This message has no effect other than relaying a message to the user.
+     * 
+     * @param message The message to display to the user
+     */
+    public void displayMessageDialog(String message) {
+        JOptionPane.showInternalMessageDialog(this, message);
     }
  
     /**

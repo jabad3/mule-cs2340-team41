@@ -1,12 +1,14 @@
 package Models;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
 
-public class Player extends Trader {
+public class Player extends Trader implements Comparable<Player> {
     
     /** The player's chosen name */
 	private String name;
@@ -17,8 +19,11 @@ public class Player extends Trader {
 	/** The color that the Player uses to mark land that it owns */
 	private Color color;
 	
-	/** Holds the up/down status for each possible player key input */
-	private EnumMap<InputType, Boolean> keyStates;
+	/** Holds the land plots that belong to this player. */
+	private List<LandPlot> landPlotList = new ArrayList<>();
+	
+	/** True if the Player has a mule that has not been installed on a plot. */
+	private boolean isHoldingMule;
 	
 	/**
 	 * Create a Player object using a name, a RaceType, a Color, and Difficulty.
@@ -46,13 +51,13 @@ public class Player extends Trader {
 	}
 	
 	/**
-	 * Calculates and returns the Player's current score.
+	 * finds the amount of food in a player's inventory
 	 * 
-	 * @return The Player's current score
+	 * @return The amount of food resource in the player's inventory
 	 */
-	public int calculateScore() {
-		// TODO
-		return 0; 
+	public int getFood() {
+		int food = this.inventory.getResourceCount(Resource.FOOD);
+		return food; 
 	}
 	
 	@Override
@@ -60,13 +65,9 @@ public class Player extends Trader {
 			throws FailedTransactionException {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	@Override
-	public void buyLandFromSeller(Trader seller, int price)
-			throws FailedTransactionException {
-		paySeller(seller, price);
-		
+	    // check for enough money
+	    // deduct money
+	    // add mule to inventory
 	}
 	
 	/**
@@ -86,7 +87,60 @@ public class Player extends Trader {
     public Color getColor() {
         return color;
     }
+
+    /**
+     * Get the icon associated with this player.
+     * 
+     * @return The image icon for the player
+     */
+    public ImageIcon getIcon() {
+        // TODO At one point may want to customize each icon according to color
+        return race.getStockImageIcon();
+    }
     
+    /**
+     * Add a land plot to this player's list of land plots.
+     * 
+     * Pre-condition:  this player must be the owner of the land plot.
+     * 
+     * @param landPlot The landplot to add to the player's land plot list
+     */
+    public void addLandPlot(LandPlot landPlot) {
+    	landPlotList.add(landPlot);
+    }
+
+	@Override
+	public int compareTo(Player otherPlayer) {
+	    return this.calculateScore() - otherPlayer.calculateScore();
+	}
+
+	/**
+	 * Calculates and returns the player's current score using the original
+	 * score formula for MULE.
+	 * 
+	 * Score is dependent on the status of the Player's plots and inventory.
+	 * 
+	 * @return The player's current score.
+	 */
+	public int calculateScore() {
+		int score = 0;
+		for(LandPlot plot : landPlotList) {
+			score += plot.calculateScore();
+		}
+		score += inventory.calculateScore();
+		return score;
+	}
+	
+	/**
+	 * Checks whether or not the current Player is holding a mule.
+	 * 
+	 * @return True if the Player is holding a mule;
+	 */
+	public boolean getMuleHolder() {
+	    return isHoldingMule;
+	}
+	
+	
     /**
      * Returns a String containing information for the Player's instance
      * data, as well as information concerning its inventory.
@@ -99,26 +153,18 @@ public class Player extends Trader {
         String s2 = "\nRace: " + race.name();
         String s3 = "\nColor:  " + color;
         String s4 = "\nMy inventory info... " + inventory.toString();
-        return s1 + s2 + s3 + s4;
+        String s5 = "\nMy Score is: " + calculateScore();
+        return s1 + s2 + s3 + s4 + s5;
     }
     
     /**
      * Returns String representation of inventory.
      * Intended to be printed for simple testing.
+     * 
      * @return String representation of inventory
      */
     public String getMyInventoryAsString() {
-        return "\n\n----------" + name + "'s Inventory--------------" + inventory.toString();
-    }
-
-    /**
-     * Get the icon associated with this player.
-     * 
-     * @return The image icon for the player
-     */
-    public ImageIcon getIcon() {
-        // TODO At one point may want to customize each icon according to color
-        return race.getStockImageIcon();
+        return "----------" + name + "'s Inventory--------------" + inventory.toString();
     }
 	
 }
