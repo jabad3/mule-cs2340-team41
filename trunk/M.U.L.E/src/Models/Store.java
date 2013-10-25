@@ -15,6 +15,7 @@ public class Store extends Trader {
 	public static final int foodPrice = 30;
 	public static final int energyPrice = 25;
 	public static final int orePrice = 50;
+	private Difficulty difficulty;
     /**
      * Creates a store with the proper initial inventory based on a difficulty.
      * The store is given an arbitrarily large number for its initial money
@@ -41,6 +42,7 @@ public class Store extends Trader {
         int ore = difficulty.storeOreSetting();
         int money = Integer.MAX_VALUE / 2;
         int mules = difficulty.storeMuleSetting();
+        this.difficulty = difficulty;
         
         inventory = new Inventory(food, energy, ore, money, mules);
     }
@@ -57,7 +59,14 @@ public class Store extends Trader {
      * number of ore units.
      */
     public void buildMulesWithOre() {
-        // TODO
+    	if(inventory.getResourceCount(Resource.ORE) < difficulty.storeMuleSetting()) {
+    		for(int i = inventory.getResourceCount(Resource.ORE); i <= difficulty.storeMuleSetting(); i++) {
+    			if(inventory.getResourceCount(Resource.ORE) >= 2) {
+    				inventory.addResource(Resource.MULE, 1);
+    				inventory.removeResource(Resource.ORE, 2);
+    		    }
+    	    }
+    	}	
     }
     
     /**
