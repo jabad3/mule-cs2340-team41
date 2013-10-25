@@ -32,6 +32,10 @@ public class GameModel {
 	/** The food requirement for players each round. */
 	private java.util.Map<Integer,Integer> foodRequirements;
 	
+	/**
+	 * Create a new GameModel.
+     * Must manually set all fields except for foodRequirements.
+	 */
 	public GameModel()
 	{
 		buildFoodRequirements();

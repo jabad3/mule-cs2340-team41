@@ -51,13 +51,6 @@ public class Store extends Trader {
         // TODO Auto-generated method stub
         
     }
-
-    @Override
-    public void buyLandFromSeller(Trader seller, int price)
-            throws FailedTransactionException {
-        // TODO Auto-generated method stub
-        
-    }
     
     /**
      * Increases the Stores quantity of mules by consuming the appropriate
@@ -70,6 +63,8 @@ public class Store extends Trader {
     /**
      * Prints the Store's inventory information.
      * Intended to be printed to the console for testing.
+     * 
+     * @return String representation of the Store's inventory
      */
     public String toString() {
         return inventory.toString();

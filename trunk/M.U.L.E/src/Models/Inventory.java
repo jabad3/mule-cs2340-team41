@@ -105,6 +105,13 @@ public class Inventory {
         return s1 + s2 + s3 + s4 + s5;
     }
 
+    /**
+     * Calculates the score value for this inventory.
+     * For inventories, score value depends on the amounts of Money, Food,
+     * Energy, and Ore in the inventory.
+     * 
+     * @return The score value of the inventory
+     */
 	public int calculateScore() {
 		int totalInventoryScore = 0;
 		totalInventoryScore += resourceCounts.get(Resource.MONEY);
