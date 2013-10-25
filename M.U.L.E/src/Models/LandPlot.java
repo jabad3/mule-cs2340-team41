@@ -114,4 +114,32 @@ public class LandPlot {
     		totalPlotScore = 500 + mule.getScoreValue();
     	return totalPlotScore;
     }
+
+    /**
+     * Checks whether or not the given Player is the owner of this land plot.
+     * 
+     * @param player The player we are checking for ownership of the plot
+     * @return Return true if the given Player is the owner
+     */
+    public boolean isOwnedBy(Player currentPlayer) {
+        return currentPlayer.equals(owner);
+    }
+
+    /**
+     * Gets the mule on this LandPlot.
+     * 
+     * @return The Mule on the LandPlot
+     */
+    public Mule getMule() {
+        return mule;
+    }
+    
+    /**
+     * Sets the mule on this LandPlot to the given mule.
+     * 
+     * @param mule The Mule to place on the LandPlot
+     */
+    public void setMule(Mule mule) {
+        this.mule = mule;
+    }
 }

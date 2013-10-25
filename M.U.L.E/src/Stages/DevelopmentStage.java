@@ -1,23 +1,16 @@
 package Stages;
 
-import java.awt.Color;
 import java.awt.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.KeyStroke;
 
 import Models.GameModel;
 import Models.LandPlot;
 import Models.Map;
+import Models.Mule;
 import Models.Player;
 import Models.Resource;
 import Views.DevelopmentView;
@@ -206,8 +199,34 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 
     @Override
     public void enteredLandPlot(LandPlot plot) {
-        // TODO Auto-generated method stub
-        
+        if (plot.isOwnedBy(currentPlayer))
+            swapMules(currentPlayer, plot);
+        else if (currentPlayer.hasMule())
+            muleRunsAway();
+    }
+    
+    /**
+     * Swaps the mules between a Player and a LandPlot.
+     * 
+     * Pre-condition:  Player is the owner of the LandPlot.
+     * 
+     * @param player The player that the land plot gives its mule to
+     * @param plot The land plot that the player gives its mule to
+     */
+    private void swapMules(Player player, LandPlot plot) {
+        Mule playerMule = player.getMule();
+        Mule plotMule = plot.getMule();
+        player.setMule(plotMule);
+        plot.setMule(playerMule);
+    }
+    
+    /**
+     * Causes the current player's mule to run away by setting its mule
+     * to null.
+     */
+    private void muleRunsAway() {
+        currentPlayer.setMule(null);
+        myView.displayMessageDialog("Oh no!  Your Mule has run away!");
     }
 
 }
