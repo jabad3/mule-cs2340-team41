@@ -126,7 +126,8 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     	
     	myView.displayMessageDialog("Tims panel here");    	
     	//once finished buying from store, reset location to coordinates outside of store
-    	myView.currentPawn.setLocation(new Point(283,260));
+    	myView.currentPawn.resetStates();
+    	myView.currentPawn.setLocation(new Point(80,140));	//location outside store
     	
     	
 //    	if(currentPlayer.getMuleHolder() == true) {
