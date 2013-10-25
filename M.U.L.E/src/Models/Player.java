@@ -59,15 +59,6 @@ public class Player extends Trader implements Comparable<Player> {
 		return food; 
 	}
 	
-	@Override
-	public void buyMuleFromSeller(Trader seller, Resource muleConfig, int price)
-			throws FailedTransactionException {
-		// TODO Auto-generated method stub
-		
-	    // check for enough money
-	    // deduct money
-	    // add mule to inventory
-	}
 	
 	/**
 	 * Get the Player's name

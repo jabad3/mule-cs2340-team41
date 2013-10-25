@@ -47,12 +47,6 @@ public class Store extends Trader {
         inventory = new Inventory(food, energy, ore, money, mules);
     }
     
-    @Override
-    public void buyMuleFromSeller(Trader seller, Resource muleConfig, int price)
-            throws FailedTransactionException {
-        // TODO Auto-generated method stub
-        
-    }
     
     /**
      * Increases the Stores quantity of mules by consuming the appropriate
