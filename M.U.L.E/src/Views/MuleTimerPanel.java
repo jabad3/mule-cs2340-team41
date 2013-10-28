@@ -183,9 +183,15 @@ public class MuleTimerPanel extends JPanel {
         g.fillRect(0, height - barHeight, width, barHeight);
     }
     
+    /**
+     * Gets the remaining time (in milliseconds).
+     * 
+     * @return The remaining time in milliseconds
+     */
     public int getRemainingTime() {
     	return remainingTime;
     }
+    
     /**
      * Main method for testing.
      * 
