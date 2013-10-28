@@ -168,7 +168,6 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
         advanceOneTurn();
     }
     
-    @SuppressWarnings("unused")
 	private int calculatePubPayment() {
     	Random rand = new Random();
     	int roundBonus = 0;
