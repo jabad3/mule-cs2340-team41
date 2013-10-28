@@ -211,10 +211,13 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 
     @Override
     public void enteredLandPlot(LandPlot plot) {
-        if (plot.isOwnedBy(currentPlayer))
-            swapMules(currentPlayer, plot);
-        else if (currentPlayer.hasMule())
-            muleRunsAway();
+        if (currentPlayer.hasMule()) {
+            if (plot.isOwnedBy(currentPlayer) && !plot.hasMule())
+                swapMules(currentPlayer, plot);  // place mule on plot
+            else
+                muleRunsAway();
+        } else if (plot.isOwnedBy(currentPlayer))
+            swapMules(currentPlayer, plot);  // take mule from plot
         System.out.println("Entered LandPlot");
     }
     
