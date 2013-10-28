@@ -8,7 +8,13 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 /**
- * Players contain model information associated with each user's  
+ * Players contain model information associated with each user's  selected
+ * player.  This includes information such as the player's name, race, and
+ * color.  Players also maintain a list of plots that they own as well as
+ * the mule object that they are currently holding, if they are holding one.
+ * 
+ * Player extends Trader, so Players contain an inventory which they
+ * change after interactions with other Traders.
  * 
  * Player also implements Comparable<Player>, as Players need to be sorted
  * to determine turn order.  Player ordering is based on the Player's current

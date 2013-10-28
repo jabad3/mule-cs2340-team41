@@ -11,12 +11,19 @@ package Models;
  */
 public class Store extends Trader {
     
-	
+	/** The current buying and selling price of food. */
 	public static final int foodPrice = 30;
+	
+	/** The current buying and selling price of energy. */
 	public static final int energyPrice = 25;
+	
+	/** The current buying and selling price of ore. */
 	public static final int orePrice = 50;
-	private Difficulty difficulty;
-    /**
+	
+	/** The maximum number of mules that the store can hold. */
+	private final int MULE_COUNT_MAX;
+    
+	/**
      * Creates a store with the proper initial inventory based on a difficulty.
      * The store is given an arbitrarily large number for its initial money
      * balance.
@@ -42,7 +49,7 @@ public class Store extends Trader {
         int ore = difficulty.storeOreSetting();
         int money = Integer.MAX_VALUE / 2;
         int mules = difficulty.storeMuleSetting();
-        this.difficulty = difficulty;
+        MULE_COUNT_MAX= mules;  // stores start out with max num of mules
         
         inventory = new Inventory(food, energy, ore, money, mules);
     }
@@ -53,7 +60,7 @@ public class Store extends Trader {
      * number of ore units.
      */
     public void buildMulesWithOre() {
-    	while(inventory.getResourceCount(Resource.MULE) < difficulty.storeMuleSetting()) {
+    	while(inventory.getResourceCount(Resource.MULE) < MULE_COUNT_MAX) {
 			if(inventory.getResourceCount(Resource.ORE) >= 2) {
 				inventory.addResource(Resource.MULE, 1);
 				inventory.removeResource(Resource.ORE, 2);
