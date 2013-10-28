@@ -54,6 +54,9 @@ public class StorePanel extends JPanel{
 	
 	/** The store that is currently interacting with the player */
 	Store store;
+	
+	/** Tracks whether player is buying or selling from/to store */
+	boolean isBuying;
     
 	/**
 	 * This class updates a player's inventory when the buy button is pressed
@@ -74,12 +77,14 @@ public class StorePanel extends JPanel{
 		}
 	}
 	
-	//EDIT JAVA DOC
 	/**
-	 * Creates the ColorPanel, adding ActionListeners to
-	 * the buttons and buttons to the JPanel
+	 * Creates the StorePanel's interface
+	 * 
+	 * @param store The store to transact with
+	 * @param player The Player to transact with
+	 * @param isBuying Whether to set the interface in buying or selling mode
 	 */
-	public StorePanel(Store store, Player player){
+	public StorePanel(Store store, Player player) {
 		this.player = player;
 		this.store = store;
 		
@@ -123,17 +128,24 @@ public class StorePanel extends JPanel{
 	}
 	
 	/**
+	 * Changes the transaction mode of the store to buy/sell
+	 */	
+	public void changeMode(boolean isBuying)
+	{
+		this.isBuying = isBuying;
+		updateStorePanel(null);
+	}
+	
+	/**
 	 * Updates spinners and JLabels to reflect model
 	 */	
 	public void updateStorePanel(JSpinner source)
 	{
-		boolean isbuying = true;
-		
 		int oreSubtotal;
 		int foodSubtotal;
 		int energySubtotal;
 		
-		if(isbuying)
+		if(isBuying)
 		{
 			oreSubtotal = (Integer)oreSpinner.getValue() * Store.orePrice;
 			foodSubtotal = (Integer)foodSpinner.getValue() * Store.foodPrice;
@@ -147,24 +159,24 @@ public class StorePanel extends JPanel{
 			energySubtotal = (Integer)energySpinner.getValue() * Store.energyPrice;
 		}
 		
-		oreLabel.setText("Ore (" + (isbuying ? store.getOre() : player.getOre()) + ")");
+		oreLabel.setText("Ore (" + (isBuying ? store.getOre() : player.getOre()) + ")");
 		SpinnerModel oreModel = new SpinnerNumberModel(((Integer)oreSpinner.getValue()).intValue(), //initial value
                 0, //min
-                (isbuying ? Math.min((player.getMoney()-foodSubtotal-energySubtotal)/Store.orePrice, store.getOre()) : player.getOre()), //max
+                (isBuying ? Math.min((player.getMoney()-foodSubtotal-energySubtotal)/Store.orePrice, store.getOre()) : player.getOre()), //max
                 1); //step
 		oreSpinner.setModel(oreModel);
 		
-		foodLabel.setText("Food (" + (isbuying ? store.getFood() : player.getFood()) + ")");
+		foodLabel.setText("Food (" + (isBuying ? store.getFood() : player.getFood()) + ")");
 		SpinnerModel foodModel = new SpinnerNumberModel(((Integer)foodSpinner.getValue()).intValue(), //initial value
                 0, //min
-                (isbuying ? Math.min((player.getMoney()-oreSubtotal-energySubtotal)/Store.foodPrice, store.getFood()) : player.getFood()), //max
+                (isBuying ? Math.min((player.getMoney()-oreSubtotal-energySubtotal)/Store.foodPrice, store.getFood()) : player.getFood()), //max
                 1); //step
 		foodSpinner.setModel(foodModel);
 		
-		energyLabel.setText("Energy (" + (isbuying ? store.getEnergy() : player.getEnergy()) + ")");
+		energyLabel.setText("Energy (" + (isBuying ? store.getEnergy() : player.getEnergy()) + ")");
 		SpinnerModel energyModel = new SpinnerNumberModel(((Integer)energySpinner.getValue()).intValue(), //initial value
                 0, //min
-                (isbuying ? Math.min((player.getMoney()-oreSubtotal-foodSubtotal)/Store.energyPrice, store.getEnergy()) : player.getEnergy()), //max
+                (isBuying ? Math.min((player.getMoney()-oreSubtotal-foodSubtotal)/Store.energyPrice, store.getEnergy()) : player.getEnergy()), //max
                 1); //step
 		energySpinner.setModel(energyModel);
 		
@@ -172,6 +184,6 @@ public class StorePanel extends JPanel{
 			source.requestFocus();
 		
 		subtotalLabel.setText("Subtotal: $" + (oreSubtotal + foodSubtotal + energySubtotal));
-		buySellButton.setText(isbuying ? "Buy" : "Sell");
+		buySellButton.setText(isBuying ? "Buy" : "Sell");
 	}
 }

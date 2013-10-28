@@ -22,7 +22,9 @@ import Views.MuleTimerListener;
 import Views.MuleTimerPanel;
 import Views.PlayerPawn;
 import Views.ShopEntryListener;
+import Views.StoreBuySellPanel;
 import Views.StorePanel;
+import Views.StoreView;
 import Views.TownPanel;
 
 /**
@@ -131,8 +133,9 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     	//myView.displayMessageDialog("Tims panel here");
     	
     	StorePanel storepanel = new StorePanel(gameModel.getStore(), currentPlayer);
+    	StoreView storeview = new StoreView(storepanel);
     	JDialog dialog = new JDialog();
-    	dialog.setContentPane(storepanel);
+    	dialog.setContentPane(storeview);
     	dialog.pack();
     	dialog.setVisible(true);
     	
