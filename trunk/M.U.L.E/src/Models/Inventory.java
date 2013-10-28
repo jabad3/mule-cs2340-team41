@@ -91,19 +91,6 @@ public class Inventory {
         int newBalance = currentBalance + amount;
         resourceCounts.put(Resource.MONEY,  newBalance);
     }
-    
-    /**
-     * Returns a String containing the counts of all items in resourceCounts.
-     * Intended to be printed to the console for testing.
-     */
-    public String toString() {
-        String s1 = "\nFood Count:  " + getResourceCount(Resource.FOOD);
-        String s2 = "\nEnergy Count:  " + getResourceCount(Resource.ENERGY);
-        String s3 = "\nOre Count:  " + getResourceCount(Resource.ORE);
-        String s4 = "\nMoney:  " + getResourceCount(Resource.MONEY);
-        String s5 = "\nMules:  " + getResourceCount(Resource.MULE);
-        return s1 + s2 + s3 + s4 + s5;
-    }
 
     /**
      * Calculates the score value for this inventory.
@@ -120,4 +107,17 @@ public class Inventory {
 		totalInventoryScore += (resourceCounts.get(Resource.ORE) * Store.orePrice);
 		return totalInventoryScore;
 	}
+    
+    /**
+     * Returns a String containing the counts of all items in resourceCounts.
+     * Intended to be printed to the console for testing.
+     */
+    public String toString() {
+        String s1 = "\nFood Count:  " + getResourceCount(Resource.FOOD);
+        String s2 = "\nEnergy Count:  " + getResourceCount(Resource.ENERGY);
+        String s3 = "\nOre Count:  " + getResourceCount(Resource.ORE);
+        String s4 = "\nMoney:  " + getResourceCount(Resource.MONEY);
+        String s5 = "\nMules:  " + getResourceCount(Resource.MULE);
+        return s1 + s2 + s3 + s4 + s5;
+    }
 }
