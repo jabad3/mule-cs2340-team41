@@ -52,11 +52,6 @@ public class LandPlot {
     public void setOwner(Player player) {
     	this.owner = player;
     }
-    
-    @Override
-    public String toString() {
-        return landType.name();
-    }
 
     /**
      * Gets the land type for this land plot.
@@ -141,5 +136,10 @@ public class LandPlot {
      */
     public void setMule(Mule mule) {
         this.mule = mule;
+    }
+    
+    @Override
+    public String toString() {
+        return landType.name();
     }
 }

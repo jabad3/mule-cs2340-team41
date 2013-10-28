@@ -108,6 +108,11 @@ public enum Difficulty {
 		return storeOre;
 	}
 	
+	/**
+	 * Gets the starting mule count for the Store.
+	 * 
+	 * @return Store's starting mule count
+	 */
 	public int storeMuleSetting() {
 		return storeMuleCount;
 	}

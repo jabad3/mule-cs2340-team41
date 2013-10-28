@@ -7,7 +7,18 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-
+/**
+ * Players contain model information associated with each user's  
+ * 
+ * Player also implements Comparable<Player>, as Players need to be sorted
+ * to determine turn order.  Player ordering is based on the Player's current
+ * score.  Players with lower scores get to go first, so the compareTo()
+ * method is implemented so that a sorted list of Players will have
+ * the Player with the lowest score in the first position.
+ * 
+ * @author Max
+ *
+ */
 public class Player extends Trader implements Comparable<Player> {
     
     /** The player's chosen name */
@@ -22,6 +33,7 @@ public class Player extends Trader implements Comparable<Player> {
 	/** Holds the land plots that belong to this player. */
 	private List<LandPlot> landPlotList = new ArrayList<>();
 	
+	/** The mule currently following the player, null if there is no mule. */
 	private Mule mule;
 	
 	/**
