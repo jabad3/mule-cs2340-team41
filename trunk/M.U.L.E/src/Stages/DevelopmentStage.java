@@ -57,7 +57,9 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     
     /** The index in the playerList of the player whose turn it currently is. */
     private int currentPlayerIndex;
-    	
+    
+    /** THe store dialog that is currently open, if any */
+    JDialog storeDialog;
 	
 	
 	/**
@@ -114,6 +116,11 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 	 * if there is no next player, start the next stage.
 	 */
 	private void advanceOneTurn() {
+		if(storeDialog != null)
+		{
+			storeDialog.dispose();
+		}
+		
 		currentPlayerIndex++;
         if (currentPlayerIndex >= playerList.size())
             goNextStage();
@@ -140,10 +147,10 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     	
     	StorePanel storepanel = new StorePanel(gameModel.getStore(), currentPlayer);
     	StoreView storeview = new StoreView(storepanel);
-    	JDialog dialog = new JDialog();
-    	dialog.setContentPane(storeview);
-    	dialog.pack();
-    	dialog.setVisible(true);
+    	storeDialog = new JDialog();
+    	storeDialog.setContentPane(storeview);
+    	storeDialog.pack();
+    	storeDialog.setVisible(true);
     	
     	//once finished buying from store, reset location to coordinates outside of store
     	myView.currentPawn.resetStates();
