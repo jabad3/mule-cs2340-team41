@@ -93,7 +93,13 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 		beginCurrentPlayerTurn();
 	}
 	
-	
+	/**
+	 * Begins the current player's turn by...
+	 *   1) determining the current player
+	 *   2) updating the view to display the correct pawn
+	 *   3) reseting the view to put the player in the correct spot with
+	 *      correct amount of time remaining
+	 */
 	private void beginCurrentPlayerTurn() {
 	    currentPlayer = playerList.get(currentPlayerIndex);
 	    PlayerPawn currentPawn = new PlayerPawn(currentPlayer.getIcon());
@@ -171,6 +177,13 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
         advanceOneTurn();
     }
     
+    /**
+     * Calculates the pub payment according to the (CS 2340) rules of the game.
+     * Pub payment depends on the player's time remaining as well as the
+     * current round of the game.
+     * 
+     * @return The money amount that the pub will give to the Player
+     */
 	private int calculatePubPayment() {
     	Random rand = new Random();
     	int roundBonus = 0;
