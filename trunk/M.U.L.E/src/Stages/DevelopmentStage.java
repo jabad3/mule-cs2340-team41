@@ -174,25 +174,26 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     	int roundBonus = 0;
     	int timeBonus = 0;
     	int totalPubPayment = 0;
+    	double secondsRemaining = muleTimerPanel.getRemainingTime() / 1000.0;
     	
     	if(gameModel.getCurrentRound() < 4)
     		roundBonus = 50;
-    	else if(gameModel.getCurrentRound() < 8 && gameModel.getCurrentRound() > 3)
+    	else if(gameModel.getCurrentRound() < 8 && gameModel.getCurrentRound() >= 4)
     		roundBonus = 100;
-    	else if(gameModel.getCurrentRound() < 12 && gameModel.getCurrentRound() > 7)
+    	else if(gameModel.getCurrentRound() < 12 && gameModel.getCurrentRound() >= 8)
     		roundBonus = 150;
     	else if(gameModel.getCurrentRound() == 12)
     		roundBonus = 200;
     	else
     		roundBonus = 0;
     		
-    	if(muleTimerPanel.getRemainingTime() > 36)
+    	if(secondsRemaining >= 37 && secondsRemaining <= 50)
     		timeBonus = 200;
-    	else if(muleTimerPanel.getRemainingTime() < 38 && muleTimerPanel.getRemainingTime() > 24)
+    	else if(secondsRemaining < 37 && secondsRemaining >= 25)
     		timeBonus = 150;
-    	else if(muleTimerPanel.getRemainingTime() < 26 && muleTimerPanel.getRemainingTime() > 11)
+    	else if(secondsRemaining < 25 && secondsRemaining >= 12)
     		timeBonus = 100;
-    	else if(muleTimerPanel.getRemainingTime() < 13)
+    	else if(secondsRemaining < 12)
     		timeBonus = 50;
     		
     	totalPubPayment = roundBonus * (rand.nextInt(timeBonus + 1));
