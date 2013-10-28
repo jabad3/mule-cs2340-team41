@@ -64,6 +64,7 @@ public class StorePanel extends JPanel{
 		{
 			try {
 				//TODO: NEED TO HANDLE MULE AND MULE TYPE
+				//TODO: make dialog box (in DevelopmentStage) close when button is clicked
 				player.buyResourceFromSeller(store, Resource.ENERGY, Store.energyPrice, (Integer)energySpinner.getValue());
 				player.buyResourceFromSeller(store, Resource.ORE, Store.orePrice, (Integer)oreSpinner.getValue());
 				player.buyResourceFromSeller(store, Resource.FOOD, Store.foodPrice, (Integer)foodSpinner.getValue());
