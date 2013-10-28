@@ -66,11 +66,20 @@ public class StorePanel extends JPanel{
 		public void actionPerformed(ActionEvent e)
 		{
 			try {
+				if(isBuying == true)
+				{
 				//TODO: NEED TO HANDLE MULE AND MULE TYPE
 				//TODO: make dialog box (in DevelopmentStage) close when button is clicked
-				player.buyResourceFromSeller(store, Resource.ENERGY, Store.energyPrice, (Integer)energySpinner.getValue());
-				player.buyResourceFromSeller(store, Resource.ORE, Store.orePrice, (Integer)oreSpinner.getValue());
-				player.buyResourceFromSeller(store, Resource.FOOD, Store.foodPrice, (Integer)foodSpinner.getValue());
+					player.buyResourceFromSeller(store, Resource.ENERGY, Store.energyPrice, (Integer)energySpinner.getValue());
+					player.buyResourceFromSeller(store, Resource.ORE, Store.orePrice, (Integer)oreSpinner.getValue());
+					player.buyResourceFromSeller(store, Resource.FOOD, Store.foodPrice, (Integer)foodSpinner.getValue());
+				}
+				else
+				{
+					store.buyResourceFromSeller(player, Resource.ENERGY, Store.energyPrice, (Integer)energySpinner.getValue());
+					store.buyResourceFromSeller(player, Resource.ORE, Store.orePrice, (Integer)oreSpinner.getValue());
+					store.buyResourceFromSeller(player, Resource.FOOD, Store.foodPrice, (Integer)foodSpinner.getValue());
+				}
 			} catch (FailedTransactionException e1) {
 				e1.printStackTrace();
 			}
