@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Models.FailedTransactionException;
 import Models.Player;
 import Models.Resource;
 import Models.Store;
@@ -55,6 +56,25 @@ public class StorePanel extends JPanel{
 	Store store;
     
 	/**
+	 * This class updates a player's inventory when the buy button is pressed
+	 * @author Erica
+	 */
+	private class InventoryListener implements ActionListener{
+		public void actionPerformed(ActionEvent e)
+		{
+			try {
+				//TODO: NEED TO HANDLE MULE AND MULE TYPE
+				player.buyResourceFromSeller(store, Resource.ENERGY, Store.energyPrice, (Integer)energySpinner.getValue());
+				player.buyResourceFromSeller(store, Resource.ORE, Store.orePrice, (Integer)oreSpinner.getValue());
+				player.buyResourceFromSeller(store, Resource.FOOD, Store.foodPrice, (Integer)foodSpinner.getValue());
+			} catch (FailedTransactionException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	//EDIT JAVA DOC
+	/**
 	 * Creates the ColorPanel, adding ActionListeners to
 	 * the buttons and buttons to the JPanel
 	 */
@@ -94,6 +114,9 @@ public class StorePanel extends JPanel{
 		
 		this.add(subtotalLabel);
 		this.add(buySellButton);
+		
+		InventoryListener inventoryListener = new InventoryListener();
+		buySellButton.addActionListener(inventoryListener);
 		
 		updateStorePanel(null);
 	}
