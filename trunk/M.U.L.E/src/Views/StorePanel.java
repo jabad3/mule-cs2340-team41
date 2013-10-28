@@ -93,7 +93,7 @@ public class StorePanel extends JPanel{
 	 * @param player The Player to transact with
 	 * @param isBuying Whether to set the interface in buying or selling mode
 	 */
-	public StorePanel(Store store, Player player) {
+	public StorePanel(Store store, Player player, ActionListener closeListener) {
 		this.player = player;
 		this.store = store;
 		
@@ -126,6 +126,8 @@ public class StorePanel extends JPanel{
 		this.add(new JLabel("Mule Type"));
 		muleTypeCombobox = new JComboBox<String>(muleTypeStrings);
 		this.add(muleTypeCombobox);
+		
+		buySellButton.addActionListener(closeListener);
 		
 		this.add(subtotalLabel);
 		this.add(buySellButton);
