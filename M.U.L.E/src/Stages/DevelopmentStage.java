@@ -2,6 +2,8 @@ package Stages;
 
 import java.awt.BorderLayout;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Random;
 
@@ -145,9 +147,14 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     	
     	//myView.displayMessageDialog("Tims panel here");
     	
-    	StorePanel storepanel = new StorePanel(gameModel.getStore(), currentPlayer);
-    	StoreView storeview = new StoreView(storepanel);
     	storeDialog = new JDialog();
+    	StorePanel storepanel = new StorePanel(gameModel.getStore(), currentPlayer, new ActionListener() {
+    	    public void actionPerformed(ActionEvent e)
+    	    {
+    	    	storeDialog.dispose();
+    	    }
+    	});
+    	StoreView storeview = new StoreView(storepanel);
     	storeDialog.setContentPane(storeview);
     	storeDialog.pack();
     	storeDialog.setVisible(true);
