@@ -53,12 +53,12 @@ public class Store extends Trader {
      * number of ore units.
      */
     public void buildMulesWithOre() {
-		for(int i = inventory.getResourceCount(Resource.ORE); i < difficulty.storeMuleSetting(); i++) {
+    	while(inventory.getResourceCount(Resource.MULE) < difficulty.storeMuleSetting()) {
 			if(inventory.getResourceCount(Resource.ORE) >= 2) {
 				inventory.addResource(Resource.MULE, 1);
 				inventory.removeResource(Resource.ORE, 2);
-		    }
-	    }
+			}
+    	}
     }
     
     /**
