@@ -138,6 +138,15 @@ public class LandPlot {
         this.mule = mule;
     }
     
+    /**
+     * Checks whether or not the LandPlot has a mule.
+     * 
+     * @return True if there is a mule on this LandPlot
+     */
+    public boolean hasMule() {
+        return mule != null;
+    }
+    
     @Override
     public String toString() {
         return landType.name();
