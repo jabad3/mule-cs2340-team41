@@ -60,6 +60,11 @@ public class PlayerPawn extends ResizableIcon {
         setLocation(postmovePos);
 	}
     
+	/**
+     * enables movement of PlayerPawn
+     * 
+     * @param listenToThis Component that accepts the KeyListener
+     */
     public void enableMovement(Component listenToThis)
     {
         listenToThis.setFocusable(true);

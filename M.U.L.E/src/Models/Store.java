@@ -28,7 +28,7 @@ public class Store extends Trader {
      * The store is given an arbitrarily large number for its initial money
      * balance.
      * 
-     * This is done in order to simulate the Store's
+     * This is done in oif(gameModrder to simulate the Store's
      * infinite supply of money while still having the Store interact with its
      * inventory as all Traders should, as a Store must still pull money out of
      * its inventory to pay another Trader.
@@ -49,7 +49,7 @@ public class Store extends Trader {
         int ore = difficulty.storeOreSetting();
         int money = Integer.MAX_VALUE / 2;
         int mules = difficulty.storeMuleSetting();
-        MULE_COUNT_MAX= mules;  // stores start out with max num of mules
+        MULE_COUNT_MAX = mules;  // stores start out with max num of mules
         
         inventory = new Inventory(food, energy, ore, money, mules);
     }
@@ -60,7 +60,7 @@ public class Store extends Trader {
      * number of ore units.
      */
     public void buildMulesWithOre() {
-    	while(inventory.getResourceCount(Resource.MULE) < MULE_COUNT_MAX) {
+    	while(inventory.getResourceCount(Resource.MULE) < MULE_COUNT_MAX && (inventory.getResourceCount(Resource.ORE) >=2)) {
 			if(inventory.getResourceCount(Resource.ORE) >= 2) {
 				inventory.addResource(Resource.MULE, 1);
 				inventory.removeResource(Resource.ORE, 2);
