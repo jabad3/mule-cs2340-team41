@@ -13,6 +13,46 @@ public abstract class Trader {
     protected Inventory inventory;
     
     /**
+	 * finds the amount of food in a trader's inventory
+	 * 
+	 * @return The amount of food resource in the trader's inventory
+	 */
+	public int getFood() {
+		int food = this.inventory.getResourceCount(Resource.FOOD);
+		return food; 
+	}
+	
+	/**
+	 * finds the amount of energy in a trader's inventory
+	 * 
+	 * @return The amount of energy resource in the trader's inventory
+	 */
+	public int getEnergy() {
+		int energy = this.inventory.getResourceCount(Resource.ENERGY);
+		return energy; 
+	}
+	
+	/**
+	 * finds the amount of ore in a trader's inventory
+	 * 
+	 * @return The amount of ore resource in the trader's inventory
+	 */
+	public int getOre() {
+		int ore = this.inventory.getResourceCount(Resource.ORE);
+		return ore; 
+	}
+	
+	/**
+	 * finds the amount of money in a trader's inventory
+	 * 
+	 * @return The amount of money in the trader's inventory
+	 */
+	public int getMoney() {
+		int money = this.inventory.getResourceCount(Resource.MONEY);
+		return money; 
+	}
+    
+    /**
      * This method is used to carry out a transaction
      * between a buyer (this) and a seller involving a resource.
      * 

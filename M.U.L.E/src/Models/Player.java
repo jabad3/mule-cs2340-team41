@@ -62,17 +62,6 @@ public class Player extends Trader implements Comparable<Player> {
 	}
 	
 	/**
-	 * finds the amount of food in a player's inventory
-	 * 
-	 * @return The amount of food resource in the player's inventory
-	 */
-	public int getFood() {
-		int food = this.inventory.getResourceCount(Resource.FOOD);
-		return food; 
-	}
-	
-	
-	/**
 	 * Get the Player's name
 	 * 
 	 * @return The Player's name

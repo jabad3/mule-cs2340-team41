@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Models.Player;
 import Models.Resource;
 import Models.Store;
 /**
@@ -46,12 +47,21 @@ public class StorePanel extends JPanel{
 	
 	/** Button to complete transaction */
 	JButton buySellButton = new JButton();
+	
+	/** The player that is currently interacting with the store */
+	Player player;
+	
+	/** The store that is currently interacting with the player */
+	Store store;
     
 	/**
 	 * Creates the ColorPanel, adding ActionListeners to
 	 * the buttons and buttons to the JPanel
 	 */
-	public StorePanel(){
+	public StorePanel(Store store, Player player){
+		this.player = player;
+		this.store = store;
+		
 		setLayout(new GridLayout(5,2));
 		
 		ChangeListener updateListener = new ChangeListener() {
@@ -93,9 +103,6 @@ public class StorePanel extends JPanel{
 	 */	
 	public void updateStorePanel(JSpinner source)
 	{
-		int storerescount[] = {10, 111, 12};
-		int playerrescount[] = {7, 8, 9};
-		int playermoney = 500;
 		boolean isbuying = true;
 		
 		int oreSubtotal;
@@ -116,24 +123,24 @@ public class StorePanel extends JPanel{
 			energySubtotal = (Integer)energySpinner.getValue() * Store.energyPrice;
 		}
 		
-		oreLabel.setText("Ore (" + (isbuying ? storerescount[0] : playerrescount[0]) + ")");
+		oreLabel.setText("Ore (" + (isbuying ? store.getOre() : player.getOre()) + ")");
 		SpinnerModel oreModel = new SpinnerNumberModel(((Integer)oreSpinner.getValue()).intValue(), //initial value
                 0, //min
-                (isbuying ? Math.min((playermoney-foodSubtotal-energySubtotal)/Store.orePrice, storerescount[0]) : playerrescount[0]), //max
+                (isbuying ? Math.min((player.getMoney()-foodSubtotal-energySubtotal)/Store.orePrice, store.getOre()) : player.getOre()), //max
                 1); //step
 		oreSpinner.setModel(oreModel);
 		
-		foodLabel.setText("Food (" + (isbuying ? storerescount[1] : playerrescount[1]) + ")");
+		foodLabel.setText("Food (" + (isbuying ? store.getFood() : player.getFood()) + ")");
 		SpinnerModel foodModel = new SpinnerNumberModel(((Integer)foodSpinner.getValue()).intValue(), //initial value
                 0, //min
-                (isbuying ? Math.min((playermoney-oreSubtotal-energySubtotal)/Store.foodPrice, storerescount[1]) : playerrescount[1]), //max
+                (isbuying ? Math.min((player.getMoney()-oreSubtotal-energySubtotal)/Store.foodPrice, store.getFood()) : player.getFood()), //max
                 1); //step
 		foodSpinner.setModel(foodModel);
 		
-		energyLabel.setText("Energy (" + (isbuying ? storerescount[2] : playerrescount[2]) + ")");
+		energyLabel.setText("Energy (" + (isbuying ? store.getEnergy() : player.getEnergy()) + ")");
 		SpinnerModel energyModel = new SpinnerNumberModel(((Integer)energySpinner.getValue()).intValue(), //initial value
                 0, //min
-                (isbuying ? Math.min((playermoney-oreSubtotal-foodSubtotal)/Store.energyPrice, storerescount[2]) : playerrescount[2]), //max
+                (isbuying ? Math.min((player.getMoney()-oreSubtotal-foodSubtotal)/Store.energyPrice, store.getEnergy()) : player.getEnergy()), //max
                 1); //step
 		energySpinner.setModel(energyModel);
 		
@@ -143,20 +150,4 @@ public class StorePanel extends JPanel{
 		subtotalLabel.setText("Subtotal: $" + (oreSubtotal + foodSubtotal + energySubtotal));
 		buySellButton.setText(isbuying ? "Buy" : "Sell");
 	}
-	
-	/**
-     * To test the view.
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
-        JFrame jf = new JFrame("Test Store View");
-        final StorePanel storePanel = new StorePanel();
-        
-        jf.getContentPane().add(storePanel);
-        jf.pack();
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setVisible(true);
-        
-    }
 }

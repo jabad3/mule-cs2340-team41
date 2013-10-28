@@ -130,7 +130,7 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     	
     	//myView.displayMessageDialog("Tims panel here");
     	
-    	StorePanel storepanel = new StorePanel();
+    	StorePanel storepanel = new StorePanel(gameModel.getStore(), currentPlayer);
     	JDialog dialog = new JDialog();
     	dialog.setContentPane(storepanel);
     	dialog.pack();
