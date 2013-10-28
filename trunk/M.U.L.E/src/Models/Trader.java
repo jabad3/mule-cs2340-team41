@@ -144,5 +144,4 @@ public abstract class Trader {
      *          Thrown if the buyer does not have enough money
      *          to pay for the mule, or if the seller has no mules to sell
      */
-    //public abstract void buyMuleFromSeller(Trader seller, Resource muleConfig, int price) throws FailedTransactionException;
 }
