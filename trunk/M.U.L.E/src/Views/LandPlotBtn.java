@@ -4,7 +4,10 @@ import java.awt.Graphics;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+
 import Models.LandPlot;
+import Models.Mule;
+import Models.Resource;
 
 /**
  * LandPlotBtn represents the visual representation of a land plot in the
@@ -39,7 +42,19 @@ public class LandPlotBtn extends ResizableIcon {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // TODO needed later for painting mule, resource
+        if (myLandPlot.hasMule())
+            drawMuleIcon(g);
+    }
+    
+    /**
+     * Draws a mule icon in the lower left of the image if the land plot
+     * has a mule.
+     * 
+     * @param g The graphics object for this component
+     */
+    private void drawMuleIcon(Graphics g) {
+        // TODO Draw an image
+        g.drawString(myLandPlot.getResourceForProduction() + " Mule", 0, getHeight() / 2);
     }
 
     /**

@@ -147,6 +147,17 @@ public class LandPlot {
         return mule != null;
     }
     
+    /**
+     * Gets the resource that this landplot will produce.  Null if the land
+     * plot cannot produce anything (i.e. land plot has no mule).
+     * 
+     * @return The Resource that this land plot will produce
+     * (null if the land plot cannot produce anything)
+     */
+    public Resource getResourceForProduction() {
+        return mule == null ? null : mule.getMuleType();
+    }
+    
     @Override
     public String toString() {
         return landType.name();
