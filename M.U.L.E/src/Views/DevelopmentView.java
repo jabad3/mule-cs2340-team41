@@ -271,7 +271,7 @@ public class DevelopmentView extends JPanel {
             sendEnteredPubNotifications();
         }
         
-        if(townPanel.overlapsStoreEntrance(currentPawn) && currentPawn.actionKey)
+        if(townPanel.overlapsStoreEntrance(currentPawn) && actionKeyWasHit())
         {
         	//TODO: give player cash
         	//TODO: display "you gambled and won $___!"

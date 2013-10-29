@@ -123,6 +123,10 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 			storeDialog.dispose();
 		}
 		
+		// mule runs away if not placed
+		if (currentPlayer.hasMule())
+		    muleRunsAway();
+		
 		currentPlayerIndex++;
         if (currentPlayerIndex >= playerList.size())
             goNextStage();
@@ -161,7 +165,6 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     	
     	//once finished buying from store, reset location to coordinates outside of store
     	myView.currentPawn.resetStates();
-    	myView.currentPawn.setLocation(new Point(80,140));	//location outside store
     	
     	
 //    	if(currentPlayer.getMuleHolder() == true) {
@@ -248,6 +251,7 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
                 muleRunsAway();
         } else if (plot.isOwnedBy(currentPlayer))
             swapMules(currentPlayer, plot);  // take mule from plot
+        mapPanel.repaint();
         System.out.println("Entered LandPlot");
     }
     
