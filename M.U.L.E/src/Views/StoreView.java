@@ -1,19 +1,9 @@
 package Views;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Timer;
-
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-
-import Models.Player;
-import Models.Store;
 
 /**
  * This class manages a player's interaction with the store through buying/selling
