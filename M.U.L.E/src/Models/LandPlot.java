@@ -116,8 +116,8 @@ public class LandPlot {
      * @param player The player we are checking for ownership of the plot
      * @return Return true if the given Player is the owner
      */
-    public boolean isOwnedBy(Player currentPlayer) {
-        return currentPlayer.equals(owner);
+    public boolean isOwnedBy(Player player) {
+        return player.equals(owner);
     }
 
     /**

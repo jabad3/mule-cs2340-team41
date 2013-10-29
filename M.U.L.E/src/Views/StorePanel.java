@@ -112,7 +112,7 @@ public class StorePanel extends JPanel{
 	 * 
 	 * @param store The store to transact with
 	 * @param player The Player to transact with
-	 * @param isBuying Whether to set the interface in buying or selling mode
+	 * @param closeListener Listener for when the panel needs to be closed
 	 */
 	public StorePanel(Store store, Player player, ActionListener closeListener) {
 		this.player = player;
@@ -167,6 +167,8 @@ public class StorePanel extends JPanel{
 	
 	/**
 	 * Changes the transaction mode of the store to buy/sell
+	 * 
+	 * @param isBuying True indicates that the transaction mode is "buying"
 	 */	
 	public void changeMode(boolean isBuying)
 	{
