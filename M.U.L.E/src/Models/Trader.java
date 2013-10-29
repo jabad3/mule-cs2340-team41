@@ -63,15 +63,18 @@ public abstract class Trader {
      *
      * @param seller Trader who is selling the resource
      * @param rType The type of resource that is being traded
-     * @param price The price of the resource that is being traded
+     * @param unitPrice The price of a single unit of resource that is being traded
      * @throws FailedTransactionException
      *          Thrown when a buyer (this) does not have enough money,
      *          or when the seller does not have the resource in stock.
      */
-    public void buyResourceFromSeller(Trader seller, Resource rType, int price, int resourceCount) throws FailedTransactionException {
+    public void buyResourceFromSeller(Trader seller, Resource rType, int unitPrice, int resourceCount) throws FailedTransactionException {
+        
         try {
+            int grandTotal = unitPrice * resourceCount;
+            
             seller.removeResource(rType, resourceCount);
-            this.paySeller(seller, price);
+            this.paySeller(seller, grandTotal);
             this.addResource(rType, resourceCount);
         }
         catch (FailedTransactionException e) {
