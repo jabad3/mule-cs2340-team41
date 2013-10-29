@@ -14,6 +14,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import Models.FailedTransactionException;
+import Models.Mule;
 import Models.Player;
 import Models.Resource;
 import Models.Store;
@@ -75,19 +76,19 @@ public class StorePanel extends JPanel{
 					{
 						//Buy Food Mule
 						player.buyResourceFromSeller(store, Resource.MULE, Store.mulePrice + Resource.FOOD.getMuleTypeScore(), 1);
-						//TODO: give new Mule() to player
+						player.setMule(new Mule(Resource.FOOD));
 					}
 					else if(muleTypeCombobox.getSelectedIndex() == 2)
 					{
 						//Buy Energy Mule
 						player.buyResourceFromSeller(store, Resource.MULE, Store.mulePrice + Resource.ENERGY.getMuleTypeScore(), 1);
-						//TODO: give new Mule() to player
+						player.setMule(new Mule(Resource.ENERGY));
 					}
 					else if(muleTypeCombobox.getSelectedIndex() == 3)
 					{
 						//Buy Ore Mule
 						player.buyResourceFromSeller(store, Resource.MULE, Store.mulePrice + Resource.ORE.getMuleTypeScore(), 1);
-						//TODO: give new Mule() to player
+						player.setMule(new Mule(Resource.ORE));
 					}
 					player.buyResourceFromSeller(store, Resource.ENERGY, Store.energyPrice, (Integer)energySpinner.getValue());
 					player.buyResourceFromSeller(store, Resource.ORE, Store.orePrice, (Integer)oreSpinner.getValue());
