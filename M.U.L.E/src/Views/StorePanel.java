@@ -180,9 +180,16 @@ public class StorePanel extends JPanel{
 		}
 		else
 		{
-			String[] muleTypeStrings = {"", "Sell"};
-			
-			muleTypeCombobox.setModel(new javax.swing.DefaultComboBoxModel<String>(muleTypeStrings));
+			if(player.hasMule())
+			{
+				String[] muleTypeStrings = {"", "Sell"};
+				muleTypeCombobox.setModel(new javax.swing.DefaultComboBoxModel<String>(muleTypeStrings));
+			}
+			else
+			{
+				String[] muleTypeStrings = {""};
+				muleTypeCombobox.setModel(new javax.swing.DefaultComboBoxModel<String>(muleTypeStrings));
+			}
 		}
 		
 		updateStorePanel(null, false);
@@ -238,12 +245,12 @@ public class StorePanel extends JPanel{
 			
 			oreLabel.setText("Ore (" + (isBuying ? store.getOre() : player.getOre()) + ")");
 			prevResCount = ((Integer)oreSpinner.getValue()).intValue();
-			maxResCount = (isBuying ? Math.min((player.getMoney()-foodSubtotal-energySubtotal-muleSubtotal)/Store.orePrice, store.getOre()) : player.getOre());
+			maxResCount = (isBuying ? Math.max(Math.min((player.getMoney()-foodSubtotal-energySubtotal-muleSubtotal)/Store.orePrice, store.getOre()), 0) : player.getOre());
 			if(prevResCount > maxResCount)
 			{
 				prevResCount = maxResCount;
 			}
-			
+			System.out.println(prevResCount);
 			SpinnerModel oreModel = new SpinnerNumberModel(prevResCount, //initial value
 	                0, //min
 	                maxResCount, //max
@@ -252,7 +259,7 @@ public class StorePanel extends JPanel{
 			
 			foodLabel.setText("Food (" + (isBuying ? store.getFood() : player.getFood()) + ")");
 			prevResCount = ((Integer)foodSpinner.getValue()).intValue();
-			maxResCount = (isBuying ? Math.min((player.getMoney()-oreSubtotal-energySubtotal-muleSubtotal)/Store.foodPrice, store.getFood()) : player.getFood());
+			maxResCount = (isBuying ? Math.max(Math.min((player.getMoney()-oreSubtotal-energySubtotal-muleSubtotal)/Store.foodPrice, store.getFood()), 0) : player.getFood());
 			if(prevResCount > maxResCount)
 			{
 				prevResCount = maxResCount;
@@ -266,7 +273,7 @@ public class StorePanel extends JPanel{
 			
 			energyLabel.setText("Energy (" + (isBuying ? store.getEnergy() : player.getEnergy()) + ")");
 			prevResCount = ((Integer)energySpinner.getValue()).intValue();
-			maxResCount = (isBuying ? Math.min((player.getMoney()-oreSubtotal-foodSubtotal-muleSubtotal)/Store.energyPrice, store.getEnergy()) : player.getEnergy());
+			maxResCount = (isBuying ? Math.max(Math.min((player.getMoney()-oreSubtotal-foodSubtotal-muleSubtotal)/Store.energyPrice, store.getEnergy()), 0) : player.getEnergy());
 			if(prevResCount > maxResCount)
 			{
 				prevResCount = maxResCount;
