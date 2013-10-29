@@ -123,14 +123,14 @@ public class StorePanel extends JPanel{
 		ChangeListener updateListener = new ChangeListener() {
 	        @Override
 	        public void stateChanged(ChangeEvent e) {
-	            updateStorePanel((JSpinner)e.getSource());
+	            updateStorePanel((JSpinner)e.getSource(), false);
 	        }
 	    };
 	    
 	    ActionListener updateListenerAction = new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	            updateStorePanel(null);
+	            updateStorePanel(null, false);
 	        }
 	    };
     	
@@ -162,7 +162,7 @@ public class StorePanel extends JPanel{
 		InventoryListener inventoryListener = new InventoryListener();
 		buySellButton.addActionListener(inventoryListener);
 		
-		updateStorePanel(null);
+		updateStorePanel(null, false);
 	}
 	
 	/**
@@ -185,13 +185,13 @@ public class StorePanel extends JPanel{
 			muleTypeCombobox.setModel(new javax.swing.DefaultComboBoxModel<String>(muleTypeStrings));
 		}
 		
-		updateStorePanel(null);
+		updateStorePanel(null, false);
 	}
 	
 	/**
 	 * Updates spinners and JLabels to reflect model
 	 */	
-	public void updateStorePanel(JSpinner source)
+	public void updateStorePanel(JSpinner source, boolean onlyRecalcSubtotal)
 	{
 		int oreSubtotal;
 		int foodSubtotal;
@@ -231,31 +231,64 @@ public class StorePanel extends JPanel{
 			}
 		}
 		
-		oreLabel.setText("Ore (" + (isBuying ? store.getOre() : player.getOre()) + ")");
-		SpinnerModel oreModel = new SpinnerNumberModel(((Integer)oreSpinner.getValue()).intValue(), //initial value
-                0, //min
-                (isBuying ? Math.min((player.getMoney()-foodSubtotal-energySubtotal-muleSubtotal)/Store.orePrice, store.getOre()) : player.getOre()), //max
-                1); //step
-		oreSpinner.setModel(oreModel);
+		if(!onlyRecalcSubtotal)
+		{
+			int prevResCount;
+			int maxResCount;
+			
+			oreLabel.setText("Ore (" + (isBuying ? store.getOre() : player.getOre()) + ")");
+			prevResCount = ((Integer)oreSpinner.getValue()).intValue();
+			maxResCount = (isBuying ? Math.min((player.getMoney()-foodSubtotal-energySubtotal-muleSubtotal)/Store.orePrice, store.getOre()) : player.getOre());
+			if(prevResCount > maxResCount)
+			{
+				prevResCount = maxResCount;
+			}
+			
+			SpinnerModel oreModel = new SpinnerNumberModel(prevResCount, //initial value
+	                0, //min
+	                maxResCount, //max
+	                1); //step
+			oreSpinner.setModel(oreModel);
+			
+			foodLabel.setText("Food (" + (isBuying ? store.getFood() : player.getFood()) + ")");
+			prevResCount = ((Integer)foodSpinner.getValue()).intValue();
+			maxResCount = (isBuying ? Math.min((player.getMoney()-oreSubtotal-energySubtotal-muleSubtotal)/Store.foodPrice, store.getFood()) : player.getFood());
+			if(prevResCount > maxResCount)
+			{
+				prevResCount = maxResCount;
+			}
+			
+			SpinnerModel foodModel = new SpinnerNumberModel(prevResCount, //initial value
+	                0, //min
+	                maxResCount, //max
+	                1); //step
+			foodSpinner.setModel(foodModel);
+			
+			energyLabel.setText("Energy (" + (isBuying ? store.getEnergy() : player.getEnergy()) + ")");
+			prevResCount = ((Integer)energySpinner.getValue()).intValue();
+			maxResCount = (isBuying ? Math.min((player.getMoney()-oreSubtotal-foodSubtotal-muleSubtotal)/Store.energyPrice, store.getEnergy()) : player.getEnergy());
+			if(prevResCount > maxResCount)
+			{
+				prevResCount = maxResCount;
+			}
+			
+			SpinnerModel energyModel = new SpinnerNumberModel(prevResCount, //initial value
+	                0, //min
+	                maxResCount, //max
+	                1); //step
+			energySpinner.setModel(energyModel);
+			
+			if(source != null)
+				source.requestFocus();
+			
+			updateStorePanel(null, true);
+		}
 		
-		foodLabel.setText("Food (" + (isBuying ? store.getFood() : player.getFood()) + ")");
-		SpinnerModel foodModel = new SpinnerNumberModel(((Integer)foodSpinner.getValue()).intValue(), //initial value
-                0, //min
-                (isBuying ? Math.min((player.getMoney()-oreSubtotal-energySubtotal-muleSubtotal)/Store.foodPrice, store.getFood()) : player.getFood()), //max
-                1); //step
-		foodSpinner.setModel(foodModel);
+		if(onlyRecalcSubtotal)
+		{
+			subtotalLabel.setText("Subtotal: $" + (oreSubtotal + foodSubtotal + energySubtotal + muleSubtotal));
+		}
 		
-		energyLabel.setText("Energy (" + (isBuying ? store.getEnergy() : player.getEnergy()) + ")");
-		SpinnerModel energyModel = new SpinnerNumberModel(((Integer)energySpinner.getValue()).intValue(), //initial value
-                0, //min
-                (isBuying ? Math.min((player.getMoney()-oreSubtotal-foodSubtotal-muleSubtotal)/Store.energyPrice, store.getEnergy()) : player.getEnergy()), //max
-                1); //step
-		energySpinner.setModel(energyModel);
-		
-		if(source != null)
-			source.requestFocus();
-		
-		subtotalLabel.setText("Subtotal: $" + (oreSubtotal + foodSubtotal + energySubtotal + muleSubtotal));
 		buySellButton.setText(isBuying ? "Buy" : "Sell");
 	}
 }
