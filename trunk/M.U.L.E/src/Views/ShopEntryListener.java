@@ -45,7 +45,7 @@ public interface ShopEntryListener {
      * This method is called whenver the user attempts to interact with
      * a land plot.
      * 
-     * @param plot 
+     * @param plot The LandPlot that the user wishes to interact with
      */
     public void enteredLandPlot(LandPlot plot);
 }

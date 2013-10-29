@@ -29,7 +29,6 @@ public class StoreView extends JPanel {
      * Create the Store View.
      * 
      * @param storePanel The transaction panel to display to the user
-     * @param storeBuySellPanel The transaction mode selector to display to the user
      */
     public StoreView(StorePanel storePanel) {
         this.storePanel = storePanel;
@@ -65,7 +64,7 @@ public class StoreView extends JPanel {
 		/**
 		 * Sets the configuration of the store
 		 * 
-		 * @param ActionEvent Unused
+		 * @param e The action event fired to the listener
 		 */
 		public void actionPerformed(ActionEvent e)
 	    {
