@@ -178,7 +178,9 @@ public class Player extends Trader implements Comparable<Player> {
      * @return String representation of inventory
      */
     public String getMyInventoryAsString() {
-        return "----------" + name + "'s Inventory--------------" + inventory.toString();
+        String s1 = "----------" + name + "'s Inventory--------------" + inventory.toString();
+        String s2 = "\nMy Score is: " + calculateScore();
+        return s1 + s2;
     }
 	
 }
