@@ -20,6 +20,9 @@ public class Store extends Trader {
 	/** The current buying and selling price of ore. */
 	public static final int orePrice = 50;
 	
+	/** The current buying and selling price of mules. */
+	public static final int mulePrice = 100;
+	
 	/** The maximum number of mules that the store can hold. */
 	private final int MULE_COUNT_MAX;
     
