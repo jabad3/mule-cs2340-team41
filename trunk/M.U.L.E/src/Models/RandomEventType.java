@@ -30,18 +30,16 @@ public enum RandomEventType {
 	private java.util.Map<Integer,Integer> mValues;
 	
 	/** used to pick an event for the player with lowest score. only good events */
-	RandomEventType[] goodEvents = {};
-	
+	static RandomEventType[] goodEvents = {ALUMNI, TRAVELER, MUSEUM, RAT};
 	
 	/**used to pick an event for everyone else. could be good or bad event */
-	RandomEventType[] allEvents = {};
+	static RandomEventType[] allEvents = {ALUMNI, TRAVELER, MUSEUM, RAT, CATBUGS, UGA, MESS};
 	
-	
-
-	//needs java doc
-	private RandomEventType(String eventString) 
-	{
-	}
+	/**
+	 * 
+	 * @param eventString String description of event
+	 * @param isBad true is event is "bad", false if event is "good"
+	 */
 	private RandomEventType(String eventString, boolean isBad) {
 
 		this.eventString = eventString;
