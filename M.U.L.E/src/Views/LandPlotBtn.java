@@ -2,7 +2,10 @@ package Views;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 
 import Models.LandPlot;
@@ -54,7 +57,15 @@ public class LandPlotBtn extends ResizableIcon {
      */
     private void drawMuleIcon(Graphics g) {
         // TODO Draw an image
-        g.drawString(myLandPlot.getResourceForProduction() + " Mule", 0, getHeight() / 2);
+    	try {
+			image = ImageIO.read(new File("mule_icon.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        //g.drawString(myLandPlot.getResourceForProduction() + " Mule", 0, getHeight() / 2);
+        g.drawImage(image, 0,0,null);
+        
     }
 
     /**
