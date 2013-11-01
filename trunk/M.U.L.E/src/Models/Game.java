@@ -6,6 +6,7 @@ import Stages.DevelopmentStage;
 import Stages.GameConfigStage;
 import Stages.LandSelectionStage;
 import Stages.PlayerConfigStage;
+import Stages.ProductionStage;
 import Stages.Stage;
 
 /**
@@ -44,11 +45,13 @@ public class Game {
 	    Stage playerConfigStage = new PlayerConfigStage(mainFrame, gameModel);
 	    Stage landSelectionStage = new LandSelectionStage(mainFrame, gameModel);
 	    Stage developmentStage = new DevelopmentStage(mainFrame, gameModel);
+	    Stage productionStage = new ProductionStage(mainFrame, gameModel);
 	    
 	    gameConfigStage.setNextStage(playerConfigStage);
 	    playerConfigStage.setNextStage(landSelectionStage);
 	    landSelectionStage.setNextStage(developmentStage);
-	    developmentStage.setNextStage(landSelectionStage);  // just for M6
+	    developmentStage.setNextStage(productionStage);
+	    productionStage.setNextStage(landSelectionStage);  // just for M6
 	    
 	    gameConfigStage.start();
 	}
