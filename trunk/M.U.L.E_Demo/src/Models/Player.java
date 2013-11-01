@@ -2,12 +2,28 @@ package Models;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 
-
+/**
+ * Players contain model information associated with each user's  selected
+ * player.  This includes information such as the player's name, race, and
+ * color.  Players also maintain a list of plots that they own as well as
+ * the mule object that they are currently holding, if they are holding one.
+ * 
+ * Player extends Trader, so Players contain an inventory which they
+ * change after interactions with other Traders.
+ * 
+ * Player also implements Comparable<Player>, as Players need to be sorted
+ * to determine turn order.  Player ordering is based on the Player's current
+ * score.  Players with lower scores get to go first, so the compareTo()
+ * method is implemented so that a sorted list of Players will have
+ * the Player with the lowest score in the first position.
+ * 
+ * @author Max
+ *
+ */
 public class Player extends Trader implements Comparable<Player> {
     
     /** The player's chosen name */
@@ -22,8 +38,8 @@ public class Player extends Trader implements Comparable<Player> {
 	/** Holds the land plots that belong to this player. */
 	private List<LandPlot> landPlotList = new ArrayList<>();
 	
-	/** True if the Player has a mule that has not been installed on a plot. */
-	private boolean isHoldingMule;
+	/** The mule currently following the player, null if there is no mule. */
+	private Mule mule;
 	
 	/**
 	 * Create a Player object using a name, a RaceType, a Color, and Difficulty.
@@ -48,26 +64,6 @@ public class Player extends Trader implements Comparable<Player> {
 	    int mules = 0;  // players never start out with Mules
 	    
 	    this.inventory = new Inventory(food, energy, ore, money, mules);
-	}
-	
-	/**
-	 * finds the amount of food in a player's inventory
-	 * 
-	 * @return The amount of food resource in the player's inventory
-	 */
-	public int getFood() {
-		int food = this.inventory.getResourceCount(Resource.FOOD);
-		return food; 
-	}
-	
-	@Override
-	public void buyMuleFromSeller(Trader seller, Resource muleConfig, int price)
-			throws FailedTransactionException {
-		// TODO Auto-generated method stub
-		
-	    // check for enough money
-	    // deduct money
-	    // add mule to inventory
 	}
 	
 	/**
@@ -132,12 +128,30 @@ public class Player extends Trader implements Comparable<Player> {
 	}
 	
 	/**
+	 * Sets the player's mule.
+	 * 
+	 * @param mule The new mule for the Player
+	 */
+	public void setMule(Mule mule) {
+		this.mule = mule;
+	}
+	
+	/**
+	 * Gets the player's mule.
+	 * 
+	 * @return The mule that the Player currently has.  Null if no mule.
+	 */
+	public Mule getMule() {
+	    return mule;
+	}
+	
+	/**
 	 * Checks whether or not the current Player is holding a mule.
 	 * 
 	 * @return True if the Player is holding a mule;
 	 */
-	public boolean getMuleHolder() {
-	    return isHoldingMule;
+	public boolean hasMule() {
+	    return mule != null;
 	}
 	
 	
@@ -164,7 +178,9 @@ public class Player extends Trader implements Comparable<Player> {
      * @return String representation of inventory
      */
     public String getMyInventoryAsString() {
-        return "----------" + name + "'s Inventory--------------" + inventory.toString();
+        String s1 = "----------" + name + "'s Inventory--------------" + inventory.toString();
+        String s2 = "\nMy Score is: " + calculateScore();
+        return s1 + s2;
     }
 	
 }

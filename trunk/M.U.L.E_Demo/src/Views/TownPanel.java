@@ -145,8 +145,7 @@ public class TownPanel extends JPanel{
      * @return True if the component is overlapping with store entrance
      */
     public boolean overlapsStoreEntrance(JComponent component) {
-        // TODO
-        return false;
+    	return areOverlapping(storeDisplay, component);
     }
     
     /**

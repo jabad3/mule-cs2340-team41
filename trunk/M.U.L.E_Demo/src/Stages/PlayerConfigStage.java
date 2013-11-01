@@ -14,14 +14,16 @@ import Views.PlayerConfigView;
 
 /**
  * 
- */
-
-/**
+ * 
  * @author jabad3
  *
  */
 public class PlayerConfigStage extends Stage {
-	PlayerConfigView myView;
+	
+    /** The View that this PlayerConfigStage will control. */
+    PlayerConfigView myView;
+    
+    /** The player number (Ex:  Player 1) being configured.  Starts at 1. */
 	public int playerAt = 1;
 	
 	// used to setup the View
@@ -37,11 +39,21 @@ public class PlayerConfigStage extends Stage {
      */
     private List<Color> disabledColorOptions = new ArrayList<>();
 	
+    /**
+     * Create the PlayerConfigStage object.
+     * 
+     * @param mainFrame The primary container that will hold this Stage's view
+     * @param model The GameModel that the Stage will manipulate
+     */
 	public PlayerConfigStage(JFrame mainFrame, GameModel model) {
     	super(mainFrame, model);
     	
     }
 	
+	/**
+	 * Configures the view for the current player number, then displays the
+	 * view to the user.
+	 */
 	public void showPlayerConfigPane() {
 		myView = new PlayerConfigView();
 		myView.setPlayerNum(playerAt);
@@ -50,13 +62,27 @@ public class PlayerConfigStage extends Stage {
     	displayView(myView);
 	}
 	
+	/**
+	 * Starts the stage by displaying the View to the user.
+	 */
 	public void start() {
-		System.out.println("pconfig start");
 		showPlayerConfigPane();
 	}
 	
+	/**
+	 * FinishedListener listens for when the user is finished configuring
+	 * a Player.
+	 * 
+	 * If there are still players left to configure, continue displaying
+	 * PlayerConfigViews to the user.  Otherwise, there are no players left,
+	 * so the FinishedListener will take action to end the stage.
+	 * 
+	 * @author Max
+	 *
+	 */
 	private class FinishedListener implements ActionListener
 	{
+	    @Override
 		public void actionPerformed(ActionEvent e)
 		{
 			// take no action if user does not select a race or color

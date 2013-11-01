@@ -38,4 +38,13 @@ public class Mule {
 	public int getScoreValue() {
 	    return (muleType == null) ? 0 : muleType.getMuleTypeScore();
 	}
+
+	/**
+	 * Gets the type of resource that this mule has been set to produce.
+	 * 
+	 * @return The Resource that this mule has been outfitted to produce
+	 */
+    public Resource getMuleType() {
+        return muleType;
+    }
 }

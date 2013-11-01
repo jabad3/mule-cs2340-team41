@@ -5,7 +5,20 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * This class represents the primary game model for MULE in
+ * Model-View-Controller.  The GameModel will contain the the state of the game
+ * (the difficulty, current round, number of players) as well as provide
+ * access to the other model objects that need to be used in the game.
+ * 
+ * These other model objects are:
+ *   list of players
+ *   the map of land plots
+ *   the store
+ * 
+ * @author Max
+ *
+ */
 public class GameModel {
     
     /** The round number of the final round. */
@@ -41,11 +54,10 @@ public class GameModel {
 		buildFoodRequirements();
 	}
 	
-	/** Build Map with food requirements per round
-	 * 
-	 * 
+	/** 
+	 * Build a Map with food requirements (values) for each round (keys). 
 	 */
-	public void buildFoodRequirements() {
+	private void buildFoodRequirements() {
 		foodRequirements = new HashMap<Integer,Integer>();
 		foodRequirements.put(1, 3); //key = round, value = # of foods
 		foodRequirements.put(2, 3);
@@ -151,21 +163,6 @@ public class GameModel {
     public Map getMap() {
         return map;
     }
-    
-    /**
-     * Returns a String containing details about instance data.
-     * Intended to be used for print-testing.
-     */
-    public String toString() {
-        String s2 = "\nDifficulty:  " + difficulty;
-        String s3 = "\nStore:  " + store;
-        String s4 = "\nMap:  " + map;
-        String s5 = "\nNumber of Players:  " + numPlayers;
-        String s6 = "\n\n Player info.......";
-        for (Player p: playerList)
-            s6 += p.toString();
-        return s2 + s3 + s4 + s5 + s6;
-    }
 
     /**
      * Returns the Store object.
@@ -225,5 +222,20 @@ public class GameModel {
 	 */
     public boolean gameIsOver() {
         return currentRound > FINAL_ROUND;
+    }
+    
+    /**
+     * Returns a String containing details about instance data.
+     * Intended to be used for print-testing.
+     */
+    public String toString() {
+        String s2 = "\nDifficulty:  " + difficulty;
+        String s3 = "\nStore:  " + store;
+        String s4 = "\nMap:  " + map;
+        String s5 = "\nNumber of Players:  " + numPlayers;
+        String s6 = "\n\n Player info.......";
+        for (Player p: playerList)
+            s6 += p.toString();
+        return s2 + s3 + s4 + s5 + s6;
     }
 }

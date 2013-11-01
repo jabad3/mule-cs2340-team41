@@ -13,6 +13,56 @@ public abstract class Trader {
     protected Inventory inventory;
     
     /**
+	 * finds the amount of food in a trader's inventory
+	 * 
+	 * @return The amount of food resource in the trader's inventory
+	 */
+	public int getFood() {
+		int food = this.inventory.getResourceCount(Resource.FOOD);
+		return food; 
+	}
+	
+	/**
+	 * finds the amount of energy in a trader's inventory
+	 * 
+	 * @return The amount of energy resource in the trader's inventory
+	 */
+	public int getEnergy() {
+		int energy = this.inventory.getResourceCount(Resource.ENERGY);
+		return energy; 
+	}
+	
+	/**
+	 * finds the amount of ore in a trader's inventory
+	 * 
+	 * @return The amount of ore resource in the trader's inventory
+	 */
+	public int getOre() {
+		int ore = this.inventory.getResourceCount(Resource.ORE);
+		return ore; 
+	}
+	
+	/**
+	 * finds the amount of money in a trader's inventory
+	 * 
+	 * @return The amount of money in the trader's inventory
+	 */
+	public int getMoney() {
+		int money = this.inventory.getResourceCount(Resource.MONEY);
+		return money; 
+	}
+	
+	/**
+	 * finds the amount of mules in a trader's inventory
+	 * 
+	 * @return The amount of mules in the trader's inventory
+	 */
+	public int getMules() {
+		int mules = this.inventory.getResourceCount(Resource.MULE);
+		return mules; 
+	}
+    
+    /**
      * This method is used to carry out a transaction
      * between a buyer (this) and a seller involving a resource.
      * 
@@ -23,15 +73,18 @@ public abstract class Trader {
      *
      * @param seller Trader who is selling the resource
      * @param rType The type of resource that is being traded
-     * @param price The price of the resource that is being traded
+     * @param unitPrice The price of a single unit of resource that is being traded
      * @throws FailedTransactionException
      *          Thrown when a buyer (this) does not have enough money,
      *          or when the seller does not have the resource in stock.
      */
-    public void buyResourceFromSeller(Trader seller, Resource rType, int price, int resourceCount) throws FailedTransactionException {
+    public void buyResourceFromSeller(Trader seller, Resource rType, int unitPrice, int resourceCount) throws FailedTransactionException {
+        
         try {
+            int grandTotal = unitPrice * resourceCount;
+            
             seller.removeResource(rType, resourceCount);
-            this.paySeller(seller, price);
+            this.paySeller(seller, grandTotal);
             this.addResource(rType, resourceCount);
         }
         catch (FailedTransactionException e) {
@@ -104,5 +157,4 @@ public abstract class Trader {
      *          Thrown if the buyer does not have enough money
      *          to pay for the mule, or if the seller has no mules to sell
      */
-    public abstract void buyMuleFromSeller(Trader seller, Resource muleConfig, int price) throws FailedTransactionException;
 }

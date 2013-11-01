@@ -16,6 +16,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Models.LandPlot;
 import Models.MapFactory;
 
 
@@ -48,7 +49,7 @@ public class DevelopmentView extends JPanel {
     private CardLayout cardLayout;
     
     /** The current PlayerPawn object to be displayed to the user. */
-    private PlayerPawn currentPawn;
+    public PlayerPawn currentPawn;												//temp
     
     /** Displays a bar representing the time left in the current turn. */
     private MuleTimerPanel muleTimerPanel;
@@ -58,6 +59,12 @@ public class DevelopmentView extends JPanel {
     
     /** Keeps track of all ShopEntryListeners listening to the view. */
     private Collection<ShopEntryListener> shopEntryListeners;
+    
+    /** Holds the previous state of the action key during animation. */
+    private boolean previousActionKeyState;
+    
+    /** Holds the current state of the action key during animation. */
+    private boolean currentActionKeyState;
     
     /**
      * Create the Development View.
@@ -154,7 +161,7 @@ public class DevelopmentView extends JPanel {
         // call pawn.move if new location is valid
         // swap town/map panel if needed
         // update the MULE timer
-
+        updateActionKeyState();
         currentPawn.move();
         
         if (mapPanel.isVisible())
@@ -167,6 +174,15 @@ public class DevelopmentView extends JPanel {
         setFocusable(true);  // if not called, then muleTimerPanel.repaint() messes up focus
     }
     
+    /**
+     * Updates previousActionKeyState and currentActionKeyState according
+     * to what the user has pressed at this point in time.
+     */
+    private void updateActionKeyState() {
+        previousActionKeyState = currentActionKeyState;
+        currentActionKeyState = currentPawn.actionKey;
+    }
+
     /** Moves the pawn to be inside the given panel
      * 
      * @param toPanel The panel to contain the pawn
@@ -208,13 +224,29 @@ public class DevelopmentView extends JPanel {
         
         if (!mapPanel.insideMap(currentPawn)) {
         	constrainPawn(mapPanel);
-        }
-                
-        if (mapPanel.overlapsTown(currentPawn)) {
+        } else if (mapPanel.overlapsTown(currentPawn)) {
             showTown();
+        } else if (actionKeyWasHit()) {
+            Point currentLocation = currentPawn.getLocation();
+            int centerX = currentLocation.x + currentPawn.getWidth() / 2;
+            int centerY = currentLocation.y + currentPawn.getHeight() / 2;
+            Point centerOfPawn = new Point(centerX, centerY);
+            LandPlot enteredPlot = mapPanel.getLandPlotAt(centerOfPawn);
+            sendEnteredLandPlotNotifications(enteredPlot);
         }
     }
-    
+
+    /**
+     * Checks whether or not the user has just hit the action key.
+     * A hit key is defined as a key that is pressed now that was previously
+     * unpressed.
+     * 
+     * @return True if the action key has just been hit
+     */
+    private boolean actionKeyWasHit() {
+        return (!previousActionKeyState && currentActionKeyState);
+    }
+
     /**
      * In the map, take action if the current pawn..
      *   1) Collides with the town border,
@@ -236,11 +268,17 @@ public class DevelopmentView extends JPanel {
         
         if(townPanel.overlapsPubEntrance(currentPawn) && currentPawn.actionKey)
         {
+            sendEnteredPubNotifications();
+        }
+        
+        if(townPanel.overlapsStoreEntrance(currentPawn) && actionKeyWasHit())
+        {
         	//TODO: give player cash
         	//TODO: display "you gambled and won $___!"
         	//muleTimerPanel.remainingTime = 0;
-            sendEnteredPubNotifications();
+            sendEnteredStoreNotifications();
         }
+        
         /*if (townPanel.overlapsTownShops(currentPawn)) {
             Point newPawnLocation = townPanel.calcInBoundsLocation(currentPawn);
             currentPawn.setLocation(newPawnLocation);
@@ -255,7 +293,23 @@ public class DevelopmentView extends JPanel {
         for (ShopEntryListener sel: shopEntryListeners)
             sel.enteredPub();
     }
+    
+    /**
+     * Notify appropriate listeners that the user interacted with a land plot.
+     * 
+     * @param enteredPlot The LandPlot that the user interacted with
+     */
+    private void sendEnteredLandPlotNotifications(LandPlot enteredPlot) {
+        for (ShopEntryListener sel: shopEntryListeners)
+            sel.enteredLandPlot(enteredPlot);
+        
+    }
 
+    private void sendEnteredStoreNotifications() {
+        for (ShopEntryListener sel: shopEntryListeners)
+            sel.enteredStore();
+    }
+    
     /**
      * Set the current Player's name
      * 

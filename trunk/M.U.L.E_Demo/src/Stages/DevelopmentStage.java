@@ -1,21 +1,21 @@
 package Stages;
 
-import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.BorderLayout;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.KeyStroke;
+import javax.swing.JInternalFrame;
 
 import Models.GameModel;
+import Models.LandPlot;
 import Models.Map;
+import Models.Mule;
 import Models.Player;
 import Models.Resource;
 import Views.DevelopmentView;
@@ -24,6 +24,9 @@ import Views.MuleTimerListener;
 import Views.MuleTimerPanel;
 import Views.PlayerPawn;
 import Views.ShopEntryListener;
+import Views.StoreBuySellPanel;
+import Views.StorePanel;
+import Views.StoreView;
 import Views.TownPanel;
 
 /**
@@ -56,7 +59,9 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     
     /** The index in the playerList of the player whose turn it currently is. */
     private int currentPlayerIndex;
-    	
+    
+    /** THe store dialog that is currently open, if any */
+    JDialog storeDialog;
 	
 	
 	/**
@@ -92,7 +97,13 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 		beginCurrentPlayerTurn();
 	}
 	
-	
+	/**
+	 * Begins the current player's turn by...
+	 *   1) determining the current player
+	 *   2) updating the view to display the correct pawn
+	 *   3) reseting the view to put the player in the correct spot with
+	 *      correct amount of time remaining
+	 */
 	private void beginCurrentPlayerTurn() {
 	    currentPlayer = playerList.get(currentPlayerIndex);
 	    PlayerPawn currentPawn = new PlayerPawn(currentPlayer.getIcon());
@@ -107,6 +118,15 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 	 * if there is no next player, start the next stage.
 	 */
 	private void advanceOneTurn() {
+		if(storeDialog != null)
+		{
+			storeDialog.dispose();
+		}
+		
+		// mule runs away if not placed
+		if (currentPlayer.hasMule())
+		    muleRunsAway();
+		
 		currentPlayerIndex++;
         if (currentPlayerIndex >= playerList.size())
             goNextStage();
@@ -124,27 +144,34 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     }
 
     @Override
-    public void enteredMuleStore() {
+    public void enteredStore() {
         // TODO
         // User will buy/sell a mule to the store, or error if not enough money
         // Update View to indicate pawn has/does not have a mule
     	
-    	//if player is already holding a mule, can't buy another one
-    	if(currentPlayer.getMuleHolder() == true) {
-    		//myView.displayMessageDialog("Already holding mule!");
-    		return;
-    	}
-
-    	/*
-    	try {
-    		currentPlayer.buyMuleFromSeller(StoreMISS store)
-    		}
-    	catch (failed transaction event ) {
-    		myView.displayMessageDialog("Not enough money!");
-    		//show mule picture, play mule sound, ////probably not, but possibly animate trailing mule
-    		}
-    	*/
-        
+    	//myView.displayMessageDialog("Tims panel here");
+    	
+    	storeDialog = new JDialog();
+    	StorePanel storepanel = new StorePanel(gameModel.getStore(), currentPlayer, new ActionListener() {
+    	    public void actionPerformed(ActionEvent e)
+    	    {
+    	    	storeDialog.dispose();
+    	    }
+    	});
+    	StoreView storeview = new StoreView(storepanel);
+    	storeDialog.setContentPane(storeview);
+    	storeDialog.pack();
+    	storeDialog.setVisible(true);
+    	
+    	//once finished buying from store, reset location to coordinates outside of store
+    	myView.currentPawn.resetStates();
+    	
+    	
+//    	if(currentPlayer.getMuleHolder() == true) {
+//		myView.displayMessageDialog("Already holding mule!");
+//		return;
+//	}
+    	
     }
 
     @Override
@@ -167,31 +194,38 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
         advanceOneTurn();
     }
     
-    @SuppressWarnings("unused")
+    /**
+     * Calculates the pub payment according to the (CS 2340) rules of the game.
+     * Pub payment depends on the player's time remaining as well as the
+     * current round of the game.
+     * 
+     * @return The money amount that the pub will give to the Player
+     */
 	private int calculatePubPayment() {
     	Random rand = new Random();
     	int roundBonus = 0;
     	int timeBonus = 0;
     	int totalPubPayment = 0;
+    	double secondsRemaining = muleTimerPanel.getRemainingTime() / 1000.0;
     	
     	if(gameModel.getCurrentRound() < 4)
     		roundBonus = 50;
-    	else if(gameModel.getCurrentRound() < 8 && gameModel.getCurrentRound() > 3)
+    	else if(gameModel.getCurrentRound() < 8 && gameModel.getCurrentRound() >= 4)
     		roundBonus = 100;
-    	else if(gameModel.getCurrentRound() < 12 && gameModel.getCurrentRound() > 7)
+    	else if(gameModel.getCurrentRound() < 12 && gameModel.getCurrentRound() >= 8)
     		roundBonus = 150;
     	else if(gameModel.getCurrentRound() == 12)
     		roundBonus = 200;
     	else
     		roundBonus = 0;
     		
-    	if(muleTimerPanel.getRemainingTime() > 36)
+    	if(secondsRemaining >= 37 && secondsRemaining <= 50)
     		timeBonus = 200;
-    	else if(muleTimerPanel.getRemainingTime() < 38 && muleTimerPanel.getRemainingTime() > 24)
+    	else if(secondsRemaining < 37 && secondsRemaining >= 25)
     		timeBonus = 150;
-    	else if(muleTimerPanel.getRemainingTime() < 26 && muleTimerPanel.getRemainingTime() > 11)
+    	else if(secondsRemaining < 25 && secondsRemaining >= 12)
     		timeBonus = 100;
-    	else if(muleTimerPanel.getRemainingTime() < 13)
+    	else if(secondsRemaining < 12)
     		timeBonus = 50;
     		
     	totalPubPayment = roundBonus * (rand.nextInt(timeBonus + 1));
@@ -206,6 +240,43 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
         // TODO
         // Only if crystite resource is added
         
+    }
+
+    @Override
+    public void enteredLandPlot(LandPlot plot) {
+        if (currentPlayer.hasMule()) {
+            if (plot.isOwnedBy(currentPlayer) && !plot.hasMule())
+                swapMules(currentPlayer, plot);  // place mule on plot
+            else
+                muleRunsAway();
+        } else if (plot.isOwnedBy(currentPlayer))
+            swapMules(currentPlayer, plot);  // take mule from plot
+        mapPanel.repaint();
+        System.out.println("Entered LandPlot");
+    }
+    
+    /**
+     * Swaps the mules between a Player and a LandPlot.
+     * 
+     * Pre-condition:  Player is the owner of the LandPlot.
+     * 
+     * @param player The player that the land plot gives its mule to
+     * @param plot The land plot that the player gives its mule to
+     */
+    private void swapMules(Player player, LandPlot plot) {
+        Mule playerMule = player.getMule();
+        Mule plotMule = plot.getMule();
+        player.setMule(plotMule);
+        plot.setMule(playerMule);
+    }
+    
+    /**
+     * Causes the current player's mule to run away by setting its mule
+     * to null.
+     */
+    private void muleRunsAway() {
+        currentPlayer.setMule(null);
+        myView.displayMessageDialog("Oh no!  Your Mule has run away!");
     }
 
 }
