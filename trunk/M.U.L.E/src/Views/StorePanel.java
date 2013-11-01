@@ -2,6 +2,8 @@ package Views;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -33,6 +35,9 @@ public class StorePanel extends JPanel{
 	
 	/** Spinner for energy */
 	JSpinner energySpinner;
+	
+	/** Label for mule */
+	JLabel muleLabel = new JLabel();
 	
 	/** Combo box to select mule type */
 	JComboBox<String> muleTypeCombobox;
@@ -149,7 +154,7 @@ public class StorePanel extends JPanel{
 		energySpinner.addChangeListener(updateListener);
 		this.add(energySpinner);
 		
-		this.add(new JLabel("Mule Type"));
+		this.add(muleLabel);
 		muleTypeCombobox = new JComboBox<String>();
 		muleTypeCombobox.addActionListener(updateListenerAction);
 		this.add(muleTypeCombobox);
@@ -174,26 +179,6 @@ public class StorePanel extends JPanel{
 	{
 		this.isBuying = isBuying;
 		
-		if(isBuying)
-		{
-			String[] muleTypeStrings = {"", "Food", "Energy", "Ore"};
-			
-			muleTypeCombobox.setModel(new javax.swing.DefaultComboBoxModel<String>(muleTypeStrings));
-		}
-		else
-		{
-			if(player.hasMule())
-			{
-				String[] muleTypeStrings = {"", "Sell"};
-				muleTypeCombobox.setModel(new javax.swing.DefaultComboBoxModel<String>(muleTypeStrings));
-			}
-			else
-			{
-				String[] muleTypeStrings = {""};
-				muleTypeCombobox.setModel(new javax.swing.DefaultComboBoxModel<String>(muleTypeStrings));
-			}
-		}
-		
 		updateStorePanel(null, false);
 	}
 	
@@ -213,17 +198,20 @@ public class StorePanel extends JPanel{
 			foodSubtotal = (Integer)foodSpinner.getValue() * Store.foodPrice;
 			energySubtotal = (Integer)energySpinner.getValue() * Store.energyPrice;
 			
-			if(muleTypeCombobox.getSelectedIndex() == 1)
+			if(muleTypeCombobox.getSelectedItem() != null)
 			{
-				muleSubtotal = Store.mulePrice + Resource.FOOD.getMuleTypeScore();
-			}
-			else if(muleTypeCombobox.getSelectedIndex() == 2)
-			{
-				muleSubtotal = Store.mulePrice + Resource.ENERGY.getMuleTypeScore();
-			}
-			else if(muleTypeCombobox.getSelectedIndex() == 3)
-			{
-				muleSubtotal = Store.mulePrice + Resource.ORE.getMuleTypeScore();
+				if(muleTypeCombobox.getSelectedItem().equals("Food"))
+				{
+					muleSubtotal = Store.mulePrice + Resource.FOOD.getMuleTypeScore();
+				}
+				else if(muleTypeCombobox.getSelectedItem().equals("Energy"))
+				{
+					muleSubtotal = Store.mulePrice + Resource.ENERGY.getMuleTypeScore();
+				}
+				else if(muleTypeCombobox.getSelectedItem().equals("Ore"))
+				{
+					muleSubtotal = Store.mulePrice + Resource.ORE.getMuleTypeScore();
+				}
 			}
 		}
 		else
@@ -233,10 +221,10 @@ public class StorePanel extends JPanel{
 			foodSubtotal = (Integer)foodSpinner.getValue() * Store.foodPrice;
 			energySubtotal = (Integer)energySpinner.getValue() * Store.energyPrice;
 			
-			if(muleTypeCombobox.getSelectedIndex() == 1)
+			if(muleTypeCombobox.getSelectedItem() != null && muleTypeCombobox.getSelectedItem().equals("Sell"))
 			{
 				//TODO: base sold price on TYPE of mule (the "FOOD" in below transaction)
-				muleSubtotal = Store.mulePrice + Resource.FOOD.getMuleTypeScore();
+				muleSubtotal = Store.mulePrice + player.getMule().getMuleType().getMuleTypeScore();
 			}
 		}
 		
@@ -289,6 +277,49 @@ public class StorePanel extends JPanel{
 			
 			if(source != null)
 				source.requestFocus();
+			
+			muleLabel.setText("Mule (" + (isBuying ? store.getMules() : (player.hasMule() ? "1" : "0")) + ")");
+			
+			int prevSelIndex = muleTypeCombobox.getSelectedIndex();
+			
+			if(isBuying)
+			{
+				ArrayList<String> muleTypeStrings = new ArrayList<String>(4);
+				muleTypeStrings.add("");
+				
+				if(store.getMules() > 0)
+				{
+					int leftoverMoney = Math.max(player.getMoney()-oreSubtotal-foodSubtotal-energySubtotal, 0);
+					if(leftoverMoney > Store.mulePrice + Resource.FOOD.getMuleTypeScore())
+					{
+						muleTypeStrings.add("Food");
+					}
+					if(leftoverMoney > Store.mulePrice + Resource.ENERGY.getMuleTypeScore())
+					{
+						muleTypeStrings.add("Energy");
+					}
+					if(leftoverMoney > Store.mulePrice + Resource.ORE.getMuleTypeScore())
+					{
+						muleTypeStrings.add("Ore");
+					}
+				}
+				muleTypeCombobox.setModel(new javax.swing.DefaultComboBoxModel<String>(muleTypeStrings.toArray(new String[muleTypeStrings.size()])));
+			}
+			else
+			{
+				if(player.hasMule())
+				{
+					String[] muleTypeStrings = {"", "Sell"};
+					muleTypeCombobox.setModel(new javax.swing.DefaultComboBoxModel<String>(muleTypeStrings));
+				}
+				else
+				{
+					String[] muleTypeStrings = {""};
+					muleTypeCombobox.setModel(new javax.swing.DefaultComboBoxModel<String>(muleTypeStrings));
+				}
+			}
+			
+			muleTypeCombobox.setSelectedIndex(prevSelIndex);
 			
 			updateStorePanel(null, true);
 		}
