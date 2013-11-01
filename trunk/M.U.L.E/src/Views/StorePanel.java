@@ -97,9 +97,8 @@ public class StorePanel extends JPanel{
 					if(muleTypeCombobox.getSelectedIndex() == 1)
 					{
 						//Sell Mule
-						//TODO: base sold price on TYPE of mule (the "FOOD" in below transaction)
-						store.buyResourceFromSeller(player, Resource.MULE, Store.mulePrice + Resource.FOOD.getMuleTypeScore(), 1);
-						//TODO: take mule from player
+						store.buyResourceFromSeller(player, Resource.MULE, Store.mulePrice + player.getMule().getMuleType().getMuleTypeScore(), 1);
+						player.setMule(null);
 					}
 					
 					store.buyResourceFromSeller(player, Resource.ENERGY, Store.energyPrice, (Integer)energySpinner.getValue());
