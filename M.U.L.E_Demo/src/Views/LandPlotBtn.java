@@ -1,10 +1,17 @@
 package Views;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+
 import Models.LandPlot;
+import Models.Mule;
+import Models.Resource;
 
 /**
  * LandPlotBtn represents the visual representation of a land plot in the
@@ -39,7 +46,28 @@ public class LandPlotBtn extends ResizableIcon {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // TODO needed later for painting mule, resource
+        if (myLandPlot.hasMule())
+            drawMuleIcon(g);
+    }
+    
+    /**
+     * Draws a mule icon in the lower left of the image if the land plot
+     * has a mule.
+     * 
+     * @param g The graphics object for this component
+     */
+    private void drawMuleIcon(Graphics g) {
+        // TODO Draw an image
+    	Image iconImg = null;
+    	try {
+    		iconImg = ImageIO.read(new File("mule_icon.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        //g.drawString(myLandPlot.getResourceForProduction() + " Mule", 0, getHeight() / 2);
+        g.drawImage(iconImg, 0, 0, 32, 32, null);
+        
     }
 
     /**

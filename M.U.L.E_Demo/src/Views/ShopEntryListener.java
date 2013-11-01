@@ -1,5 +1,7 @@
 package Views;
 
+import Models.LandPlot;
+
 /**
  * Shop entry listeners listen for and respond to events that occur when
  * the user attempts to interact with any of the shops inside the town.
@@ -17,9 +19,9 @@ public interface ShopEntryListener {
 
     /**
      * This method is called whenever the user attempts to interact with
-     * the mule store.
+     * the store.
      */
-    public void enteredMuleStore();
+    public void enteredStore();
     
     /**
      * This method is called whenever the user attempts to interact with
@@ -38,4 +40,12 @@ public interface ShopEntryListener {
      * the assay office.
      */
     public void enteredAssayOffice();
+    
+    /**
+     * This method is called whenver the user attempts to interact with
+     * a land plot.
+     * 
+     * @param plot The LandPlot that the user wishes to interact with
+     */
+    public void enteredLandPlot(LandPlot plot);
 }
