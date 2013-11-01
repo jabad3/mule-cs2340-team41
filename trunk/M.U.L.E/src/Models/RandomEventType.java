@@ -29,7 +29,21 @@ public enum RandomEventType {
 	/** The numerical value m for each round. */
 	private java.util.Map<Integer,Integer> mValues;
 	
+	/** used to pick an event for the player with lowest score. only good events */
+	RandomEventType[] goodEvents = {};
+	
+	
+	/**used to pick an event for everyone else. could be good or bad event */
+	RandomEventType[] allEvents = {};
+	
+	
+
+	//needs java doc
+	private RandomEventType(String eventString) 
+	{
+	}
 	private RandomEventType(String eventString, boolean isBad) {
+
 		this.eventString = eventString;
 		this.isBad = isBad;
 	}
