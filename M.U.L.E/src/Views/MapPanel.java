@@ -30,7 +30,7 @@ public class MapPanel extends JPanel {
     LandPlotBtn townBtn;
     
 	/**
-	 * Creates the MapPanel containing a 5x9 grid of buttons
+	 * Creates the MapPanel containing a 5x9 grid of icons
 	 * 
 	 * @param map The map object being used by the current game
 	 * @param commonPlotListener A MouseListener object that will listen to
@@ -55,8 +55,17 @@ public class MapPanel extends JPanel {
 		
 		this.setPreferredSize(new Dimension(600, 600));
 	}
-	
-	/**
+    
+    /**
+     * Creates the MapPanel without a MouseListener.
+     * 
+     * @param map The map model object being used by the game
+     */
+    public MapPanel(Map map) {
+        this(map, null);
+    }
+
+    /**
 	 * Checks to see whether the given JComponent object has coordinates that
 	 * would cause it to overlap with the town component in the MapPanel.
 	 * 
