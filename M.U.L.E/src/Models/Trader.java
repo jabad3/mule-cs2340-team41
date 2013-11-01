@@ -51,6 +51,16 @@ public abstract class Trader {
 		int money = this.inventory.getResourceCount(Resource.MONEY);
 		return money; 
 	}
+	
+	/**
+	 * finds the amount of mules in a trader's inventory
+	 * 
+	 * @return The amount of mules in the trader's inventory
+	 */
+	public int getMules() {
+		int mules = this.inventory.getResourceCount(Resource.MULE);
+		return mules; 
+	}
     
     /**
      * This method is used to carry out a transaction
