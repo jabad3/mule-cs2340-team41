@@ -31,6 +31,18 @@ public class Map {
     }
     
     /**
+     * Calls all land plots to produce for their owner.
+     */
+    public void produceAll() {
+        for (int i = 0; i < landPlots.length; i++) {
+            for (int j = 0; j < landPlots[0].length; j++) {
+                LandPlot currentPlot = landPlots[i][j];
+                currentPlot.produce();
+            }
+        }
+    }
+    
+    /**
      * Returns a String containing a grid of LandTypes that are in the map.
      * Intended for use in print-testing.
      */

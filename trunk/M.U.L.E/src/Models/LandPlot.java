@@ -1,6 +1,9 @@
 package Models;
 
 import java.awt.Color;
+import java.util.Collections;
+import java.util.Map;
+import java.util.EnumMap;
 
 /**
  * The LandPlot class represents the model object for land tiles.
@@ -13,6 +16,48 @@ import java.awt.Color;
  *
  */
 public class LandPlot {
+    
+    /** Table of production values based on land type, resource type. */
+    private static final Map<LandPlotType, Map<Resource, Integer>> productionTable;
+    
+    /** Initializes the productionTable */
+    static {
+        Map<Resource, Integer> riverMap = new EnumMap<>(Resource.class);
+        riverMap.put(Resource.FOOD, 4);
+        riverMap.put(Resource.ENERGY, 2);
+        riverMap.put(Resource.ORE, 0);
+        
+        Map<Resource, Integer> plainMap = new EnumMap<>(Resource.class);
+        plainMap.put(Resource.FOOD, 2);
+        plainMap.put(Resource.ENERGY, 3);
+        plainMap.put(Resource.ORE, 1);
+        
+        Map<Resource, Integer> m1Map = new EnumMap<>(Resource.class);
+        m1Map.put(Resource.FOOD, 1);
+        m1Map.put(Resource.ENERGY, 1);
+        m1Map.put(Resource.ORE, 2);
+        
+        Map<Resource, Integer> m2Map = new EnumMap<>(Resource.class);
+        m2Map.put(Resource.FOOD, 1);
+        m2Map.put(Resource.ENERGY, 1);
+        m2Map.put(Resource.ORE, 3);
+        
+        Map<Resource, Integer> m3Map = new EnumMap<>(Resource.class);
+        m3Map.put(Resource.FOOD, 1);
+        m3Map.put(Resource.ENERGY, 1);
+        m3Map.put(Resource.ORE, 4);
+        
+        Map<LandPlotType, Map<Resource, Integer>> table = new EnumMap<>(LandPlotType.class);
+        table.put(LandPlotType.PLAIN, plainMap);
+        table.put(LandPlotType.RIVER, riverMap);
+        table.put(LandPlotType.MTN_1, m1Map);
+        table.put(LandPlotType.MTN_2, m2Map);
+        table.put(LandPlotType.MTN_3, m3Map);
+        
+        productionTable = Collections.unmodifiableMap(table);
+    }
+    
+    
 	
     /** The owner of the land plot.  Null if no owner. */
 	private Player owner;
@@ -24,7 +69,7 @@ public class LandPlot {
     private Mule mule;
     
     /** Holds the number of resource produced most recently by the land plot. */
-    private int productionRate;
+    private int lastAmountProduced;
     
     /**
      * Creates a LandPlot object with a specified LandPlotType.
@@ -161,5 +206,17 @@ public class LandPlot {
     @Override
     public String toString() {
         return landType.name();
+    }
+
+    /**
+     * Land plot produces its resource, increasing its owner's total.
+     */
+    public void produce() {
+        if (mule == null)  // no mule, no production
+            return;
+        
+        Resource resourceToProduce = mule.getMuleType();
+        lastAmountProduced = productionTable.get(landType).get(resourceToProduce);
+        owner.addResource(resourceToProduce, lastAmountProduced);
     }
 }
