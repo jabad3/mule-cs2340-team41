@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -265,20 +266,27 @@ public class GameModel implements Serializable {
 		}
     }
     
-    public static void loadGame() {
-		try {
+    public static GameModel loadGame() {
+    	GameModel loadedModel = null;
+    	try {
 			FileInputStream fileIn = new FileInputStream("savedgame.sav");
-			fileIn.read();
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			loadedModel = (GameModel)in.readObject();
+			in.close();
 			fileIn.close();
-			System.out.println("Game is loading from savedgame.sav");
-			
+			System.out.println("Game is loaded from savedgame.sav");
 		} catch (FileNotFoundException e) {
-			System.out.println("Could not save game");
+			System.out.println("Could not load game");
 			e.printStackTrace();
 		} catch (IOException e) {
-			System.out.println("Could not save game");
+			System.out.println("Could not load game");
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			System.out.println("Could not load game");
 			e.printStackTrace();
 		}
+    	
+		return loadedModel;
     }
     
 }
