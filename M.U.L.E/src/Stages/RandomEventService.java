@@ -22,11 +22,11 @@ public class RandomEventService {
 		
 		if(eventIsHappening() && isInLastPlace) {
 			RandomEvent event = factory.buildGoodEvent();
-			event.eventAction();
+			event.eventAction(player);
 		}
 		else if(eventIsHappening() && !isInLastPlace) {
 			RandomEvent event = factory.buildFromAllEvent();
-			event.eventAction();
+			event.eventAction(player);
 	
 		}	
 	}
