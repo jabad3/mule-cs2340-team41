@@ -7,7 +7,18 @@ package Models;
  *
  */
 public abstract class RandomEvent {
-	Player player;
 	
-	public abstract void eventAction(); 
+    /**
+     * Performs the event action on the given Player.
+     * 
+     * @param player The player to be affected by the random event
+     */
+	public abstract void eventAction(Player player);
+	
+	/**
+	 * Returns a string-representation of the result of the last eventAction().
+	 * 
+	 * @return The results of the last eventAction()
+	 */
+	public abstract String getResultMessage();
 }
