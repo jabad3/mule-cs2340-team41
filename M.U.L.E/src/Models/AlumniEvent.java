@@ -13,7 +13,7 @@ package Models;
 public class AlumniEvent extends RandomEvent {
 	
 	@Override
-	public void eventAction(Player player) {
+	public void eventAction(Player player, int m) {
 		player.addResource(Resource.FOOD, 3);
 		player.addResource(Resource.ENERGY, 2);
 	}

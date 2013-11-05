@@ -16,8 +16,7 @@ public class MessEvent extends RandomEvent {
     private int lastCleanupCost;
 
 	@Override
-	public void eventAction(Player player) {
-	    int m = 1;  // PLACEHOLDER - look up m in table
+	public void eventAction(Player player, int m) {
 	    int cleanupCost = 6 * m;
 		try {
 			player.removeResource(Resource.MONEY, cleanupCost); //placeholder! is really 6 * m-value

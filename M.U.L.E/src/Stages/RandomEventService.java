@@ -20,13 +20,17 @@ public class RandomEventService {
 	public void startService(Player player, boolean isInLastPlace) { 
 		this.player = player;
 		
+		/// PLACE HOLDER!!!!!!!!!!!  GRAB M FROM TABLE!!! ///
+		int m = 500;
+		/// PLACE HOLDER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ///
+		
 		if(eventIsHappening() && isInLastPlace) {
 			RandomEvent event = factory.buildGoodEvent();
-			event.eventAction(player);
+			event.eventAction(player, m);
 		}
 		else if(eventIsHappening() && !isInLastPlace) {
 			RandomEvent event = factory.buildFromAllEvent();
-			event.eventAction(player);
+			event.eventAction(player, m);
 	
 		}	
 	}
