@@ -1,5 +1,7 @@
 package Models;
 
+import java.io.Serializable;
+
 /**
  * The store is responsible for selling mules inside the town, selling land
  * during land auctions, 
@@ -9,7 +11,7 @@ package Models;
  * @author Max
  *
  */
-public class Store extends Trader {
+public class Store extends Trader implements Serializable {
     
 	/** The current buying and selling price of food. */
 	public static final int foodPrice = 30;

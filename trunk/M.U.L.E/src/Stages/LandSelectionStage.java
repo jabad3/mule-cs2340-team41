@@ -1,6 +1,7 @@
 package Stages;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -8,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -19,6 +21,9 @@ import Models.Player;
 import Views.LandPlotBtn;
 import Views.LandSelectionView;
 import Views.MapPanel;
+import Views.StorePanel;
+import Views.StoreView;
+import Views.SummaryPanel;
 
 /**
  * LandSelectionStage is the controller for player land selection.
@@ -146,9 +151,17 @@ public class LandSelectionStage extends Stage {
         String playerInfo = "";
         for (Player player:  playerList)
             playerInfo += player.getMyInventoryAsString() + "\n";
-        JOptionPane.showMessageDialog(mainFrame,
-                "Land Selection is Over For Round #" + gameModel.getCurrentRound()
-                + "\n\n" + playerInfo);
+        
+        JDialog summaryDialog = new JDialog();
+        summaryDialog.setModal(true);
+    	SummaryPanel summaryPanel = new SummaryPanel("SUMMARY:\nLand Selection is Over For Round #"
+    			+ gameModel.getCurrentRound()
+                + "\n\n" + playerInfo, gameModel);
+    	summaryPanel.setPreferredSize(new Dimension(300, 550));
+    	summaryDialog.setContentPane(summaryPanel);
+    	summaryDialog.pack();
+    	summaryDialog.setVisible(true);
+    	
         System.out.println("Ending LandSelection Stage");
         System.out.println("\n\n Current state of the model:  \n");
         System.out.println(gameModel);

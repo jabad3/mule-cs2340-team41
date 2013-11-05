@@ -1,12 +1,14 @@
 package Models;
 
+import java.io.Serializable;
+
 /**
  * This class represents the Mule model objects in a game of MULE.
  * Mules are responsible for producing 
  * @author Max
  *
  */
-public class Mule {
+public class Mule implements Serializable {
     
     /** The resource that the mule is configured to produce. */
 	private Resource muleType;

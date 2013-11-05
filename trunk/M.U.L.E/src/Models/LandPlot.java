@@ -1,6 +1,7 @@
 package Models;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 import java.util.EnumMap;
@@ -15,7 +16,7 @@ import java.util.EnumMap;
  * @author Max
  *
  */
-public class LandPlot {
+public class LandPlot implements Serializable {
     
     /** Table of production values based on land type, resource type. */
     private static final Map<LandPlotType, Map<Resource, Integer>> productionTable;

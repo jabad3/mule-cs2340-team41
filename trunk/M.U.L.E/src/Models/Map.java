@@ -1,5 +1,7 @@
 package Models;
 
+import java.io.Serializable;
+
 /**
  * The Map class holds a 9x5 grid of LandPlots and methods to act on the
  * LandPlots as a whole
@@ -7,7 +9,7 @@ package Models;
  * @author Max
  *
  */
-public class Map {
+public class Map implements Serializable {
     
     /** A 9x5 array of all landPlots in the map in row-major order. */
     private LandPlot[][] landPlots;
