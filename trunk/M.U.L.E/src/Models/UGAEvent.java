@@ -13,7 +13,7 @@ package Models;
 public class UGAEvent extends RandomEvent {
 
 	@Override
-	public void eventAction(Player player) {
+	public void eventAction(Player player, int m) {
 		int curPlayerFood = player.getFood();
 		try {
 			player.removeResource(Resource.FOOD, curPlayerFood / 2); //get approx. half with integer division, then remove from player

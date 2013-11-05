@@ -13,7 +13,7 @@ package Models;
 public class WandererEvent extends RandomEvent {
 
 	@Override
-	public void eventAction(Player player) {
+	public void eventAction(Player player, int m) {
 		player.addResource(Resource.ORE, 2);
 	}
 

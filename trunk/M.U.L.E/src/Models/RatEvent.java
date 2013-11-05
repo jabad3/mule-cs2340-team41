@@ -16,8 +16,7 @@ public class RatEvent extends RandomEvent {
     int lastHidePrice;
     
 	@Override
-	public void eventAction(Player player) {
-	    int m = 1;  // PLACEHOLDER - lookup in table
+	public void eventAction(Player player, int m) {
 	    int hidePrice = 2 * m;
 		player.addResource(Resource.MONEY, hidePrice); //placeholder!, is really 2 * m-value!
 		lastHidePrice = hidePrice;

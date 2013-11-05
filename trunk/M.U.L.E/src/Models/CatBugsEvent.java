@@ -16,7 +16,7 @@ public class CatBugsEvent extends RandomEvent {
     private int lastRepairCost;
 
 	@Override
-	public void eventAction(Player player) {
+	public void eventAction(Player player, int m) {
 	    int repairCost = 4;  //placeholder! is really 4 * m_value!
 		try {
 			player.removeResource(Resource.MONEY, repairCost);
