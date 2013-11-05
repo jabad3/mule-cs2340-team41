@@ -93,6 +93,8 @@ public class LandSelectionStage extends Stage {
         calculateLandPlotPrice();
     	myView = new LandSelectionView(mapPanel, landPlotPrice, currentPlayerName, new SelectionSkipListener());
     	
+    	showStatusDialog();
+    	
     	displayView(myView);
     }
     
@@ -134,7 +136,6 @@ public class LandSelectionStage extends Stage {
         currentPlayerIndex++;
         
         if (allPlayersHaveSelected()) {
-            showStatusDialog();
             goNextStage();
         } else {  // let the next player go
             currentPlayer = playerList.get(currentPlayerIndex);
