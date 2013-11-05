@@ -34,6 +34,10 @@ import Views.TownPanel;
  */
 
 /**
+ * DevelopmentStage updates the View and the Model during the Development
+ * part of the game.  During Development, users are allowed to interact with
+ * the town and the map by visiting town stores and placing mules on land plots.
+ * 
  * @author jabad3
  *
  */
