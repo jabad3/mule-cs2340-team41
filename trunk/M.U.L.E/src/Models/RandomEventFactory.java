@@ -1,4 +1,5 @@
 package Models;
+import java.util.Random;
 
 /**
  * RandomEventFactory object that builds RandomEvent objects at the request 
@@ -8,19 +9,41 @@ package Models;
  *
  */
 public class RandomEventFactory {
+	Random rand = new Random();
 	
 	public RandomEventFactory() {
 		//TODO constructor
 	}
 	
 	public RandomEvent buildGoodEvent() {
-		//TODO
-		return new AlumniEvent(); //temporary!
+		switch (rand.nextInt(4)) {
+			case(0) : return new AlumniEvent();
+		
+			case(1) : return new WandererEvent();
+		
+			case(2) : return new MuseumEvent();
+		
+			default : return new RatEvent();
+		}
+		
 	}
 	
 	public RandomEvent buildFromAllEvent() {
-		//TODO
-		return new RatEvent(); //temporary!
+		switch (rand.nextInt(7)) {
+		case(0) : return new AlumniEvent();
+	
+		case(1) : return new WandererEvent();
+	
+		case(2) : return new MuseumEvent();
+	
+		case(3) : return new RatEvent();
+		
+		case(4) : return new CatBugsEvent();
+		
+		case(5) : return new UGAEvent();
+		
+		default : return new MessEvent();
+		}
 	}
 	
 	
