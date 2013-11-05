@@ -47,19 +47,14 @@ public class Game {
 	 */
 	public void start()
 	{
-		Stage gameConfigStage = null;
-		if(gameModel.getCurrentRound() == 0) {
-			gameConfigStage = new GameConfigStage(mainFrame, gameModel);
-			Stage playerConfigStage = new PlayerConfigStage(mainFrame, gameModel);
-		}
+		Stage gameConfigStage = new GameConfigStage(mainFrame, gameModel);
+		Stage playerConfigStage = new PlayerConfigStage(mainFrame, gameModel);
 	    Stage landSelectionStage = new LandSelectionStage(mainFrame, gameModel);
 	    Stage developmentStage = new DevelopmentStage(mainFrame, gameModel);
 	    Stage productionStage = new ProductionStage(mainFrame, gameModel);
 	    
-		if(gameModel.getCurrentRound() == 0) {
-		    //gameConfigStage.setNextStage(playerConfigStage);
-		    //playerConfigStage.setNextStage(landSelectionStage);
-		}
+	    gameConfigStage.setNextStage(playerConfigStage);
+	    playerConfigStage.setNextStage(landSelectionStage);
 	    landSelectionStage.setNextStage(developmentStage);
 	    developmentStage.setNextStage(productionStage);
 	    productionStage.setNextStage(landSelectionStage);  // just for M6
@@ -67,9 +62,8 @@ public class Game {
 		if(gameModel.getCurrentRound() == 0) {
 			gameConfigStage.start();
 		}
-		if(gameModel.getCurrentRound() != 0) {
+		else {
 			landSelectionStage.start();
-
 		}
 	}
 }
