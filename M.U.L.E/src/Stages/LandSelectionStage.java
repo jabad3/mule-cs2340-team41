@@ -93,9 +93,9 @@ public class LandSelectionStage extends Stage {
         calculateLandPlotPrice();
     	myView = new LandSelectionView(mapPanel, landPlotPrice, currentPlayerName, new SelectionSkipListener());
     	
-    	showStatusDialog();
-    	
     	displayView(myView);
+    	
+    	showStatusDialog();
     }
     
     /**
@@ -155,7 +155,7 @@ public class LandSelectionStage extends Stage {
         
         JDialog summaryDialog = new JDialog();
         summaryDialog.setModal(true);
-    	SummaryPanel summaryPanel = new SummaryPanel("SUMMARY:\nLand Selection is Over For Round #"
+    	SummaryPanel summaryPanel = new SummaryPanel("Summary For Round #"
     			+ gameModel.getCurrentRound()
                 + "\n\n" + playerInfo, gameModel);
     	summaryPanel.setPreferredSize(new Dimension(300, 550));
