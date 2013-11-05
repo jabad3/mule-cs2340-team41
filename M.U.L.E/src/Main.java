@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import Models.Game;
+import Models.GameModel;
 /**
  * This class executes the game of MULE.
  * 
@@ -54,11 +55,14 @@ public class Main {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == button1) {
-				System.out.println("Load");
-				//open a load file dialog
+				System.out.println("Loading");
+				
+				GameModel saved = new GameModel();
+				saved.loadGame();
+				
 				//call new constructor
-				//Game curGame = new Game(frame, gameModel);
-				//curGame.start();
+				Game curGame = new Game(frame, saved);
+				curGame.start();
 			}
 			if (e.getSource() == button2) {
 				System.out.println("New Game");
