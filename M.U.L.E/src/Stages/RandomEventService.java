@@ -10,10 +10,6 @@ public class RandomEventService {
 	//private List<Player> playerList;
 	Random rand = new Random();
 	
-	public RandomEventService(Player player) {
-		this.player = player;
-	}
-	
 	private boolean eventIsHappening() {
 		if(rand.nextInt(101) <= 27)
 			return true;
@@ -21,11 +17,19 @@ public class RandomEventService {
 			return false;
 	}
 	
-	/*public void startService() { 
+	public void startService(Player player, boolean isInLastPlace) { 
+		this.player = player;
+		
+		if(eventIsHappening() && isInLastPlace) {
+			RandomEvent event = factory.buildGoodEvent();
+			event.eventAction();
+		}
+		else if(eventIsHappening() && !isInLastPlace) {
+			RandomEvent event = factory.buildFromAllEvent();
+			event.eventAction();
 	
-		if(eventIsHappening()) {
-			factory.
-	}*/
+		}	
+	}
 		
 	
 }
