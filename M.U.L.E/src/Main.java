@@ -57,8 +57,7 @@ public class Main {
 			if (e.getSource() == button1) {
 				System.out.println("Loading");
 				
-				GameModel saved = new GameModel();
-				saved.loadGame();
+				GameModel saved = GameModel.loadGame();
 				
 				//call new constructor
 				Game curGame = new Game(frame, saved);
