@@ -1,5 +1,6 @@
 package Models;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -263,4 +264,21 @@ public class GameModel implements Serializable {
 			e.printStackTrace();
 		}
     }
+    
+    public static void loadGame() {
+		try {
+			FileInputStream fileIn = new FileInputStream("savedgame.sav");
+			fileIn.read();
+			fileIn.close();
+			System.out.println("Game is loading from savedgame.sav");
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("Could not save game");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("Could not save game");
+			e.printStackTrace();
+		}
+    }
+    
 }
