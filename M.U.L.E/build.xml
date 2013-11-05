@@ -1,11 +1,11 @@
-<project name="MULE" basedir="." default="javadoc">
+<project name="MULE" basedir="." default="run">
 
     <!-- initialize properties for directories and file names-->
     <target name="init">
         <property name="src.dir"            value="src"/>
         <property name="build.dir"          value="build"/>
         <property name="class.dir"          value="${build.dir}/classes"/>
-        <property name="jar.name"           value="MULE.jar"/>
+        <property name="jar.name"           value="${build.dir}/MULE.jar"/>
         <property name="docs.dir"           value="apidoc"/>
         <property name="main-class"         value="Main"/>
     </target>
@@ -13,9 +13,30 @@
     <!-- prepare makes all the required directories-->
     <target name="prepare" depends="init">
         <mkdir dir="${docs.dir}"/>
+    	<mkdir dir="${class.dir}"/>
+    	<mkdir dir="${build.dir}"/>
     </target>
-    
-    <!-- generates javadoc documentation for all java classes in 'src' dir to
+	
+	<!-- compiles all source files-->
+	<target name="compile" depends="javadoc">
+		<javac srcdir="${src.dir}" destdir="${class.dir}"/>
+	</target>
+	
+	<!-- creates jar file-->
+	<target name="jar" depends="compile">
+			<jar destfile="${jar.name}" basedir="${class.dir}">
+				<manifest>
+					<attribute name="main-class" value="Main"/>
+				</manifest>
+			</jar>
+	</target>
+	
+	<!-- runs jar file-->
+	<target name="run" depends="jar">
+		<java jar="${jar.name}" fork="true"/>
+	</target>
+	
+	<!-- generates javadoc documentation for all java classes in 'src' dir to
          be stored in 'apidoc' dir-->
     <target name="javadoc" depends="prepare">
         <javadoc sourcepath="${src.dir}" access="public" destdir="${docs.dir}">
@@ -27,10 +48,12 @@
             </bottom>
         </javadoc>
     </target>
-    
+
     <!-- removes anything that would be created from running "all" task-->
     <target name="clean" depends="prepare">
         <delete dir="${docs.dir}"/>
+    	<delete dir="${class.dir}"/>
+    	<delete dir="${build.dir}"/>
     </target>
     
 </project>
