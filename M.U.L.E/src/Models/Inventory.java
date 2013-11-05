@@ -118,7 +118,6 @@ public class Inventory implements Serializable {
         String s2 = "\nEnergy Count:  " + getResourceCount(Resource.ENERGY);
         String s3 = "\nOre Count:  " + getResourceCount(Resource.ORE);
         String s4 = "\nMoney:  " + getResourceCount(Resource.MONEY);
-        String s5 = "\nMules:  " + getResourceCount(Resource.MULE);
-        return s1 + s2 + s3 + s4 + s5;
+        return s1 + s2 + s3 + s4;
     }
 }
