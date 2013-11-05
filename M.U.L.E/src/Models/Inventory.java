@@ -1,5 +1,6 @@
 package Models;
 
+import java.io.Serializable;
 import java.util.EnumMap;
 
 /**
@@ -8,7 +9,7 @@ import java.util.EnumMap;
  * @author Max
  *
  */
-public class Inventory {
+public class Inventory implements Serializable {
 	
     /** Holds quantities for:  Food, Energy, Ore, Money, Mule */
     EnumMap<Resource, Integer> resourceCounts;

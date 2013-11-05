@@ -1,5 +1,7 @@
 package Models;
 
+import java.io.Serializable;
+
 /**
  * A Trader represents an object in the game that has the ability
  * to buy and sell goods to others who are also Traders
@@ -7,7 +9,7 @@ package Models;
  * @author Max
  *
  */
-public abstract class Trader {
+public abstract class Trader implements Serializable {
 	
     /** The inventory for this Trader object */
     protected Inventory inventory;

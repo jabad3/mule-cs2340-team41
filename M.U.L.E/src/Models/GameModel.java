@@ -1,5 +1,10 @@
 package Models;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,7 +24,7 @@ import java.util.List;
  * @author Max
  *
  */
-public class GameModel {
+public class GameModel implements Serializable {
     
     /** The round number of the final round. */
     private final int FINAL_ROUND = 12;
@@ -237,5 +242,25 @@ public class GameModel {
         for (Player p: playerList)
             s6 += p.toString();
         return s2 + s3 + s4 + s5 + s6;
+    }
+    
+    /**
+     * Serializes the model to the file, thus saving the game
+     */
+    public void saveGame() {
+		try {
+			FileOutputStream fileOut = new FileOutputStream("savedgame.sav");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(this);
+			out.close();
+			fileOut.close();
+			System.out.println("Game is saved in savedgame.sav");
+		} catch (FileNotFoundException e) {
+			System.out.println("Could not save game");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("Could not save game");
+			e.printStackTrace();
+		}
     }
 }

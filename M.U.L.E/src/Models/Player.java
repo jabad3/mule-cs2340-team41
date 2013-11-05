@@ -1,6 +1,7 @@
 package Models;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import javax.swing.ImageIcon;
  * @author Max
  *
  */
-public class Player extends Trader implements Comparable<Player> {
+public class Player extends Trader implements Comparable<Player>, Serializable {
     
     /** The player's chosen name */
 	private String name;
