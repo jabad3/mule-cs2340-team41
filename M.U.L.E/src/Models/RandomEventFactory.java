@@ -9,4 +9,19 @@ package Models;
  */
 public class RandomEventFactory {
 	
+	public RandomEventFactory() {
+		//TODO constructor
+	}
+	
+	public RandomEvent buildGoodEvent() {
+		//TODO
+		return new AlumniEvent(); //temporary!
+	}
+	
+	public RandomEvent buildFromAllEvent() {
+		//TODO
+		return new RatEvent(); //temporary!
+	}
+	
+	
 }
