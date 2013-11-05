@@ -35,6 +35,12 @@ public class Game {
 		this.gameModel = new GameModel();
 	}
 	
+	public Game(JFrame mainFrame, GameModel gameModel)
+	{
+		this.mainFrame = mainFrame;
+		this.gameModel = gameModel;
+	}
+	
 	/**
 	 * Creates and links each stage to prepare the game loop.
 	 * Begins a game of MULE by starting the first stage of the game.
