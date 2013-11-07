@@ -211,13 +211,74 @@ public class LandPlot implements Serializable {
 
     /**
      * Land plot produces its resource, increasing its owner's total.
+     * Production occurs by:
+     *  1) Powering up the mule
+     *  2) Determine production results (# of resource that was produced)
+     *  3) Adding resources to the owner's inventory
+     *  
+     * No production occurs if
+     *  a) Plot is unowned
+     *  b) Plot has no mule
+     *  c) the plot's mule cannot be powered
+     *       (NOTE:  energy mules do NOT require energy units to function)
      */
     public void produce() {
-        if (mule == null)  // no mule, no production
+        if (owner == null || mule == null) {  // no mule, no production
+            lastAmountProduced = 0;
             return;
+        }
         
         Resource resourceToProduce = mule.getMuleType();
+        if (canProduce(resourceToProduce))
+            giveProductionToOwner(resourceToProduce);
+        else
+            lastAmountProduced = 0;
+    }
+    
+    /**
+     * Checks whether the land plot can produce a resource this turn.
+     * 
+     * Pre-condition:  owner and mule are both non-null
+     * 
+     * Land plots with mules can only produce if the mule is an energy mule,
+     * or if the mule is non-energy and has consumed an energy unit from
+     * its owner
+     * 
+     * @param resourceToProduce The resource that the land plot is configured
+     * to produce
+     * @return True if this land plot can produce this turn
+     */
+    private boolean canProduce(Resource resourceToProduce) {
+        boolean hasEnergyMule = resourceToProduce == Resource.ENERGY;
+        boolean muleHasPower = muleIsPowered();
+        return hasEnergyMule || muleHasPower;
+    }
+    
+    /**
+     * Determine the amount to produce, then add to the owner's inventory
+     * @param resourceToProduce The resource to be produced
+     */
+    private void giveProductionToOwner(Resource resourceToProduce) {
         lastAmountProduced = productionTable.get(landType).get(resourceToProduce);
         owner.addResource(resourceToProduce, lastAmountProduced);
+    }
+    
+    /**
+     * Determine whether or not the mule on this land plot can produce.
+     * Land plots without powered mules cannot produce.
+     * 
+     * A non-energy mule must consume an energy unit from its owner in order
+     * to be powered.
+     * 
+     * @return True if the mule on this land plot consumed an energy unit, 
+     * making it powered
+     */
+    private boolean muleIsPowered() {
+        try {
+            owner.removeResource(Resource.ENERGY, 1);
+            return true;
+        } catch (FailedTransactionException e) {
+            return false;
+        }
     }
 }
