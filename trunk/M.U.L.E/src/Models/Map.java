@@ -1,6 +1,9 @@
 package Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The Map class holds a 9x5 grid of LandPlots and methods to act on the
@@ -34,6 +37,7 @@ public class Map implements Serializable {
     
     /**
      * Calls all land plots to produce for their owner.
+     * Production starts at the top-left-most land plot.
      */
     public void produceAll() {
         for (int i = 0; i < landPlots.length; i++) {
@@ -41,6 +45,29 @@ public class Map implements Serializable {
                 LandPlot currentPlot = landPlots[i][j];
                 currentPlot.produce();
             }
+        }
+    }
+    
+    /**
+     * Calls all land plots to produce for their owner.
+     * The order that land plots produce is random.
+     */
+    public void produceAllRandomOrder() {
+        int width = landPlots[0].length;
+        int height = landPlots.length;
+        List<Integer> linearIndices = new ArrayList<>(width*height);
+        
+        for (int i = 0; i < width*height; i++)
+            linearIndices.add(i);
+        
+        Collections.shuffle(linearIndices);
+        
+        for (int i = 0; i < width*height; i++) {
+            int index = linearIndices.get(i);
+            int row = index / width;
+            int col = index % width;
+            LandPlot currentPlot = landPlots[row][col];
+            currentPlot.produce();
         }
     }
     
