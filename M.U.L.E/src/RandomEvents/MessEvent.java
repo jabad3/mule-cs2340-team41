@@ -25,7 +25,7 @@ public class MessEvent extends RandomEvent {
 		try {
 			player.removeResource(Resource.MONEY, cleanupCost); //placeholder! is really 6 * m-value
 		} catch (FailedTransactionException e) {
-			// TODO Auto-generated catch block
+			player.deductAll(Resource.MONEY);
 			e.printStackTrace();
 		}
 		lastCleanupCost = cleanupCost;
