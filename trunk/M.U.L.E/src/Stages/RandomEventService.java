@@ -80,8 +80,10 @@ public class RandomEventService {
 			System.out.println(event.getResultMessage()); //temporary for testing
 			return event.getResultMessage();
 		}	
-		else
+		else {
+			System.out.println("no event occured");
 			return "No event occured"; //feel free to revise this message
+		}
 	}
 		
 	
