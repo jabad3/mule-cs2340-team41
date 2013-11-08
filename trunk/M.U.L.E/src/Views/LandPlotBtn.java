@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 
 import Models.LandPlot;
 import Models.Mule;
@@ -58,15 +59,9 @@ public class LandPlotBtn extends ResizableIcon {
      */
     private void drawMuleIcon(Graphics g) {
         // TODO Draw an image
-    	Image iconImg = null;
-    	try {
-    		iconImg = ImageIO.read(new File("mule_icon.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        //g.drawString(myLandPlot.getResourceForProduction() + " Mule", 0, getHeight() / 2);
-        g.drawImage(iconImg, 0, 0, 32, 32, null);
+    	//Image iconImg = new ImageIcon("mule_icon.png").getImage();
+    	Image iconImg = myLandPlot.getMule().getIcon();
+    	g.drawImage(iconImg, 0, 0, 32, 32, null);
         
     }
 
