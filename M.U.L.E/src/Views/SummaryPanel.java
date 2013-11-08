@@ -49,5 +49,8 @@ public class SummaryPanel extends JPanel {
 		});
 		saveBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(saveBtn);
+		
+		if(gameModel.getCurrentRound() == 0 || gameModel.gameIsOver())
+			saveBtn.setEnabled(false);
 	}
 }

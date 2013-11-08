@@ -76,6 +76,11 @@ public class LandSelectionStage extends Stage {
         Map map = gameModel.getMap();
         mapPanel = new MapPanel(map, new LandPlotListener());
         
+        showStatusDialog();
+        
+        // currently, this is our first stage, so increment round upon start
+        gameModel.incrementRound();
+        
         // TODO
         // Temporary until we have a proper summary/end screen
         if (gameModel.gameIsOver()) {
@@ -86,11 +91,6 @@ public class LandSelectionStage extends Stage {
             System.out.println("Exiting game...");
             System.exit(0);
         }
-        
-        showStatusDialog();
-        
-        // currently, this is our first stage, so increment round upon start
-        gameModel.incrementRound();
         
         String currentPlayerName = currentPlayer.getName();
         calculateLandPlotPrice();
