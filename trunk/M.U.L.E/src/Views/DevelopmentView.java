@@ -172,7 +172,6 @@ public class DevelopmentView extends JPanel {
         muleTimerPanel.decrement();
         muleTimerPanel.repaint();
         setFocusable(true);  // if not called, then muleTimerPanel.repaint() messes up focus
-        requestFocus();
     }
     
     /**
