@@ -29,7 +29,7 @@ import java.util.List;
 public class GameModel implements Serializable {
     
     /** The round number of the final round. */
-    private final int FINAL_ROUND = 12;
+    private final int FINAL_ROUND = 3;
     
     /** Holds all Player objects in the game. */
 	private List<Player> playerList = new ArrayList<>();
