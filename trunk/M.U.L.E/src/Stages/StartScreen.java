@@ -1,8 +1,11 @@
 package Stages;
-
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,14 +13,12 @@ import javax.swing.JPanel;
 import Models.Game;
 import Models.GameModel;
 
-
-
 public class StartScreen {
-	
 	public StartScreen() { 
 		JFrame frame = new JFrame("M.U.L.E");
 		
-		JPanel panel = new JPanel();
+		BgPanel panel = new BgPanel();
+		
 		JButton button = new JButton("Load");
 		JButton button2 = new JButton("New Game");
 		
@@ -33,9 +34,21 @@ public class StartScreen {
 		frame.pack();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
+        frame.setSize(new Dimension(630, 430));
 
-	public class ButtonListener implements ActionListener {
+	}
+	
+	
+	private class BgPanel extends JPanel {
+	    Image bg = new ImageIcon("title.png").getImage();
+
+	    @Override
+	    public void paintComponent(Graphics g) {
+	        g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+	    }
+	}
+	
+	private class ButtonListener implements ActionListener {
 		JButton button1;
 		JButton button2;
 		JFrame frame;
@@ -63,6 +76,9 @@ public class StartScreen {
 				curGame.start();
 			}
 		}
+	}
+	public static void main(String[] args) {
+		StartScreen s = new StartScreen();
 	}
 }
 
