@@ -24,8 +24,8 @@ public class NamePanel extends JPanel {
 		setLayout(new GridLayout(1,2));
 		setPreferredSize(new Dimension(300,75));
 		
-		add(nameOutput);
 		add(textField);
+		add(nameOutput);
 	}
 	
 	/**
