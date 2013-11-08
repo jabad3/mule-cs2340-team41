@@ -45,6 +45,14 @@ public class Inventory implements Serializable {
         int newCount = currentCount - resourceCount;
         resourceCounts.put(resource, newCount);
     }
+    /**
+     * deducts all of a given resource, effectively setting it to 0
+     * 
+     * @param resource the resource to deduct
+     */
+    public void deductAll(Resource resource) {
+    	resourceCounts.put(resource, 0);
+    }
 
     /**
      * Increments the count of the given resource type by one.

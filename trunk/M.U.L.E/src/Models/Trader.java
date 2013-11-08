@@ -138,6 +138,14 @@ public abstract class Trader implements Serializable {
             seller.depositMoney(price);
         }
     }
+    /**
+     * deducts all of given resource from Trader's inventory
+     * 
+     * @param resource the resource to deduct
+     */
+    public void deductAll(Resource resource) {
+    	inventory.deductAll(resource);
+    }
     
     /**
      * Increases this Trader's money count by the given amount.
