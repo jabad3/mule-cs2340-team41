@@ -1,4 +1,8 @@
-package Models;
+package RandomEvents;
+
+import Models.Player;
+import Models.RandomEvent;
+import Models.Resource;
 
 /**
 * WandererEvent is a subclass of RandomEvent that implements an action method
