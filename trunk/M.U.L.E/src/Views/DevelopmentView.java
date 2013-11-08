@@ -233,6 +233,7 @@ public class DevelopmentView extends JPanel {
             Point centerOfPawn = new Point(centerX, centerY);
             LandPlot enteredPlot = mapPanel.getLandPlotAt(centerOfPawn);
             sendEnteredLandPlotNotifications(enteredPlot);
+            currentPawn.resetStates();
         }
     }
 
