@@ -1,4 +1,4 @@
-package Models;
+package RandomEvents;
 
 import java.util.HashMap;
 

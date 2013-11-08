@@ -1,7 +1,8 @@
 package Stages;
-import Models.RandomEventFactory;
-import Models.RandomEvent;
 import Models.Player;
+import RandomEvents.RandomEvent;
+import RandomEvents.RandomEventFactory;
+
 import java.util.List;
 import java.util.Random;
 

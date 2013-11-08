@@ -1,7 +1,6 @@
 package RandomEvents;
 
 import Models.Player;
-import Models.RandomEvent;
 import Models.Resource;
 
 /**
