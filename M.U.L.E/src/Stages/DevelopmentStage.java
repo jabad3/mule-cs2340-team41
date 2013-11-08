@@ -95,6 +95,9 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 		
 		currentPlayerIndex = 0;
 		beginCurrentPlayerTurn();
+		
+		// TODO  Surely there is a better fix than this...
+        myView.requestFocus();
 	}
 	
 	/**
@@ -166,12 +169,6 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     	//once finished buying from store, reset location to coordinates outside of store
     	myView.currentPawn.resetStates();
     	
-    	
-//    	if(currentPlayer.getMuleHolder() == true) {
-//		myView.displayMessageDialog("Already holding mule!");
-//		return;
-//	}
-    	
     }
 
     @Override
@@ -181,11 +178,7 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     }
 
     @Override
-    public void enteredPub() {
-        // TODO
-        // User will be paid an appropriate amount of money, then their turn ends
-        // Update View to indicate next player's turn
-        
+    public void enteredPub() {        
         myView.endPlayerTurn();  // stop timer, pawn movement
         int pubPayment = calculatePubPayment();  
         currentPlayer.addResource(Resource.MONEY, pubPayment);
