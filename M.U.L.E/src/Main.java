@@ -20,7 +20,7 @@ public class Main {
      * Creates the main JFrame container for MULE, then runs the Game
      * object.
      */
-		
+
 	public static void main(String[] args)
 	{
 		StartScreen startscreen = new StartScreen();
