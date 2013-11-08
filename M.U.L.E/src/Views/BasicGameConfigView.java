@@ -4,6 +4,7 @@ package Views;
  * and open the template in the editor.
  */
 
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
@@ -37,7 +38,8 @@ public class BasicGameConfigView extends GameConfigView {
      * Initializes components on the JPanel
      */
     public BasicGameConfigView() {
-        initComponents();
+        setPreferredSize(new Dimension(600, 400));
+    	initComponents();
     }
 
     /**
@@ -99,6 +101,7 @@ public class BasicGameConfigView extends GameConfigView {
                 .addComponent(nextButton)
                 .addContainerGap())
         );
+        //this.setSize(new Dimension(600, 400));
     }
 
     @Override

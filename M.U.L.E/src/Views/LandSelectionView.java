@@ -61,7 +61,8 @@ public class LandSelectionView extends JPanel {
         skipButton.addActionListener(skipListener);
         
         this.mapPanel = mapPanel;
-        this.mapPanel.setPreferredSize(new Dimension(600, 400));
+        //this.mapPanel.setPreferredSize(new Dimension(600, 400));
+        setPreferredSize(new Dimension(600, 400));
         JPanel infoPanel = buildInfoPanel(landPlotPrice);
 
         this.setLayout(new BorderLayout());
