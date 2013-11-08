@@ -1,7 +1,9 @@
 package Views;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -24,13 +26,19 @@ public class ProductionView extends JPanel {
      * 
      * @param mapPanel The map to display to the user
      */
-    public ProductionView(MapPanel mapPanel) {
+    public ProductionView(MapPanel mapPanel, ActionListener finishedListener) {
         this.mapPanel = mapPanel;
         
         JLabel infoLabel = new JLabel("Production Results For The Round");
+        JButton continueButton = new JButton("Continue to Summary");
+        continueButton.addActionListener(finishedListener);
+        
+        JPanel northPanel = new JPanel();
+        northPanel.add(infoLabel);
+        northPanel.add(continueButton);
         
         this.setLayout(new BorderLayout());
-        this.add(infoLabel, BorderLayout.NORTH);
+        this.add(northPanel, BorderLayout.NORTH);
         this.add(mapPanel, BorderLayout.CENTER);
     }
 }
