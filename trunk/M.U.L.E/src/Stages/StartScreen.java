@@ -13,6 +13,10 @@ import javax.swing.JPanel;
 import Models.Game;
 import Models.GameModel;
 
+ /**
+  * This is start screen allows a player to start from a loaded or saved game
+  */
+
 public class StartScreen {
 	public StartScreen() { 
 		JFrame frame = new JFrame("M.U.L.E");
@@ -35,7 +39,8 @@ public class StartScreen {
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(new Dimension(630, 430));
-
+        frame.setFocusable(true);
+        
 	}
 	
 	
