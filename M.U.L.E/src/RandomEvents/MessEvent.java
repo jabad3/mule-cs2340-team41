@@ -2,7 +2,6 @@ package RandomEvents;
 
 import Models.FailedTransactionException;
 import Models.Player;
-import Models.RandomEvent;
 import Models.Resource;
 
 /**

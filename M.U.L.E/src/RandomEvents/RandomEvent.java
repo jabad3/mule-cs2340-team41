@@ -1,4 +1,6 @@
-package Models;
+package RandomEvents;
+
+import Models.Player;
 
 /**
  * superclass for RandomEvents, events that perform an action on a given player
