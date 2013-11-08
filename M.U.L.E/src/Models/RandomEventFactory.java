@@ -1,6 +1,14 @@
 package Models;
 import java.util.Random;
 
+import RandomEvents.AlumniEvent;
+import RandomEvents.CatBugsEvent;
+import RandomEvents.MessEvent;
+import RandomEvents.MuseumEvent;
+import RandomEvents.RatEvent;
+import RandomEvents.UGAEvent;
+import RandomEvents.WandererEvent;
+
 /**
  * RandomEventFactory object that builds RandomEvent objects at the request 
  * of a client.
