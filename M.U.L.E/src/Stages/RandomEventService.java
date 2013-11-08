@@ -8,6 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Service that performs a RandomEvent on a player.  
+ * Instantiation of RandomEvents is done by RandomEventFactory
+ * 
+ * @author kevin
+ *
+ */
 public class RandomEventService {
 	private RandomEventFactory factory = new RandomEventFactory();
 	private Player player;
