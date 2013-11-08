@@ -62,6 +62,7 @@ public class RandomEventService {
 	 * type of event
 	 * 
 	 * @param player the player to run service on
+	 * @param currentRound the current round of the game
 	 * @param isInLastPlace whether the player is in last place or not
 	 */
 	public String startService(Player player, int currentRound, boolean isInLastPlace) { 
