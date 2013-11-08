@@ -5,6 +5,9 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseListener;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,13 +24,16 @@ import Models.MapFactory;
 public class MapPanel extends JPanel {
     
     /** The number of rows in the grid of land plots. */
-    private final int ROWS = 5;
+    public final int ROWS = 5;
     
     /** The number of columns in the grid of land plots. */
-    private final int COLS = 9;
+    public final int COLS = 9;
 	
     /** Maintains a reference to the component representing the town. */
-    LandPlotBtn townBtn;
+    private LandPlotBtn townBtn;
+    
+    /** Maintains a list of all land plot icons in row-major order. */
+    protected List<LandPlotBtn> btnList;
     
 	/**
 	 * Creates the MapPanel containing a 5x9 grid of icons
@@ -38,6 +44,7 @@ public class MapPanel extends JPanel {
 	 */
 	public MapPanel(Map map, MouseListener commonPlotListener)
 	{
+	    btnList = new ArrayList<>();
 	    LandPlot[][] landPlots = map.landPlotArray();
 	    
 	    setLayout(new GridLayout(ROWS, COLS));
@@ -47,13 +54,14 @@ public class MapPanel extends JPanel {
 	            LandPlot plot = landPlots[row][col];
 	            LandPlotBtn plotBtn = new LandPlotBtn(plot, commonPlotListener);
 	            this.add(plotBtn);
+	            btnList.add(plotBtn);
 	            
 	            if (plot.isTown())
 	                townBtn = plotBtn;
 	        }
 	    }
 		
-		this.setPreferredSize(new Dimension(600, 600));
+		this.setPreferredSize(new Dimension(600, 400));
 	}
     
     /**

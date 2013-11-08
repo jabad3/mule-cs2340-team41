@@ -1,5 +1,7 @@
 package Stages;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -8,7 +10,7 @@ import javax.swing.JOptionPane;
 import Models.GameModel;
 import Models.Map;
 import Models.Player;
-import Views.MapPanel;
+import Views.ProductionMapPanel;
 import Views.ProductionView;
 
 
@@ -32,7 +34,7 @@ public class ProductionStage extends Stage {
     private Map map;
     
     /** Used to display the map to the user inside the stage's view. */
-    private MapPanel mapPanel;
+    private ProductionMapPanel productionMapPanel;
     
     /**
      * Create a ProductionStage object.
@@ -47,15 +49,26 @@ public class ProductionStage extends Stage {
     @Override
     public void start() {
         map = gameModel.getMap();
-        mapPanel = new MapPanel(map);
-        map.produceAll();
+        map.produceAllRandomOrder();
+        productionMapPanel = new ProductionMapPanel(map);
+        myView = new ProductionView(productionMapPanel, new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent arg0) {
+                    goNextStage();
+                }
+                    
+            });
+        //displayView(myView);
         
+        //productionMapPanel.displayLatestProduction();
         // PLACE HOLDER UNTIL PRODUCTION VIEW IS FINISHED
         showStatusDialog();
+        goNextStage();
         // END OF PLACE HOLDER
         
         
-        goNextStage();
+        
     }
     
     /**

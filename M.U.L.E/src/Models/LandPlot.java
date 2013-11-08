@@ -281,4 +281,13 @@ public class LandPlot implements Serializable {
             return false;
         }
     }
+    
+    /**
+     * Gets the last amount produced by this land plot.
+     * 
+     * @return The last amount produced by the land plot
+     */
+    public int getLastAmountProduced() {
+        return lastAmountProduced;
+    }
 }
