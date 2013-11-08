@@ -290,4 +290,5 @@ public class LandPlot implements Serializable {
     public int getLastAmountProduced() {
         return lastAmountProduced;
     }
+    
 }

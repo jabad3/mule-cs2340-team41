@@ -1,6 +1,9 @@
 package Models;
 
+import java.awt.Image;
 import java.io.Serializable;
+
+import javax.swing.ImageIcon;
 
 /**
  * This class represents the Mule model objects in a game of MULE.
@@ -49,4 +52,18 @@ public class Mule implements Serializable {
     public Resource getMuleType() {
         return muleType;
     }
+    
+    public Image getIcon() {
+    	Image iconImg = null;
+    	switch(muleType) {
+    		case FOOD:
+    			return iconImg = new ImageIcon("mule_food_icon.png").getImage();
+    		case ORE:
+    			return iconImg = new ImageIcon("mule_ore_icon.png").getImage();
+    		case ENERGY:
+    			return iconImg = new ImageIcon("mule_energy_icon.png").getImage();
+       	}
+    	return iconImg;
+    }
+    
 }

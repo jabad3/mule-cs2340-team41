@@ -37,5 +37,4 @@ public class MessEvent extends RandomEvent {
                         + "It cost you $" + lastCleanupCost + " to clean it up.";
         return result;
     }
-
 }
