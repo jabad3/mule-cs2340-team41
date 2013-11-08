@@ -64,19 +64,22 @@ public class RandomEventService {
 	 * @param player the player to run service on
 	 * @param isInLastPlace whether the player is in last place or not
 	 */
-	public void startService(Player player, boolean isInLastPlace) { 
+	public String startService(Player player, boolean isInLastPlace) { 
 		this.player = player;
 		int m = mValues.get(gameModel.getCurrentRound());
 		
 		if(eventIsHappening() && isInLastPlace) {
 			RandomEvent event = factory.buildGoodEvent();
 			event.eventAction(player, m);
+			return event.getResultMessage();
 		}
 		else if(eventIsHappening() && !isInLastPlace) {
 			RandomEvent event = factory.buildFromAllEvent();
 			event.eventAction(player, m);
-	
+			return event.getResultMessage();
 		}	
+		else
+			return "No event occured"; //feel free to revise this message
 	}
 		
 	
