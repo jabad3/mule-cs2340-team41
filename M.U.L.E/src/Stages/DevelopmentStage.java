@@ -63,6 +63,7 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     /** THe store dialog that is currently open, if any */
     JDialog storeDialog;
 	
+    private RandomEventService randService;
 	
 	/**
 	 *	Creates Development Stage object.
@@ -73,6 +74,7 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 	public DevelopmentStage(JFrame mainFrame, GameModel gameModel) {
 		super(mainFrame, gameModel);
 		// TODO Auto-generated constructor stub
+		randService = new RandomEventService();
 	}
 
 	/* (non-Javadoc)
@@ -110,6 +112,7 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 	private void beginCurrentPlayerTurn() {
 	    currentPlayer = playerList.get(currentPlayerIndex);
 	    PlayerPawn currentPawn = new PlayerPawn(currentPlayer.getIcon());
+	    randService.startService(currentPlayer, gameModel.getCurrentRound());
 	    myView.setCurrentPawn(currentPawn);
 	    myView.setCurrentPlayerName(currentPlayer.getName());
 	    myView.beginPlayerTurn(gameModel.calculateTurnTime(currentPlayer));
