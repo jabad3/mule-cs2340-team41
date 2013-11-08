@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import Models.LandPlot;
 import Models.MapFactory;
+import Models.Player;
 
 
 /**
@@ -66,6 +67,9 @@ public class DevelopmentView extends JPanel {
     /** Holds the current state of the action key during animation. */
     private boolean currentActionKeyState;
     
+    /** Displays information about the current player. */
+    private PlayerInfoPanel playerInfoPanel;
+    
     /**
      * Create the Development View.
      * 
@@ -78,6 +82,7 @@ public class DevelopmentView extends JPanel {
         this.mapPanel = mapPanel;
         this.townPanel = townPanel;
         this.muleTimerPanel = muleTimerPanel;
+        playerInfoPanel = new PlayerInfoPanel();
         playerNameLabel = new JLabel("Whose turn is it?");
         cardPanel = new JPanel();
         currentPawn = playerPawn;
@@ -112,9 +117,21 @@ public class DevelopmentView extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(layeredPane, BorderLayout.CENTER);
         this.add(this.muleTimerPanel, BorderLayout.EAST);
-        this.add(playerNameLabel, BorderLayout.NORTH);
+        //this.add(playerNameLabel, BorderLayout.NORTH);
+        this.add(playerInfoPanel, BorderLayout.NORTH);
         
         animationTimer = new Timer();
+    }
+    
+    /**
+     * Updates the view to display player info for the given player.
+     * This information includes:  1) Name, and 2) Inventory (Money, Food,
+     * Energy, Ore) information
+     * 
+     * @param player The player to display the info for
+     */
+    public void updateCurrentPlayerInfo(Player player) {
+        playerInfoPanel.displayInfoForNewPlayer(player);
     }
     
     /**
@@ -157,12 +174,9 @@ public class DevelopmentView extends JPanel {
      * animation appears smooth.
      */
     public void animateView() {
-        // TODO
-        // call pawn.move if new location is valid
-        // swap town/map panel if needed
-        // update the MULE timer
         updateActionKeyState();
         currentPawn.move();
+        playerInfoPanel.refresh();
         
         if (mapPanel.isVisible())
             performMapCollisionEvents();   
@@ -290,17 +304,8 @@ public class DevelopmentView extends JPanel {
         
         if(townPanel.overlapsStoreEntrance(currentPawn) && actionKeyWasHit())
         {
-        	//TODO: give player cash
-        	//TODO: display "you gambled and won $___!"
-        	//muleTimerPanel.remainingTime = 0;
             sendEnteredStoreNotifications();
-        }
-        
-        /*if (townPanel.overlapsTownShops(currentPawn)) {
-            Point newPawnLocation = townPanel.calcInBoundsLocation(currentPawn);
-            currentPawn.setLocation(newPawnLocation);
-        }*/
-        
+        }        
     }
     
     /**
@@ -343,13 +348,6 @@ public class DevelopmentView extends JPanel {
      */
     public void setCurrentPawn(PlayerPawn newPawn) {
         currentPawn.setImage(newPawn.getImage());
-    }
-    
-    /**
-     * Shows the map and positions the current pawn to its initial position in the map.
-     */
-    public void resetView() {
-        // TODO
     }
     
     /**
