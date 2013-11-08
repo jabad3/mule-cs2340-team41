@@ -286,7 +286,7 @@ public class StorePanel extends JPanel{
 				ArrayList<String> muleTypeStrings = new ArrayList<String>(4);
 				muleTypeStrings.add("");
 				
-				if(store.getMules() > 0)
+				if(store.getMules() > 0 && !player.hasMule())
 				{
 					int leftoverMoney = Math.max(player.getMoney()-oreSubtotal-foodSubtotal-energySubtotal, 0);
 					if(leftoverMoney > Store.mulePrice + Resource.FOOD.getMuleTypeScore())
