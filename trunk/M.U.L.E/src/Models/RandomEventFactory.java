@@ -15,6 +15,11 @@ public class RandomEventFactory {
 		//TODO constructor
 	}
 	
+	/**
+	 * builds a random event from the set of "good" events
+	 * 
+	 * @return the newly instantiated "good" event that is chosen
+	 */
 	public RandomEvent buildGoodEvent() {
 		switch (rand.nextInt(4)) {
 			case(0) : return new AlumniEvent();
@@ -28,6 +33,11 @@ public class RandomEventFactory {
 		
 	}
 	
+	/**
+	 * builds a random event from the set of all events
+	 * 
+	 * @return the newly instantiated event that is chosen
+	 */
 	public RandomEvent buildFromAllEvent() {
 		switch (rand.nextInt(7)) {
 		case(0) : return new AlumniEvent();
