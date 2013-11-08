@@ -150,6 +150,16 @@ public class GameModel implements Serializable {
      */
 	private void sortPlayerList() {
 		Collections.sort(playerList);
+		
+	}
+	
+	/**
+	 * check if given Player is in last place
+	 * @param player the Player to check
+	 * @return true if the Player is in last place, false otherwise
+	 */
+	public boolean isInLastPlace(Player player) {
+		return playerList.indexOf(player) == (playerList.size() - 1); 
 	}
 
 	/**
