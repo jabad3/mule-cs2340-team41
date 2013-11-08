@@ -159,7 +159,7 @@ public class GameModel implements Serializable {
 	 * @return true if the Player is in last place, false otherwise
 	 */
 	public boolean isInLastPlace(Player player) {
-		return playerList.indexOf(player) == (playerList.size() - 1); 
+		return playerList.indexOf(player) == 0;
 	}
 
 	/**
