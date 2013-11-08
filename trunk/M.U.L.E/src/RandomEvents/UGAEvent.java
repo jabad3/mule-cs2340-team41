@@ -22,7 +22,7 @@ public class UGAEvent extends RandomEvent {
 		try {
 			player.removeResource(Resource.FOOD, curPlayerFood / 2); //get approx. half with integer division, then remove from player
 		} catch (FailedTransactionException e) {
-			// TODO Auto-generated catch block
+			player.deductAll(Resource.FOOD);
 			e.printStackTrace();
 		}
 	}

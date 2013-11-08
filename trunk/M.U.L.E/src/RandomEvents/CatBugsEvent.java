@@ -21,11 +21,11 @@ public class CatBugsEvent extends RandomEvent {
 
 	@Override
 	public void eventAction(Player player, int m) {
-	    int repairCost = 4;  //placeholder! is really 4 * m_value!
+	    int repairCost = 4 * m;  //placeholder! is really 4 * m_value!
 		try {
 			player.removeResource(Resource.MONEY, repairCost);
 		} catch (FailedTransactionException e) {
-			// TODO Auto-generated catch block
+			player.deductAll(Resource.MONEY);
 			e.printStackTrace();
 		}
 		lastRepairCost = repairCost;
