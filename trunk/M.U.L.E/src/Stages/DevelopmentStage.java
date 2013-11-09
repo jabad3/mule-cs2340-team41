@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
 import Models.GameModel;
 import Models.LandPlot;
@@ -112,9 +113,12 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 	private void beginCurrentPlayerTurn() {
 	    currentPlayer = playerList.get(currentPlayerIndex);
 	    PlayerPawn currentPawn = new PlayerPawn(currentPlayer.getIcon());
-	    randService.startService(currentPlayer, gameModel.getCurrentRound(), gameModel.isInLastPlace(currentPlayer));
+	    String eventMessage = randService.startService(currentPlayer, gameModel.getCurrentRound(), gameModel.isInLastPlace(currentPlayer));
+
 	    myView.setCurrentPawn(currentPawn);
 	    myView.updateCurrentPlayerInfo(currentPlayer);
+	    
+	    JOptionPane.showMessageDialog(mainFrame, eventMessage);
 	    //myView.setCurrentPlayerName(currentPlayer.getName());
 	    myView.beginPlayerTurn(gameModel.calculateTurnTime(currentPlayer));
 	    myView.showTown();
