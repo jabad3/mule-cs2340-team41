@@ -16,11 +16,14 @@ import java.util.Random;
  *
  */
 public class RandomEventService {
+	/** the RandomEventFactory used by this service */
 	private RandomEventFactory factory = new RandomEventFactory();
-	private Player player;
+	
+	/** random object for generating random numbers */
 	Random rand = new Random();
+	
+	/** HashMap for mValues */
 	HashMap<Integer, Integer> mValues;
-	private GameModel gameModel;
 	
 	/**
 	 * constructor for RandomEventService, builds mValues map, 
@@ -28,7 +31,6 @@ public class RandomEventService {
 	 */
 	public RandomEventService() {
 		this.buildmValues();
-		gameModel = new GameModel();
 	}
 	
 	/**
@@ -73,7 +75,6 @@ public class RandomEventService {
 	 * @param isInLastPlace whether the player is in last place or not
 	 */
 	public String startService(Player player, int currentRound, boolean isInLastPlace) { 
-		this.player = player;
 		int m = mValues.get(currentRound);
 		
 		if(eventIsHappening() && isInLastPlace) {
