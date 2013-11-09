@@ -19,8 +19,8 @@ public class MuseumEvent extends RandomEvent {
 
 	@Override
 	public void eventAction(Player player, int m) {
-	    int computerPrice = 4 * m;
-		player.addResource(Resource.MONEY, 4);
+	    int computerPrice = 8 * m;
+		player.addResource(Resource.MONEY, computerPrice);
 		lastComputerPrice = computerPrice;
 	}
 
