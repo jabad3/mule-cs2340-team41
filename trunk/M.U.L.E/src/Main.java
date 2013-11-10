@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import Models.Game;
 import Models.GameModel;
+import Models.IntroTrack;
 import Stages.StartScreen;
 /**
  * This class executes the game of MULE.
@@ -24,6 +25,8 @@ public class Main {
 	public static void main(String[] args)
 	{
 		StartScreen startscreen = new StartScreen();
+    	IntroTrack theme = new IntroTrack();
+        theme.start();
 	}
 
 }

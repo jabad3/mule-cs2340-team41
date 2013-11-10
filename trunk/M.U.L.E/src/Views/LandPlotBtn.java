@@ -61,7 +61,7 @@ public class LandPlotBtn extends ResizableIcon {
         // TODO Draw an image
     	//Image iconImg = new ImageIcon("mule_icon.png").getImage();
     	Image iconImg = myLandPlot.getMule().getIcon();
-    	g.drawImage(iconImg, 0, 0, 32, 32, null);
+    	g.drawImage(iconImg, 0, 0, 50, 50, null);
         
     }
 

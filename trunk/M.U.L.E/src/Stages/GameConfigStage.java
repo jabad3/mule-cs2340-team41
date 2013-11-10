@@ -62,8 +62,8 @@ public class GameConfigStage extends Stage {
     public void start() {
     	myView = new BasicGameConfigView();
     	
-    	IntroTrack theme = new IntroTrack();
-        theme.start();
+//    	IntroTrack theme = new IntroTrack();
+//        theme.start();
         
         myView.setDifficultyChoices(difficulties);
         myView.setMapTypeChoices(mapChoices);
