@@ -22,7 +22,7 @@ public class RandomEventService {
 	/** random object for generating random numbers */
 	Random rand = new Random();
 	
-	/** HashMap for mValues */
+	/** HashMap for mValues, which are multipliers based on the current turn */
 	HashMap<Integer, Integer> mValues;
 	
 	/**
@@ -40,10 +40,7 @@ public class RandomEventService {
 	 * @return true if an event is to occur, false otherwise
 	 */
 	private boolean eventIsHappening() {
-		if(rand.nextInt(101) <= 27)
-			return true;
-		else
-			return false;
+	    return rand.nextInt(101) <= 27;
 	}
 	
 	/** 

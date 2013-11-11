@@ -9,6 +9,10 @@ import javax.swing.JFrame;
 import Models.MapFactory;
 
 /**
+ * PlayerPawn represents a Player's on-screen image. PlayerPawn is shown
+ * during Development and is able to be moved by the user using the arrow
+ * keys.
+ * 
  * @author jabad3
  *
  */
