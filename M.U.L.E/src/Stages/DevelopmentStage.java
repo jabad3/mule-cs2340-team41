@@ -35,6 +35,10 @@ import Views.TownPanel;
  */
 
 /**
+ * DevelopmentStage updates the View and the Model during the Development
+ * part of the game. During Development, users are allowed to interact with
+ * the town and the map by visiting town stores and placing mules on land plots.
+ *
  * @author jabad3
  *
  */
@@ -61,9 +65,10 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     /** The index in the playerList of the player whose turn it currently is. */
     private int currentPlayerIndex;
     
-    /** THe store dialog that is currently open, if any */
-    JDialog storeDialog;
+    /** The store dialog that is currently open, if any */
+    private JDialog storeDialog;
 	
+    /** Carries ou */
     private RandomEventService randService;
 	
 	/**
@@ -74,7 +79,6 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 	 */
 	public DevelopmentStage(JFrame mainFrame, GameModel gameModel) {
 		super(mainFrame, gameModel);
-		// TODO Auto-generated constructor stub
 		randService = new RandomEventService();
 	}
 
@@ -83,7 +87,6 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 	 */
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
 		System.out.println("Starting Development Stage");
         Map map = gameModel.getMap();
 		mapPanel = new MapPanel(map, null);
@@ -99,7 +102,6 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 		currentPlayerIndex = 0;
 		beginCurrentPlayerTurn();
 		
-		// TODO  Surely there is a better fix than this...
         myView.requestFocus();
 	}
 	
@@ -155,12 +157,6 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 
     @Override
     public void enteredStore() {
-        // TODO
-        // User will buy/sell a mule to the store, or error if not enough money
-        // Update View to indicate pawn has/does not have a mule
-    	
-    	//myView.displayMessageDialog("Tims panel here");
-    	
     	storeDialog = new JDialog();
     	StorePanel storepanel = new StorePanel(gameModel.getStore(), currentPlayer, new ActionListener() {
     	    public void actionPerformed(ActionEvent e)
@@ -173,7 +169,6 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     	storeDialog.pack();
     	storeDialog.setVisible(true);
     	
-    	//once finished buying from store, reset location to coordinates outside of store
     	myView.currentPawn.resetStates();
     	
     }

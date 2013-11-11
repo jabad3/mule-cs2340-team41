@@ -13,7 +13,10 @@ import Models.Player;
 import Views.PlayerConfigView;
 
 /**
- * 
+ * PlayerConfigStage is responsible for updating the Model using information
+ * in the View during Player Configuration. The user is able to choose
+ * characteristics for each Player, and these Player objects are created
+ * so that they can later be added to the Model.
  * 
  * @author jabad3
  *
