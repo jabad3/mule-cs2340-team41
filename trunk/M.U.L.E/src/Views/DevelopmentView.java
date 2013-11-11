@@ -344,10 +344,11 @@ public class DevelopmentView extends JPanel {
     /**
      * Set the current pawn to a new pawn.
      * 
-     * @param newPawn The new PlayerPawn to be displayed
+     * @param newImage The new image to be displayed in the current PlayerPawn
      */
-    public void setCurrentPawn(PlayerPawn newPawn) {
-        currentPawn.setImage(newPawn.getImage());
+    public void setCurrentPawnImageIcon(ImageIcon newImage) {
+        currentPawn.setIcon(newImage);
+        currentPawn.setSize(new Dimension(newImage.getIconWidth(), newImage.getIconHeight()));
     }
     
     /**
