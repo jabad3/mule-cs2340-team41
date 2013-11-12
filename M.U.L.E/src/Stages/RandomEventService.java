@@ -26,8 +26,8 @@ public class RandomEventService {
 	HashMap<Integer, Integer> mValues;
 	
 	/**
-	 * constructor for RandomEventService, builds mValues map, 
-	 * and instantiates GameModel
+	 * constructor for RandomEventService, builds mValues map 
+	 * 
 	 */
 	public RandomEventService() {
 		this.buildmValues();
