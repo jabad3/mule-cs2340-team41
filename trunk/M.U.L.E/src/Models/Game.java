@@ -10,7 +10,7 @@ import Stages.ProductionStage;
 import Stages.Stage;
 
 /**
- * This class orchestrates an entire gameplay session of MULE.
+ * This class orchestrates an entire game play session of MULE.
  * All Stages and the GameModel are instantiated in this class.
  * 
  * @author Tim Farley
@@ -57,7 +57,7 @@ public class Game {
 	    playerConfigStage.setNextStage(landSelectionStage);
 	    landSelectionStage.setNextStage(developmentStage);
 	    developmentStage.setNextStage(productionStage);
-	    productionStage.setNextStage(landSelectionStage);  // just for M6
+	    productionStage.setNextStage(landSelectionStage);
 	    
 		if(gameModel.getCurrentRound() == 0) {
 			gameConfigStage.start();

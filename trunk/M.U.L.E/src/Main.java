@@ -1,12 +1,3 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import Models.Game;
-import Models.GameModel;
 import Models.IntroTrack;
 import Stages.StartScreen;
 /**
@@ -17,9 +8,9 @@ import Stages.StartScreen;
  */
 
 public class Main {
-    /**
-     * Creates the main JFrame container for MULE, then runs the Game
-     * object.
+    /** 
+     * This is a driver class that brings up an introductory screen (with New Game and Load Game options) and
+     * consequently starts our game.
      */
 
 	public static void main(String[] args)
