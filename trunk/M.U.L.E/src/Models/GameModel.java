@@ -56,8 +56,7 @@ public class GameModel implements Serializable {
 	 * Create a new GameModel.
      * Must manually set all fields except for foodRequirements.
 	 */
-	public GameModel()
-	{
+	public GameModel() {
 		buildFoodRequirements();
 	}
 	
@@ -150,11 +149,11 @@ public class GameModel implements Serializable {
      */
 	private void sortPlayerList() {
 		Collections.sort(playerList);
-		
 	}
 	
 	/**
-	 * check if given Player is in last place
+	 * Check if given Player is in last place
+	 * 
 	 * @param player the Player to check
 	 * @return true if the Player is in last place, false otherwise
 	 */
@@ -233,7 +232,7 @@ public class GameModel implements Serializable {
 	}
 	
 	/**
-	 * determines whether or not the game is over
+	 * Determines whether or not the game is over
 	 * 
 	 * @return true if the game is over
 	 */
@@ -276,6 +275,9 @@ public class GameModel implements Serializable {
 		}
     }
     
+    /**
+     * Allows the model to initiate using a saved game file.
+     */
     public static GameModel loadGame() {
     	GameModel loadedModel = null;
     	try {

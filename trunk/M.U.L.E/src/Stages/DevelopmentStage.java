@@ -164,7 +164,7 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     	storeDialog.pack();
     	storeDialog.setVisible(true);
     	
-    	myView.currentPawn.resetStates();
+    	myView.getCurrentPawn().resetStates();
     	
     }
 

@@ -50,7 +50,7 @@ public class DevelopmentView extends JPanel {
     private CardLayout cardLayout;
     
     /** The current PlayerPawn object to be displayed to the user. */
-    public PlayerPawn currentPawn;												//temp
+    private PlayerPawn currentPawn;
     
     /** Displays a bar representing the time left in the current turn. */
     private MuleTimerPanel muleTimerPanel;
@@ -85,7 +85,7 @@ public class DevelopmentView extends JPanel {
         playerInfoPanel = new PlayerInfoPanel();
         playerNameLabel = new JLabel("Whose turn is it?");
         cardPanel = new JPanel();
-        currentPawn = playerPawn;
+        setCurrentPawn(playerPawn);
         shopEntryListeners = new ArrayList<>();
         
         // configure card panel
@@ -105,19 +105,18 @@ public class DevelopmentView extends JPanel {
         cardPanel.setSize(new Dimension(600, 400));
         cardPanel.setLocation(0, 0);
         
-        currentPawn.setSize(currentPawn.getPreferredSize());
-        currentPawn.setLocation(100, 50);
+        getCurrentPawn().setSize(getCurrentPawn().getPreferredSize());
+        getCurrentPawn().setLocation(100, 50);
 
         // Add to JLayeredPane.  Lower numbers are drawn behind high numbers.
         layeredPane.add(cardPanel, new Integer(0));  // map is behind pawn
-        layeredPane.add(currentPawn, new Integer(1));
+        layeredPane.add(getCurrentPawn(), new Integer(1));
         layeredPane.setPreferredSize(cardPanel.getSize());
         
         // Add all components to the view in a border-layout
         this.setLayout(new BorderLayout());
         this.add(layeredPane, BorderLayout.CENTER);
         this.add(this.muleTimerPanel, BorderLayout.EAST);
-        //this.add(playerNameLabel, BorderLayout.NORTH);
         this.add(playerInfoPanel, BorderLayout.NORTH);
         
         animationTimer = new Timer();
@@ -143,8 +142,8 @@ public class DevelopmentView extends JPanel {
     public void beginPlayerTurn(int duration) {
         int period = 16;  // call task.run() every 16 ms
         
-        currentPawn.enableMovement(this);
-        currentPawn.setLocation(mapPanel.getX() + mapPanel.getWidth()/2, mapPanel.getY() + mapPanel.getHeight()/2);
+        getCurrentPawn().enableMovement(this);
+        getCurrentPawn().setLocation(mapPanel.getX() + mapPanel.getWidth()/2, mapPanel.getY() + mapPanel.getHeight()/2);
         muleTimerPanel.reset(duration);
         muleTimerPanel.setDefaultDecrementAmount(period);
         
@@ -162,8 +161,8 @@ public class DevelopmentView extends JPanel {
      * with the View.
      */
     public void endPlayerTurn() {
-        animationTimer.cancel();  // view animation will stop
-        currentPawn.resetStates();  // turn off all key states
+        animationTimer.cancel();  	// view animation will stop
+        getCurrentPawn().resetStates();  // turn off all key states
     }
     
     /**
@@ -175,7 +174,7 @@ public class DevelopmentView extends JPanel {
      */
     public void animateView() {
         updateActionKeyState();
-        currentPawn.move();
+        getCurrentPawn().move();
         playerInfoPanel.refresh();
         
         if (mapPanel.isVisible())
@@ -194,7 +193,7 @@ public class DevelopmentView extends JPanel {
      */
     private void updateActionKeyState() {
         previousActionKeyState = currentActionKeyState;
-        currentActionKeyState = currentPawn.actionKey;
+        currentActionKeyState = getCurrentPawn().actionKey;
     }
 
     /** Moves the pawn to be inside the given panel
@@ -203,30 +202,26 @@ public class DevelopmentView extends JPanel {
      */
     
     private void constrainPawn(JPanel toPanel) {
-    	Point pawnPos = currentPawn.getLocation();
-    	Dimension pawnSize = currentPawn.getSize();
+    	Point pawnPos = getCurrentPawn().getLocation();
+    	Dimension pawnSize = getCurrentPawn().getSize();
         Dimension panelSize = this.mapPanel.getSize();
         Point panelOrigin = this.townPanel.getLocation();
         
-        if(pawnPos.x < panelOrigin.x)
-        {
+        if(pawnPos.x < panelOrigin.x) {
         	pawnPos.x = panelOrigin.x;
         }
-        else if(pawnPos.x+pawnSize.width > panelOrigin.x+panelSize.width)
-        {
+        else if(pawnPos.x+pawnSize.width > panelOrigin.x+panelSize.width) {
         	pawnPos.x = panelOrigin.x+panelSize.width-pawnSize.width;
         }
         
-        if(pawnPos.y < panelOrigin.y)
-        {
+        if(pawnPos.y < panelOrigin.y) {
         	pawnPos.y = panelOrigin.y;
         }
-        else if(pawnPos.y+pawnSize.height > panelOrigin.y+panelSize.height)
-        {
+        else if(pawnPos.y+pawnSize.height > panelOrigin.y+panelSize.height) {
         	pawnPos.y = panelOrigin.y+panelSize.height-pawnSize.height;
         }
         
-        currentPawn.setLocation(pawnPos);
+        getCurrentPawn().setLocation(pawnPos);
     }
     
     /**
@@ -235,19 +230,18 @@ public class DevelopmentView extends JPanel {
      *   2) Collides with the map border
      */
     private void performMapCollisionEvents() {
-        
-        if (!mapPanel.insideMap(currentPawn)) {
+        if (!mapPanel.insideMap(getCurrentPawn())) {
         	constrainPawn(mapPanel);
-        } else if (mapPanel.overlapsTown(currentPawn)) {
+        } else if (mapPanel.overlapsTown(getCurrentPawn())) {
             showTown();
         } else if (actionKeyWasHit()) {
-            Point currentLocation = currentPawn.getLocation();
-            int centerX = currentLocation.x + currentPawn.getWidth() / 2;
-            int centerY = currentLocation.y + currentPawn.getHeight() / 2;
+            Point currentLocation = getCurrentPawn().getLocation();
+            int centerX = currentLocation.x + getCurrentPawn().getWidth() / 2;
+            int centerY = currentLocation.y + getCurrentPawn().getHeight() / 2;
             Point centerOfPawn = new Point(centerX, centerY);
             LandPlot enteredPlot = mapPanel.getLandPlotAt(centerOfPawn);
             sendEnteredLandPlotNotifications(enteredPlot);
-            currentPawn.resetStates();
+            getCurrentPawn().resetStates();
         }
     }
 
@@ -269,40 +263,33 @@ public class DevelopmentView extends JPanel {
      *   3) Collides with a shop border that is not an entrance
      */
     private void performTownCollisionEvents() {
-        if (!townPanel.insideTown(currentPawn)) {
-        	if(!townPanel.overlapsTownShops(currentPawn))
-        	{
-        		if(currentPawn.getLocation().x < 60)
-        		{
-        			currentPawn.setLocation(new Point(223,180));
+        if (!townPanel.insideTown(getCurrentPawn())) {
+        	if(!townPanel.overlapsTownShops(getCurrentPawn())) {
+        		if(getCurrentPawn().getLocation().x < 60) {
+        			getCurrentPawn().setLocation(new Point(223,180));
         		}
-        		else if(currentPawn.getLocation().x > townPanel.getWidth() - 60)
-        		{
-        			currentPawn.setLocation(new Point(333,180));
+        		else if(getCurrentPawn().getLocation().x > townPanel.getWidth() - 60) {
+        			getCurrentPawn().setLocation(new Point(333,180));
         		}
-        		else if(currentPawn.getLocation().y < 60)
-        		{
-        			currentPawn.setLocation(new Point(283,100));
+        		else if(getCurrentPawn().getLocation().y < 60) {
+        			getCurrentPawn().setLocation(new Point(283,100));
         		}
-        		else
-        		{
-        			currentPawn.setLocation(new Point(283,250));
+        		else {
+        			getCurrentPawn().setLocation(new Point(283,250));
         		}
-        		
         		showMap();
         	}
-        	else
-        	{
+        	else {
         		constrainPawn(townPanel);
         	}
         }
         
-        if(townPanel.overlapsPubEntrance(currentPawn) && currentPawn.actionKey)
+        if(townPanel.overlapsPubEntrance(getCurrentPawn()) && getCurrentPawn().actionKey)
         {
             sendEnteredPubNotifications();
         }
         
-        if(townPanel.overlapsStoreEntrance(currentPawn) && actionKeyWasHit())
+        if(townPanel.overlapsStoreEntrance(getCurrentPawn()) && actionKeyWasHit())
         {
             sendEnteredStoreNotifications();
         }        
@@ -347,8 +334,8 @@ public class DevelopmentView extends JPanel {
      * @param newImage The new image to be displayed in the current PlayerPawn
      */
     public void setCurrentPawnImageIcon(ImageIcon newImage) {
-        currentPawn.setIcon(newImage);
-        currentPawn.setSize(new Dimension(newImage.getIconWidth(), newImage.getIconHeight()));
+        getCurrentPawn().setIcon(newImage);
+        getCurrentPawn().setSize(new Dimension(newImage.getIconWidth(), newImage.getIconHeight()));
     }
     
     /**
@@ -386,31 +373,34 @@ public class DevelopmentView extends JPanel {
     public void displayMessageDialog(String message) {
         JOptionPane.showInternalMessageDialog(this, message);
     }
+
+	public PlayerPawn getCurrentPawn() {
+		return currentPawn;
+	}
+
+	public void setCurrentPawn(PlayerPawn currentPawn) {
+		this.currentPawn = currentPawn;
+	}
  
     /**
      * To test the development view.
      * 
      * @param args
      */
-    public static void main(String[] args) {
-        JFrame jf = new JFrame("Test Dev't View");
-        final MapPanel mapPanel = new MapPanel(MapFactory.buildMap("Default"), null);
-        final TownPanel townPanel = new TownPanel();
-        final PlayerPawn pawn = new PlayerPawn(new ImageIcon("buzzite.png"));
-        final MuleTimerPanel muleTimerPanel = new MuleTimerPanel(25000);
-        
-        final DevelopmentView dv = new DevelopmentView(mapPanel, townPanel, pawn, muleTimerPanel);
-        
-        
-
-        
-        jf.getContentPane().add(dv);
-        jf.pack();
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setVisible(true);
-        
-        dv.beginPlayerTurn(25000);
-    }
-    
+//    public static void main(String[] args) {
+//        JFrame jf = new JFrame("Test Dev't View");
+//        final MapPanel mapPanel = new MapPanel(MapFactory.buildMap("Default"), null);
+//        final TownPanel townPanel = new TownPanel();
+//        final PlayerPawn pawn = new PlayerPawn(new ImageIcon("buzzite.png"));
+//        final MuleTimerPanel muleTimerPanel = new MuleTimerPanel(25000);
+//        
+//        final DevelopmentView dv = new DevelopmentView(mapPanel, townPanel, pawn, muleTimerPanel);
+//        
+//        jf.getContentPane().add(dv);
+//        jf.pack();
+//        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        jf.setVisible(true);
+//        
+//        dv.beginPlayerTurn(25000);
+//    }
 }
-
