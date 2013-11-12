@@ -11,10 +11,6 @@ import java.util.Random;
 public class RandomEventFactory {
 	Random rand = new Random();
 	
-	public RandomEventFactory() {
-		//TODO constructor
-	}
-	
 	/**
 	 * builds a random event from the set of "good" events
 	 * 
