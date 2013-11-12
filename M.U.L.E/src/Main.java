@@ -1,5 +1,6 @@
 import Models.IntroTrack;
 import Stages.StartScreen;
+
 /**
  * This class executes the game of MULE.
  * 
@@ -12,13 +13,10 @@ public class Main {
      * This is a driver class that brings up an introductory screen (with New Game and Load Game options) and
      * consequently starts our game.
      */
-
-	public static void main(String[] args)
-	{
-		StartScreen startscreen = new StartScreen();
-    	IntroTrack theme = new IntroTrack();
-        theme.start();
+	public static void main(String[] args) {
+		StartScreen startScreen = new StartScreen();
+    	IntroTrack introTrack = new IntroTrack();
+    	introTrack.start();
 	}
-
 }
 	
