@@ -168,6 +168,7 @@ public class GameModel implements Serializable {
 	 * @return Sorted players
 	 */
 	public List<Player> getSortedPlayerList() {
+		this.sortPlayerList();
 		return playerList;
 	}
 
