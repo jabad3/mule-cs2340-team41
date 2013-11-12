@@ -71,7 +71,6 @@ public class RandomEventService {
 	 * @param currentRound the current round of the game
 	 * @param isInLastPlace whether the player is in last place or not
 	 * @param component the parent Component to use to draw showMessageDialog
-	 * @return 
 	 */
 	public void startService(Player player, int currentRound, boolean isInLastPlace, Component component) { 
 		int m = mValues.get(currentRound);
