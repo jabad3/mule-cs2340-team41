@@ -1,7 +1,7 @@
 package Models;
 
 /**
- * Difficulty enum for all possible difficulties in a game of MULE.
+ * Difficulty enums for all possible difficulties in a game of MULE.
  * Has getters for player and store difficulty settings associated with each
  * of the different difficulty options.
  * 
@@ -32,7 +32,7 @@ public enum Difficulty {
 	
 	/** Starting mule count for the Store */
 	private final int storeMuleCount;
-	
+
 	/**
 	 * Assign appropriate starting resource counts to each Difficulty.
 	 * 
