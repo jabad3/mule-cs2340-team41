@@ -74,7 +74,7 @@ public class DevelopmentView extends JPanel {
     private static final Point EAST_LOCATION = new Point(333,180);
     
     /** Constant location of west exit. */
-    private static final Point WEST_LOCATION = new Point(223,180);
+    private static final Point WEST_LOCATION = new Point(213,180);
     
     /** Constant location of north exit. */
     private static final Point NORTH_LOCATION = new Point(283,100);
