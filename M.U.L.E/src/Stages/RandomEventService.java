@@ -4,9 +4,12 @@ import RandomEvents.RandomEvent;
 import RandomEvents.RandomEventFactory;
 import Models.GameModel;
 
+import java.awt.Component;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import javax.swing.JOptionPane;
 
 /**
  * Service that performs a RandomEvent on a player.  
@@ -70,27 +73,23 @@ public class RandomEventService {
 	 * @param player the player to run service on
 	 * @param currentRound the current round of the game
 	 * @param isInLastPlace whether the player is in last place or not
+	 * @return 
 	 */
-	public String startService(Player player, int currentRound, boolean isInLastPlace) { 
+	public void startService(Player player, int currentRound, boolean isInLastPlace, Component component) { 
 		int m = mValues.get(currentRound);
 		
 		if(eventIsHappening() && isInLastPlace) {
 			RandomEvent event = factory.buildGoodEvent();
 			event.eventAction(player, m);
 			System.out.println(event.getResultMessage()); //temporary for testing
-			return event.getResultMessage();
+			JOptionPane.showMessageDialog(component, event.getResultMessage()); event.getResultMessage();
 		}
-		else if(eventIsHappening() && !isInLastPlace) {
+		else if(eventIsHappening() && isInLastPlace) {
 			RandomEvent event = factory.buildFromAllEvent();
 			event.eventAction(player, m);
 			System.out.println(event.getResultMessage()); //temporary for testing
-			return event.getResultMessage();
-		}	
-		else {
-			System.out.println("no event occured");
-			return "No event occured"; //feel free to revise this message
+			JOptionPane.showMessageDialog(component,event.getResultMessage());	
 		}
-	}
-		
+	}	
 	
 }

@@ -114,12 +114,11 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 	 */
 	private void beginCurrentPlayerTurn() {
 	    currentPlayer = playerList.get(currentPlayerIndex);
-	    String eventMessage = randService.startService(currentPlayer, gameModel.getCurrentRound(), gameModel.isInLastPlace(currentPlayer));
+	    randService.startService(currentPlayer, gameModel.getCurrentRound(), gameModel.isInLastPlace(currentPlayer), mainFrame);
 
 	    myView.setCurrentPawnImageIcon(currentPlayer.getIcon());
 	    myView.updateCurrentPlayerInfo(currentPlayer);
 	    
-	    JOptionPane.showMessageDialog(mainFrame, eventMessage);
 	    //myView.setCurrentPlayerName(currentPlayer.getName());
 	    myView.beginPlayerTurn(gameModel.calculateTurnTime(currentPlayer));
 	    myView.showTown();
