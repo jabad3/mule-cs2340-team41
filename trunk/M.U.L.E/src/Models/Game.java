@@ -1,5 +1,4 @@
 package Models;
-
 import javax.swing.JFrame;
 
 import Stages.DevelopmentStage;
@@ -18,10 +17,10 @@ import Stages.Stage;
  */
 
 public class Game {
-	/**  The primary container to hold all Views used during the game. */
+	/** The primary container to hold all View classes used during the game. */
     private JFrame mainFrame;
     
-    /** The gameModel object that will be used for the duration of the game. */
+    /** The GameModel object that will be used for the duration of the game. */
 	private GameModel gameModel;
 	
 	/**
@@ -29,14 +28,16 @@ public class Game {
 	 * 
 	 * @param mainFrame An empty mainFrame
 	 */
-	public Game(JFrame mainFrame)
-	{
+	public Game(JFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		this.gameModel = new GameModel();
 	}
-	
-	public Game(JFrame mainFrame, GameModel gameModel)
-	{
+	/**
+	 * Instantiates a new Game object to run a game of MULE using a previous GameModel (ie. loading a game).
+	 * 
+	 * @param mainFrame An empty mainFrame
+	 */
+	public Game(JFrame mainFrame, GameModel gameModel) {
 		this.mainFrame = mainFrame;
 		this.gameModel = gameModel;
 	}
@@ -45,8 +46,7 @@ public class Game {
 	 * Creates and links each stage to prepare the game loop.
 	 * Begins a game of MULE by starting the first stage of the game.
 	 */
-	public void start()
-	{
+	public void start() {
 		Stage gameConfigStage = new GameConfigStage(mainFrame, gameModel);
 		Stage playerConfigStage = new PlayerConfigStage(mainFrame, gameModel);
 	    Stage landSelectionStage = new LandSelectionStage(mainFrame, gameModel);
