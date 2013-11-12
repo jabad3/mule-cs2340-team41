@@ -60,7 +60,6 @@ public abstract class Stage
 			nextStage.start();
 			return true;
 		}
-		
 		return false;
     }
 	

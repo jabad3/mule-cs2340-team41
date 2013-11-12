@@ -24,14 +24,11 @@ import Views.PlayerConfigView;
 public class PlayerConfigStage extends Stage {
 	
     /** The View that this PlayerConfigStage will control. */
-    PlayerConfigView myView;
+    private PlayerConfigView myView;
     
     /** The player number (Ex:  Player 1) being configured.  Starts at 1. */
-	public int playerAt = 1;
+	private int playerConfigured = 1;
 	
-	// used to setup the View
-	
-    
     /**
      * A list of Color objects representing colors that cannot be chosen.
      * 
@@ -50,7 +47,6 @@ public class PlayerConfigStage extends Stage {
      */
 	public PlayerConfigStage(JFrame mainFrame, GameModel model) {
     	super(mainFrame, model);
-    	
     }
 	
 	/**
@@ -59,7 +55,7 @@ public class PlayerConfigStage extends Stage {
 	 */
 	public void showPlayerConfigPane() {
 		myView = new PlayerConfigView();
-		myView.setPlayerNum(playerAt);
+		myView.setPlayerNum(playerConfigured);
 		myView.setDisabledColorOptions(disabledColorOptions);
 		myView.addFinishedListener(new FinishedListener());
     	displayView(myView);
@@ -83,14 +79,11 @@ public class PlayerConfigStage extends Stage {
 	 * @author Max
 	 *
 	 */
-	private class FinishedListener implements ActionListener
-	{
+	private class FinishedListener implements ActionListener {
 	    @Override
-		public void actionPerformed(ActionEvent e)
-		{
+		public void actionPerformed(ActionEvent e) {
 			// take no action if user does not select a race or color
-		    if(myView.getRace() == null || myView.getColor() == null)
-			{
+		    if(myView.getRace() == null || myView.getColor() == null) {
 				return;
 			}
 			
@@ -98,16 +91,14 @@ public class PlayerConfigStage extends Stage {
 			disabledColorOptions.add(myView.getColor());
 			Player player = new Player(myView.getText(), myView.getRace(), myView.getColor(), gameModel.getDifficulty());
 			gameModel.addPlayer(player);
-			playerAt++;
+			playerConfigured++;
 			
-			if(playerAt > gameModel.getNumPlayers())
-			{
+			if(playerConfigured > gameModel.getNumPlayers()) {
 				System.out.println("Game Model info after configuring... \n" + gameModel);
 			    System.out.println("Last player configed, going to map!");
 				goNextStage();
 			}
-			else
-			{
+			else {
 				showPlayerConfigPane();
 			}
 		}
