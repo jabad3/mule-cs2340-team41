@@ -2,11 +2,8 @@ package Stages;
 import Models.Player;
 import RandomEvents.RandomEvent;
 import RandomEvents.RandomEventFactory;
-import Models.GameModel;
-
 import java.awt.Component;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 import javax.swing.JOptionPane;

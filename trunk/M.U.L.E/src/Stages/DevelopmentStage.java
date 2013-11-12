@@ -1,7 +1,5 @@
 package Stages;
 
-import java.awt.BorderLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -10,7 +8,6 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 import Models.GameModel;
@@ -25,7 +22,6 @@ import Views.MuleTimerListener;
 import Views.MuleTimerPanel;
 import Views.PlayerPawn;
 import Views.ShopEntryListener;
-import Views.StoreBuySellPanel;
 import Views.StorePanel;
 import Views.StoreView;
 import Views.TownPanel;
