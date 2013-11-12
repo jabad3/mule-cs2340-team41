@@ -13,6 +13,12 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine; 
 import javax.sound.sampled.UnsupportedAudioFileException; 
 
+/** 
+ * This class is responsible for playing a music file during the game.
+ * 
+ * @author Max
+ *
+ */
 public class IntroTrack extends Thread { 
 
     private String filename;
