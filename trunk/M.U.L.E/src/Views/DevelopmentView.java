@@ -34,7 +34,7 @@ import Models.Player;
  */
 public class DevelopmentView extends JPanel {
     
-    /** Label to display the current Player's name. */
+	/** Label to display the current Player's name. */
     private JLabel playerNameLabel;
     
     /** Displays the land plots to the user. */
@@ -69,6 +69,19 @@ public class DevelopmentView extends JPanel {
     
     /** Displays information about the current player. */
     private PlayerInfoPanel playerInfoPanel;
+    
+    /** Constant location of east exit. */
+    private static final Point EAST_LOCATION = new Point(333,180);
+    
+    /** Constant location of west exit. */
+    private static final Point WEST_LOCATION = new Point(223,180);
+    
+    /** Constant location of north exit. */
+    private static final Point NORTH_LOCATION = new Point(283,100);
+    
+    /** Constant location of south exit. */
+    private static final Point SOUTH_LOCATION = new Point(283,250);
+    
     
     /**
      * Create the Development View.
@@ -140,8 +153,8 @@ public class DevelopmentView extends JPanel {
      * @param duration The duration of the turn in milliseconds
      */
     public void beginPlayerTurn(int duration) {
+    	showTown();
         int period = 16;  // call task.run() every 16 ms
-        
         getCurrentPawn().enableMovement(this);
         getCurrentPawn().setLocation(mapPanel.getX() + mapPanel.getWidth()/2, mapPanel.getY() + mapPanel.getHeight()/2);
         muleTimerPanel.reset(duration);
@@ -266,16 +279,16 @@ public class DevelopmentView extends JPanel {
         if (!townPanel.insideTown(getCurrentPawn())) {
         	if(!townPanel.overlapsTownShops(getCurrentPawn())) {
         		if(getCurrentPawn().getLocation().x < 60) {
-        			getCurrentPawn().setLocation(new Point(223,180));
+        			getCurrentPawn().setLocation(WEST_LOCATION);
         		}
         		else if(getCurrentPawn().getLocation().x > townPanel.getWidth() - 60) {
-        			getCurrentPawn().setLocation(new Point(333,180));
+        			getCurrentPawn().setLocation(EAST_LOCATION);
         		}
         		else if(getCurrentPawn().getLocation().y < 60) {
-        			getCurrentPawn().setLocation(new Point(283,100));
+        			getCurrentPawn().setLocation(NORTH_LOCATION);
         		}
         		else {
-        			getCurrentPawn().setLocation(new Point(283,250));
+        			getCurrentPawn().setLocation(SOUTH_LOCATION);
         		}
         		showMap();
         	}
@@ -341,14 +354,14 @@ public class DevelopmentView extends JPanel {
     /**
      * Display the map to the user.
      */
-    public void showMap() {
+    private void showMap() {
         cardLayout.show(cardPanel, "mapPanel");
     }
     
     /**
      * Display the town to the user.
      */
-    public void showTown() {
+    private void showTown() {
         cardLayout.show(cardPanel, "townPanel");
     }
     
