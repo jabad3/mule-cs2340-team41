@@ -21,8 +21,6 @@ import Models.Player;
 import Views.LandPlotBtn;
 import Views.LandSelectionView;
 import Views.MapPanel;
-import Views.StorePanel;
-import Views.StoreView;
 import Views.SummaryPanel;
 
 /**
