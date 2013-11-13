@@ -223,7 +223,7 @@ public class LandPlot implements Serializable {
      *       (NOTE:  energy mules do NOT require energy units to function)
      */
     public void produce() {
-        if (owner == null || mule == null) {  // no mule, no production
+        if (owner == null || mule == null || isTown() || mule.getMuleType() == null) {  // no mule, no production
             lastAmountProduced = 0;
             return;
         }
@@ -250,8 +250,8 @@ public class LandPlot implements Serializable {
      */
     private boolean canProduce(Resource resourceToProduce) {
         boolean hasEnergyMule = resourceToProduce == Resource.ENERGY;
-        boolean muleHasPower = muleIsPowered();
-        return hasEnergyMule || muleHasPower;
+        boolean muleCanBePowered = owner.getEnergy() > 0;
+        return hasEnergyMule || muleCanBePowered;
     }
     
     /**
@@ -259,21 +259,22 @@ public class LandPlot implements Serializable {
      * @param resourceToProduce The resource to be produced
      */
     private void giveProductionToOwner(Resource resourceToProduce) {
+        if (resourceToProduce != Resource.ENERGY)
+            powerMuleByConsumingEnergy();
         lastAmountProduced = productionTable.get(landType).get(resourceToProduce);
         owner.addResource(resourceToProduce, lastAmountProduced);
     }
     
     /**
-     * Determine whether or not the mule on this land plot can produce.
-     * Land plots without powered mules cannot produce.
+     * Powers a mule by consuming one energy unit from the owner.
      * 
-     * A non-energy mule must consume an energy unit from its owner in order
-     * to be powered.
+     * Pre-conditions:  land plot has a mule and owner, and owner has enough
+     * energy units to power a mule.
      * 
      * @return True if the mule on this land plot consumed an energy unit, 
      * making it powered
      */
-    private boolean muleIsPowered() {
+    private boolean powerMuleByConsumingEnergy() {
         try {
             owner.removeResource(Resource.ENERGY, 1);
             return true;
