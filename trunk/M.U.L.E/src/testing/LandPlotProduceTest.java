@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.awt.Color;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +17,9 @@ import Models.Resource;
 
 /**
  * This class is responsible for testing all possible scenarios for the
- * produce() method inside the LandPlot class.
+ * produce() method inside the LandPlot class.  The tests check to make sure
+ * that:  1) the owner's inventory changes as expected, and 2) the land plots'
+ * lastAmountProduced value changes as expected.
  * 
  * Because land plot production is dependent on both the land plot type and
  * the resource type, all combinations are tested.
@@ -26,7 +27,7 @@ import Models.Resource;
  * @author Max
  *
  */
-public class LandPlotTest {
+public class LandPlotProduceTest {
     
     /**
      * Denotes int value for one energy unit.
@@ -88,9 +89,6 @@ public class LandPlotTest {
      * Order in this array matches the order in the plotArray.
      */
     private int[] expectedLastAmountProduced;
-    
-    
-    
 
     @Before
     /**
@@ -219,16 +217,10 @@ public class LandPlotTest {
             int expectedEnergy = expectedOwnerEnergy[i];
             int expectedOre = expectedOwnerOre[i];
             
-            //System.out.println("Actual energy:  " + actualEnergy + "\nExpected energy:  " + expectedEnergy + "\n");
-            
             if (actualFood != expectedFood
                     || actualEnergy != expectedEnergy
-                    || actualOre != expectedOre) {
-                System.out.println("i:  " + i);
-                System.out.printf("Actual food/energy/ore:  %d/%d/%d\n", actualFood, actualEnergy, actualOre);
-                System.out.printf("Exp f/e/o:  %d/%d/%d\n", expectedFood, expectedEnergy, expectedOre);
+                    || actualOre != expectedOre)
                 return false;
-            }
         }
         return true;
     }
