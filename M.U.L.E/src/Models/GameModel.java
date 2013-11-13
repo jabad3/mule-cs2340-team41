@@ -162,13 +162,12 @@ public class GameModel implements Serializable {
 	}
 
 	/**
-	 * Get the list of Players based on score.
-	 * The Player with the highest score will be first in the list.
+	 * Gets the current list of players.  The order that players should be used
+	 * is the order that the players are inside the list.
 	 * 
-	 * @return Sorted players
+	 * @return The current list of players
 	 */
-	public List<Player> getSortedPlayerList() {
-		this.sortPlayerList();
+	public List<Player> getPlayerList() {
 		return playerList;
 	}
 

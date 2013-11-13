@@ -87,7 +87,7 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
         Map map = gameModel.getMap();
 		mapPanel = new MapPanel(map, null);
 		townPanel = new TownPanel();
-		playerList = gameModel.getSortedPlayerList();
+		playerList = gameModel.getPlayerList();
 		muleTimerPanel = new MuleTimerPanel();
 		muleTimerPanel.addMuleTimerListener(this);
 		

@@ -76,7 +76,7 @@ public class ProductionStage extends Stage {
      * land selection is over
      */
     private void showStatusDialog() {
-        List<Player> playerList = gameModel.getSortedPlayerList();
+        List<Player> playerList = gameModel.getPlayerList();
         String playerInfo = "";
         for (Player player:  playerList)
             playerInfo += player.getMyInventoryAsString() + "\n";
