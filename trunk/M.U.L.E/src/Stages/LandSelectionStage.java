@@ -67,7 +67,7 @@ public class LandSelectionStage extends Stage {
     public void start() {
         gameModel.updatePlayerOrder();  // player order used for rest of round
         
-        playerList = gameModel.getSortedPlayerList();
+        playerList = gameModel.getPlayerList();
         currentPlayerIndex = 0;
         currentPlayer = playerList.get(currentPlayerIndex);
         
