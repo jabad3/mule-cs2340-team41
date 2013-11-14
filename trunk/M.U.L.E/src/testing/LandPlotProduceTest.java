@@ -24,6 +24,14 @@ import Models.Resource;
  * Because land plot production is dependent on both the land plot type and
  * the resource type, all combinations are tested.
  * 
+ * Even though a land plot with type TOWN will never have a mule or owner
+ * due to trust boundaries, it's produce method can still be called under
+ * normal play, so TOWN type is tested along with the other land plot types.
+ * In each case, produce() on TOWN should not do anything.
+ * 
+ * Expected values for all other land plots are based on the table given in M2
+ * (in addition to whether or not they have mules and/or owners).
+ * 
  * @author Max
  *
  */
@@ -41,25 +49,16 @@ public class LandPlotProduceTest {
      */
     private static final int NO_ENERGY = 0;
     
-    /** LandPlot with a LandPlotType of RIVER. */
-    private LandPlot riverPlot;
-    
-    /** LandPlot with a LandPlotType of PLAIN. */
-    private LandPlot plainPlot;
-    
-    /** LandPlot with a LandPlotType of MTN_1. */
-    private LandPlot mtn1Plot;
-    
-    /** LandPlot with a LandPlotType of MTN_2. */
-    private LandPlot mtn2Plot;
-    
-    /** LandPlot with a LandPlotType of MTN_3. */
-    private LandPlot mtn3Plot;
-    
-    /** LandPlot with a LandPlotType of TOWN. */
-    private LandPlot townPlot;
-    
-    /** Holds the above LandPlots for easy traversing when needed. */
+    /** 
+     * Holds six LandPlots (one of each type).
+     * Format is as follows (index - type)
+     * 0 - RIVER
+     * 1 - PLAIN
+     * 2 - MTN_1
+     * 3 - MTN_2
+     * 4 - MTN_3
+     * 5 - TOWN
+     */
     private LandPlot[] plotArray;
     
     /**
@@ -93,16 +92,18 @@ public class LandPlotProduceTest {
     @Before
     /**
      * Initialize all plots and the plot array.
+     * The plotArray will be of length 6 and will have river, plain, mtn1,
+     * mtn2, mtn3, and town land plots as elements (in that order).
      * 
      * @throws Exception
      */
     public void setUp() throws Exception {
-        riverPlot = new LandPlot(LandPlotType.RIVER);
-        plainPlot = new LandPlot(LandPlotType.PLAIN);
-        mtn1Plot = new LandPlot(LandPlotType.MTN_1);
-        mtn2Plot = new LandPlot(LandPlotType.MTN_2);
-        mtn3Plot = new LandPlot(LandPlotType.MTN_3);
-        townPlot = new LandPlot(LandPlotType.TOWN);
+        LandPlot riverPlot = new LandPlot(LandPlotType.RIVER);
+        LandPlot plainPlot = new LandPlot(LandPlotType.PLAIN);
+        LandPlot mtn1Plot = new LandPlot(LandPlotType.MTN_1);
+        LandPlot mtn2Plot = new LandPlot(LandPlotType.MTN_2);
+        LandPlot mtn3Plot = new LandPlot(LandPlotType.MTN_3);
+        LandPlot townPlot = new LandPlot(LandPlotType.TOWN);
         
         plotArray = new LandPlot[] {riverPlot, plainPlot, mtn1Plot,
                                     mtn2Plot, mtn3Plot, townPlot};
@@ -333,6 +334,7 @@ public class LandPlotProduceTest {
     public void testProduceEnergyMuleWithoutPower() {
         setupAndProduceOwnedPlotsWithMules(NO_ENERGY, Resource.ENERGY);
 
+        /* Energy mules do not need energy units from owner to produce. */
         expectedOwnerFood = new int[] {0, 0, 0, 0, 0, 0};
         expectedOwnerEnergy = new int[] {2, 3, 1, 1, 1, 0};
         expectedOwnerOre= new int[] {0, 0, 0, 0, 0, 0};
