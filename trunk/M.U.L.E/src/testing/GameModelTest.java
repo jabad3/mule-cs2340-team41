@@ -1,10 +1,16 @@
-package Models;
+package testing;
 
 import static org.junit.Assert.*;
 
 import java.awt.Color;
 
 import org.junit.Test;
+
+import Models.Difficulty;
+import Models.GameModel;
+import Models.Player;
+import Models.RaceType;
+import Models.Resource;
 
 /**
  * These are the tests for the method CalculateTurnTime in the class GameModel
