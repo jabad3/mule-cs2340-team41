@@ -3,6 +3,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -19,43 +20,43 @@ import Models.Store;
  */
 public class StorePanel extends JPanel{
     /** Label for ore */
-	JLabel oreLabel = new JLabel();
+	private JLabel oreLabel = new JLabel();
 	
 	/** Spinner for ore */
-	JSpinner oreSpinner;
+	public JSpinner oreSpinner;
 	
 	/** Label for food */
-	JLabel foodLabel = new JLabel();
+	private JLabel foodLabel = new JLabel();
 	
 	/** Spinner for food */
-	JSpinner foodSpinner;
+	public JSpinner foodSpinner;
 	
 	/** Label for energy */
-	JLabel energyLabel = new JLabel();
+	private JLabel energyLabel = new JLabel();
 	
 	/** Spinner for energy */
-	JSpinner energySpinner;
+	public JSpinner energySpinner;
 	
 	/** Label for mule */
-	JLabel muleLabel = new JLabel();
+	private JLabel muleLabel = new JLabel();
 	
 	/** Combo box to select mule type */
-	JComboBox<String> muleTypeCombobox;
+	public JComboBox<String> muleTypeCombobox;
 	
 	/** Label for subtotal */
-	JLabel subtotalLabel = new JLabel();
+	private JLabel subtotalLabel = new JLabel();
 	
 	/** Button to complete transaction */
-	JButton buySellButton = new JButton();
+	private JButton buySellButton = new JButton();
 	
 	/** The player that is currently interacting with the store */
-	Player player;
+	private Player player;
 	
 	/** The store that is currently interacting with the player */
-	Store store;
+	private Store store;
 	
 	/** Tracks whether player is buying or selling from/to store */
-	boolean isBuying;
+	private boolean isBuying;
     
 	/**
 	 * This class updates a player's inventory when the buy button is pressed
@@ -184,48 +185,66 @@ public class StorePanel extends JPanel{
 	/**
 	 * Updates spinners and JLabels to reflect model
 	 */	
-	public void updateStorePanel(JSpinner source, boolean onlyRecalcSubtotal)
+	public HashMap<Resource, Integer> getResSubtotals()
 	{
-		int oreSubtotal;
-		int foodSubtotal;
-		int energySubtotal;
-		int muleSubtotal = 0;
+		HashMap<Resource, Integer> resSubtotals = new HashMap<Resource, Integer>();
 		
 		if(isBuying)
 		{
-			oreSubtotal = (Integer)oreSpinner.getValue() * Store.orePrice;
-			foodSubtotal = (Integer)foodSpinner.getValue() * Store.foodPrice;
-			energySubtotal = (Integer)energySpinner.getValue() * Store.energyPrice;
+			resSubtotals.put(Resource.ORE, (Integer)oreSpinner.getValue() * Store.orePrice);
+			resSubtotals.put(Resource.FOOD, (Integer)foodSpinner.getValue() * Store.foodPrice);
+			resSubtotals.put(Resource.ENERGY, (Integer)energySpinner.getValue() * Store.energyPrice);
 			
 			if(muleTypeCombobox.getSelectedItem() != null)
 			{
 				if(muleTypeCombobox.getSelectedItem().equals("Food"))
 				{
-					muleSubtotal = Store.mulePrice + Resource.FOOD.getMuleTypeScore();
+					resSubtotals.put(Resource.MULE, Store.mulePrice + Resource.FOOD.getMuleTypeScore());
 				}
 				else if(muleTypeCombobox.getSelectedItem().equals("Energy"))
 				{
-					muleSubtotal = Store.mulePrice + Resource.ENERGY.getMuleTypeScore();
+					resSubtotals.put(Resource.MULE, Store.mulePrice + Resource.ENERGY.getMuleTypeScore());
 				}
 				else if(muleTypeCombobox.getSelectedItem().equals("Ore"))
 				{
-					muleSubtotal = Store.mulePrice + Resource.ORE.getMuleTypeScore();
+					resSubtotals.put(Resource.MULE, Store.mulePrice + Resource.ORE.getMuleTypeScore());
 				}
+				else
+				{
+					resSubtotals.put(Resource.MULE, 0);
+				}
+			}
+			else
+			{
+				resSubtotals.put(Resource.MULE, 0);
 			}
 		}
 		else
 		{
 			//TODO: different selling prices?
-			oreSubtotal = (Integer)oreSpinner.getValue() * Store.orePrice;
-			foodSubtotal = (Integer)foodSpinner.getValue() * Store.foodPrice;
-			energySubtotal = (Integer)energySpinner.getValue() * Store.energyPrice;
+			resSubtotals.put(Resource.ORE, (Integer)oreSpinner.getValue() * Store.orePrice);
+			resSubtotals.put(Resource.FOOD, (Integer)foodSpinner.getValue() * Store.foodPrice);
+			resSubtotals.put(Resource.ENERGY, (Integer)energySpinner.getValue() * Store.energyPrice);
 			
 			if(muleTypeCombobox.getSelectedItem() != null && muleTypeCombobox.getSelectedItem().equals("Sell"))
 			{
-				//TODO: base sold price on TYPE of mule (the "FOOD" in below transaction)
-				muleSubtotal = Store.mulePrice + player.getMule().getMuleType().getMuleTypeScore();
+				resSubtotals.put(Resource.MULE, Store.mulePrice + player.getMule().getMuleType().getMuleTypeScore());
+			}
+			else
+			{
+				resSubtotals.put(Resource.MULE, 0);
 			}
 		}
+		
+		return resSubtotals;
+	}
+	
+	/**
+	 * Updates spinners and JLabels to reflect model
+	 */	
+	private void updateStorePanel(JSpinner source, boolean onlyRecalcSubtotal)
+	{
+		HashMap<Resource, Integer> resSubtotals = getResSubtotals();
 		
 		if(!onlyRecalcSubtotal)
 		{
@@ -234,12 +253,12 @@ public class StorePanel extends JPanel{
 			
 			oreLabel.setText("Ore (" + (isBuying ? store.getOre() : player.getOre()) + ")");
 			prevResCount = ((Integer)oreSpinner.getValue()).intValue();
-			maxResCount = (isBuying ? Math.max(Math.min((player.getMoney()-foodSubtotal-energySubtotal-muleSubtotal)/Store.orePrice, store.getOre()), 0) : player.getOre());
+			maxResCount = (isBuying ? Math.max(Math.min((player.getMoney()-resSubtotals.get(Resource.FOOD)-resSubtotals.get(Resource.ENERGY)-resSubtotals.get(Resource.MULE))/Store.orePrice, store.getOre()), 0) : player.getOre());
 			if(prevResCount > maxResCount)
 			{
 				prevResCount = maxResCount;
 			}
-			System.out.println(prevResCount);
+			
 			SpinnerModel oreModel = new SpinnerNumberModel(prevResCount, //initial value
 	                0, //min
 	                maxResCount, //max
@@ -248,7 +267,7 @@ public class StorePanel extends JPanel{
 			
 			foodLabel.setText("Food (" + (isBuying ? store.getFood() : player.getFood()) + ")");
 			prevResCount = ((Integer)foodSpinner.getValue()).intValue();
-			maxResCount = (isBuying ? Math.max(Math.min((player.getMoney()-oreSubtotal-energySubtotal-muleSubtotal)/Store.foodPrice, store.getFood()), 0) : player.getFood());
+			maxResCount = (isBuying ? Math.max(Math.min((player.getMoney()-resSubtotals.get(Resource.ORE)-resSubtotals.get(Resource.ENERGY)-resSubtotals.get(Resource.MULE))/Store.foodPrice, store.getFood()), 0) : player.getFood());
 			if(prevResCount > maxResCount)
 			{
 				prevResCount = maxResCount;
@@ -262,7 +281,7 @@ public class StorePanel extends JPanel{
 			
 			energyLabel.setText("Energy (" + (isBuying ? store.getEnergy() : player.getEnergy()) + ")");
 			prevResCount = ((Integer)energySpinner.getValue()).intValue();
-			maxResCount = (isBuying ? Math.max(Math.min((player.getMoney()-oreSubtotal-foodSubtotal-muleSubtotal)/Store.energyPrice, store.getEnergy()), 0) : player.getEnergy());
+			maxResCount = (isBuying ? Math.max(Math.min((player.getMoney()-resSubtotals.get(Resource.ORE)-resSubtotals.get(Resource.FOOD)-resSubtotals.get(Resource.MULE))/Store.energyPrice, store.getEnergy()), 0) : player.getEnergy());
 			if(prevResCount > maxResCount)
 			{
 				prevResCount = maxResCount;
@@ -288,7 +307,7 @@ public class StorePanel extends JPanel{
 				
 				if(store.getMules() > 0 && !player.hasMule())
 				{
-					int leftoverMoney = Math.max(player.getMoney()-oreSubtotal-foodSubtotal-energySubtotal, 0);
+					int leftoverMoney = Math.max(player.getMoney()-resSubtotals.get(Resource.ORE)-resSubtotals.get(Resource.FOOD)-resSubtotals.get(Resource.ENERGY), 0);
 					if(leftoverMoney > Store.mulePrice + Resource.FOOD.getMuleTypeScore())
 					{
 						muleTypeStrings.add("Food");
@@ -325,7 +344,7 @@ public class StorePanel extends JPanel{
 		
 		if(onlyRecalcSubtotal)
 		{
-			subtotalLabel.setText("Subtotal: $" + (oreSubtotal + foodSubtotal + energySubtotal + muleSubtotal));
+			subtotalLabel.setText("Subtotal: $" + (resSubtotals.get(Resource.ORE) + resSubtotals.get(Resource.FOOD) + resSubtotals.get(Resource.ENERGY) + resSubtotals.get(Resource.MULE)));
 		}
 		
 		buySellButton.setText(isBuying ? "Buy" : "Sell");
