@@ -12,6 +12,8 @@ public enum Difficulty {
 	STANDARD(4, 2, 0, 8, 8, 8, 14 ), 
 	TOURNAMENT(4, 2, 0, 8, 8, 8, 14);
 	
+	// THIS LINE GOT ADDED BY ME - SHOULD BE DELETED IN NEW HEAD
+	
 	/** Starting food count for Players. */
 	private final int playerFood;
 	
