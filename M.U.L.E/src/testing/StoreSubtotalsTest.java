@@ -17,6 +17,21 @@ import Models.Resource;
 import Models.Store;
 import Views.StorePanel;
 
+/**
+ * This class performs unit tests on the StorePanel.getResSubtotals() function.
+ * The goal is to prove that during buying and selling, the money subtotals for
+ * each resource and selected mule type are calculated correctly.
+ * 
+ * To make sure that only getResSubtotals() is being tested and no object-state
+ * interference is caused, the store and player are given a lot of resources to
+ * prevent shortages when selecting spinner values.
+ * 
+ * Different combinations of number of each resource, mule presence and type,
+ * and buying or selling mode are tested to achieve coverage.
+ * 
+ * @author Tim
+ *
+ */
 public class StoreSubtotalsTest {
 	@Test
 	public void testBuyNothing() {
