@@ -234,7 +234,8 @@ public class LandPlotProduceTest {
      * For each land plot, checks whether or not each of the owner's resource
      * counts matches the expected resource count after production is over.
      * 
-     * @return
+     * @return True if the expected resource counts for all owners match the
+     * actual values, false otherwise.
      */
     private boolean ownerResourceCountsMatchesExpected() {
         for (int i = 0; i < plotArray.length; i++) {
