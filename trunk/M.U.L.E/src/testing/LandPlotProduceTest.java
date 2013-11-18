@@ -38,6 +38,12 @@ import Models.Resource;
 public class LandPlotProduceTest {
     
     /**
+     * Denotes int value for two energy units.
+     * For readability in method calls.
+     */
+    private static final int TWO_ENERGY = 2;
+    
+    /**
      * Denotes int value for one energy unit.
      * For readability in method calls.
      */
@@ -185,6 +191,29 @@ public class LandPlotProduceTest {
     }
     
     /**
+     * Returns an int array of zeros.  This array has the same length as
+     * plotArray.
+     * 
+     * @return int array of zeros
+     */
+    private int[] arrayOfZeros() {
+	return new int[plotArray.length];
+    }
+    
+    /**
+     * For all arrays of expected values for owner resource counts
+     * (expectedOwnerFood, expectedOwnerEnergy, expectedOwnerOre), set them
+     * to an array of zeros.
+     * 
+     * i.e. we expected owners of all plots to have no food, energy, or ore.
+     */
+    private void setAllExpectedOwnerResourceCountsToZero() {
+	expectedOwnerFood = arrayOfZeros();
+        expectedOwnerEnergy = arrayOfZeros();
+        expectedOwnerOre = arrayOfZeros();
+    }
+    
+    /**
      * Checks whether or not each of the land plot's lastAmountProduced value
      * is what was expected after production occured.
      * 
@@ -227,50 +256,63 @@ public class LandPlotProduceTest {
     }
 
     @Test
+    /**
+     * Test case:  land plot has no owner
+     */
     public void testProduceNoOwner() {
         callProduceOnAllPlots();
 
-        expectedLastAmountProduced = new int[] {0, 0, 0, 0, 0, 0};
+        expectedLastAmountProduced = arrayOfZeros();
         
         /* Note:  no owner-related tests because there isn't one! */
         assertTrue(lastAmountProducedMatchesExpected());
     }
     
     @Test
+    /**
+     * Test case:  land plot has an owner who has energy to potentially power
+     * a mule, but the owner has no mule installed on the plot
+     */
     public void testProduceOwnerWithoutMuleWithPower() {
-        assignPlotsOwnersWithEnergyOf(1);
+        assignPlotsOwnersWithEnergyOf(ONE_ENERGY);
         callProduceOnAllPlots();
 
-        expectedOwnerFood = new int[] {0, 0, 0, 0, 0, 0};
+        expectedOwnerFood = arrayOfZeros();
         expectedOwnerEnergy = new int[] {1, 1, 1, 1, 1, 1};
-        expectedOwnerOre= new int[] {0, 0, 0, 0, 0, 0};
-        expectedLastAmountProduced = new int[] {0, 0, 0, 0, 0, 0};
+        expectedOwnerOre = arrayOfZeros();
+        expectedLastAmountProduced = arrayOfZeros();
         
         assertTrue(lastAmountProducedMatchesExpected());
         assertTrue(ownerResourceCountsMatchesExpected());
     }
     
     @Test
+    /**
+     * Test case:  owner has no energy to power any mules, and owner has no
+     * mule installed on the plot
+     */
     public void testProduceOwnerWithoutMuleWithoutPower() {
-        assignPlotsOwnersWithEnergyOf(0);
+        assignPlotsOwnersWithEnergyOf(NO_ENERGY);
         callProduceOnAllPlots();
 
-        expectedOwnerFood = new int[] {0, 0, 0, 0, 0, 0};
-        expectedOwnerEnergy = new int[] {0, 0, 0, 0, 0, 0};
-        expectedOwnerOre= new int[] {0, 0, 0, 0, 0, 0};
-        expectedLastAmountProduced = new int[] {0, 0, 0, 0, 0, 0};
+        setAllExpectedOwnerResourceCountsToZero();
+        expectedLastAmountProduced = arrayOfZeros();
         
         assertTrue(lastAmountProducedMatchesExpected());
         assertTrue(ownerResourceCountsMatchesExpected());
     }
     
     @Test
+    /**
+     * Test case:  owner has energy to power a mule, and the installed mule
+     * is configured to produce food
+     */
     public void testProduceFoodMuleWithPower() {
         setupAndProduceOwnedPlotsWithMules(ONE_ENERGY, Resource.FOOD);
 
         expectedOwnerFood = new int[] {4, 2, 1, 1, 1, 0};
         expectedOwnerEnergy = new int[] {0, 0, 0, 0, 0, 1};
-        expectedOwnerOre= new int[] {0, 0, 0, 0, 0, 0};
+        expectedOwnerOre = arrayOfZeros();
         expectedLastAmountProduced = new int[] {4, 2, 1, 1, 1, 0};
         
         assertTrue(lastAmountProducedMatchesExpected());
@@ -278,13 +320,20 @@ public class LandPlotProduceTest {
     }
     
     @Test
+    /**
+     * Test case:  owner has energy to power a mule, and the installed mule is
+     * configured to produce energy
+     * 
+     * Note:  energy mules should not consume energy units!  they do not need
+     * to be powered to produce energy!
+     */
     public void testProduceEnergyMuleWithPower() {
         setupAndProduceOwnedPlotsWithMules(ONE_ENERGY, Resource.ENERGY);
 
         /* Note:  energy mules will not consume energy! */
-        expectedOwnerFood = new int[] {0, 0, 0, 0, 0, 0};
+        expectedOwnerFood = arrayOfZeros();
         expectedOwnerEnergy = new int[] {3, 4, 2, 2, 2, 1};
-        expectedOwnerOre= new int[] {0, 0, 0, 0, 0, 0};
+        expectedOwnerOre = arrayOfZeros();
         expectedLastAmountProduced = new int[] {2, 3, 1, 1, 1, 0};
         
         assertTrue(lastAmountProducedMatchesExpected());
@@ -292,12 +341,16 @@ public class LandPlotProduceTest {
     }
     
     @Test
+    /**
+     * Test case:  owner has energy to power a mule, and the installed mule is
+     * configured to produce ore
+     */
     public void testProduceOreMuleWithPower() {
         setupAndProduceOwnedPlotsWithMules(ONE_ENERGY, Resource.ORE);
 
-        expectedOwnerFood = new int[] {0, 0, 0, 0, 0, 0};
+        expectedOwnerFood = arrayOfZeros();
         expectedOwnerEnergy = new int[] {0, 0, 0, 0, 0, 1};
-        expectedOwnerOre= new int[] {0, 1, 2, 3, 4, 0};
+        expectedOwnerOre = new int[] {0, 1, 2, 3, 4, 0};
         expectedLastAmountProduced = new int[] {0, 1, 2, 3, 4, 0};
         
         assertTrue(lastAmountProducedMatchesExpected());
@@ -305,39 +358,52 @@ public class LandPlotProduceTest {
     }
     
     @Test
+    /**
+     * Test case:  owner has energy to power a mule, but the installed mule is
+     * not configured to produce any resource
+     */
     public void testProduceUnoutfittedMuleWithPower() {
         setupAndProduceOwnedPlotsWithMules(ONE_ENERGY, null);
 
-        expectedOwnerFood = new int[] {0, 0, 0, 0, 0, 0};
+        expectedOwnerFood = arrayOfZeros();
         expectedOwnerEnergy = new int[] {1, 1, 1, 1, 1, 1};
-        expectedOwnerOre= new int[] {0, 0, 0, 0, 0, 0};
-        expectedLastAmountProduced = new int[] {0, 0, 0, 0, 0, 0};
+        expectedOwnerOre = arrayOfZeros();
+        expectedLastAmountProduced = arrayOfZeros();
         
         assertTrue(lastAmountProducedMatchesExpected());
         assertTrue(ownerResourceCountsMatchesExpected());
     }
     
     @Test
+    /**
+     * Test case:  owner does not have energy to power a mule, and the
+     * installed mule is configured to produce food
+     */
     public void testProduceFoodMuleWithoutPower() {
         setupAndProduceOwnedPlotsWithMules(NO_ENERGY, Resource.FOOD);
 
-        expectedOwnerFood = new int[] {0, 0, 0, 0, 0, 0};
-        expectedOwnerEnergy = new int[] {0, 0, 0, 0, 0, 0};
-        expectedOwnerOre= new int[] {0, 0, 0, 0, 0, 0};
-        expectedLastAmountProduced = new int[] {0, 0, 0, 0, 0, 0};
+        setAllExpectedOwnerResourceCountsToZero();
+        expectedLastAmountProduced = arrayOfZeros();
         
         assertTrue(lastAmountProducedMatchesExpected());
         assertTrue(ownerResourceCountsMatchesExpected());
     }
     
     @Test
+    /**
+     * Test case:  owner does not have energy to power a mule, and the
+     * installed mule is configured to produce energy
+     * 
+     * Note:  energy mules do not need to be powered to produce!  energy mules
+     * can produce energy if owner has no energy!
+     */
     public void testProduceEnergyMuleWithoutPower() {
         setupAndProduceOwnedPlotsWithMules(NO_ENERGY, Resource.ENERGY);
 
         /* Energy mules do not need energy units from owner to produce. */
-        expectedOwnerFood = new int[] {0, 0, 0, 0, 0, 0};
+        expectedOwnerFood = arrayOfZeros();
         expectedOwnerEnergy = new int[] {2, 3, 1, 1, 1, 0};
-        expectedOwnerOre= new int[] {0, 0, 0, 0, 0, 0};
+        expectedOwnerOre = arrayOfZeros();
         expectedLastAmountProduced = new int[] {2, 3, 1, 1, 1, 0};
         
         assertTrue(lastAmountProducedMatchesExpected());
@@ -345,26 +411,98 @@ public class LandPlotProduceTest {
     }
     
     @Test
+    /**
+     * Test case:  owner does not have energy to power a mule, and the
+     * installed mule is configured to produce ore
+     */
     public void testProduceOreMuleWithoutPower() {
         setupAndProduceOwnedPlotsWithMules(NO_ENERGY, Resource.ORE);
 
-        expectedOwnerFood = new int[] {0, 0, 0, 0, 0, 0};
-        expectedOwnerEnergy = new int[] {0, 0, 0, 0, 0, 0};
-        expectedOwnerOre= new int[] {0, 0, 0, 0, 0, 0};
-        expectedLastAmountProduced = new int[] {0, 0, 0, 0, 0, 0};
+        setAllExpectedOwnerResourceCountsToZero();
+        expectedLastAmountProduced = arrayOfZeros();
         
         assertTrue(lastAmountProducedMatchesExpected());
         assertTrue(ownerResourceCountsMatchesExpected());
     }
     
     @Test
+    /**
+     * Test case:  owner does not have energy to power a mule, and the
+     * installed mule is not configured to produce anything
+     */
     public void testProduceUnoutfittedMuleWithoutPower() {
         setupAndProduceOwnedPlotsWithMules(NO_ENERGY, null);
 
-        expectedOwnerFood = new int[] {0, 0, 0, 0, 0, 0};
-        expectedOwnerEnergy = new int[] {0, 0, 0, 0, 0, 0};
-        expectedOwnerOre= new int[] {0, 0, 0, 0, 0, 0};
-        expectedLastAmountProduced = new int[] {0, 0, 0, 0, 0, 0};
+        setAllExpectedOwnerResourceCountsToZero();
+        expectedLastAmountProduced = arrayOfZeros();
+        
+        assertTrue(lastAmountProducedMatchesExpected());
+        assertTrue(ownerResourceCountsMatchesExpected());
+    }
+    
+    @Test
+    /**
+     * Test case:  owner has more than enough energy to power a mule, and the
+     * installed mule is configured to produce food
+     */
+    public void testProduceFoodMuleWithExcessPower() {
+	setupAndProduceOwnedPlotsWithMules(TWO_ENERGY, Resource.FOOD);
+	
+	expectedOwnerFood = new int[] {4, 2, 1, 1, 1, 0};
+        expectedOwnerEnergy = new int[] {1, 1, 1, 1, 1, 2};
+        expectedOwnerOre = arrayOfZeros();
+        expectedLastAmountProduced = new int[] {4, 2, 1, 1, 1, 0};
+        
+        assertTrue(lastAmountProducedMatchesExpected());
+        assertTrue(ownerResourceCountsMatchesExpected());
+    }
+    
+    @Test
+    /**
+     * Test case:  owner has more than enough energy to power one mule, and the
+     * installed mule is configured to produce energy
+     */
+    public void testProduceEnergyMuleWithExcessPower() {
+	setupAndProduceOwnedPlotsWithMules(TWO_ENERGY, Resource.ENERGY);
+	
+	expectedOwnerFood = arrayOfZeros();
+        expectedOwnerEnergy = new int[] {4, 5, 3, 3, 3, 2};
+        expectedOwnerOre = arrayOfZeros();
+        expectedLastAmountProduced = new int[] {2, 3, 1, 1, 1, 0};
+        
+        assertTrue(lastAmountProducedMatchesExpected());
+        assertTrue(ownerResourceCountsMatchesExpected());
+    }
+    
+    @Test
+    /**
+     * Test case:  owner has more than enough energy to power one mule, and the
+     * installed mule is configured to produce ore
+     */
+    public void testProduceOreMuleWithExcessPower() {
+	setupAndProduceOwnedPlotsWithMules(TWO_ENERGY, Resource.ORE);
+	
+	expectedOwnerFood = arrayOfZeros();
+        expectedOwnerEnergy = new int[] {1, 1, 1, 1, 1, 2};
+        expectedOwnerOre = new int[] {0, 1, 2, 3, 4, 0};
+        expectedLastAmountProduced = new int[] {0, 1, 2, 3, 4, 0};
+        
+        assertTrue(lastAmountProducedMatchesExpected());
+        assertTrue(ownerResourceCountsMatchesExpected());
+    }
+    
+    @Test
+    /**
+     * Test case:  owner has more than enough energy to power one mule, and the
+     * installed mule is not configured to produce any resource
+     */
+    public void testProduceUnoutfittedMuleWithExcessPower() {
+        setupAndProduceOwnedPlotsWithMules(TWO_ENERGY, null);
+
+        expectedOwnerFood = arrayOfZeros();
+        expectedOwnerEnergy = new int[] {2, 2, 2, 2, 2, 2};
+        expectedOwnerOre = arrayOfZeros();
+        expectedLastAmountProduced = arrayOfZeros();
         
         assertTrue(lastAmountProducedMatchesExpected());
         assertTrue(ownerResourceCountsMatchesExpected());
