@@ -12,8 +12,6 @@ import Models.Mule;
 import Models.Player;
 import Models.RaceType;
 import Models.Resource;
-import Models.Store;
-import Models.Trader;
 
 import org.junit.Before;
 import org.junit.Test;
