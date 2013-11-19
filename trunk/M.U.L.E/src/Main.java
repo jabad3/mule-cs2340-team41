@@ -9,14 +9,13 @@ import Stages.StartScreen;
  */
 
 public class Main {
-    /** 
-     * This is a driver class that brings up an introductory screen (with New Game and Load Game options) and
-     * consequently starts our game.
+    /**
+     * This is a driver class that brings up an introductory screen (with New
+     * Game and Load Game options) and consequently starts our game.
      */
-	public static void main(String[] args) {
-		StartScreen startScreen = new StartScreen();
-    	IntroTrack introTrack = new IntroTrack();
-    	introTrack.start();
-	}
+    public static void main(String[] args) {
+	StartScreen startScreen = new StartScreen();
+	IntroTrack introTrack = new IntroTrack();
+	introTrack.start();
+    }
 }
-	
