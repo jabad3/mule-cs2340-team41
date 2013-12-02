@@ -16,14 +16,22 @@ import Models.Resource;
 */
 public class UGAEvent extends RandomEvent {
 
+    /**
+     * Create a new UGAEvent.
+     * 
+     * @param player The player that this event affects.
+     */
+    public UGAEvent(Player player) {
+        super(player);
+    }
+    
 	@Override
-	public void eventAction(Player player, int m) {
+	public void execute() {
 		int curPlayerFood = player.getFood();
 		try {
-			player.removeResource(Resource.FOOD, curPlayerFood / 2); //get approx. half with integer division, then remove from player
+			player.removeResource(Resource.FOOD, curPlayerFood / 2);
 		} catch (FailedTransactionException e) {
-			player.deductAll(Resource.FOOD);
-			e.printStackTrace();
+			player.deductAll(Resource.FOOD);  // take all if they don't have enough
 		}
 	}
 

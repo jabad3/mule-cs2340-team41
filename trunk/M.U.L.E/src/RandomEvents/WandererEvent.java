@@ -15,8 +15,16 @@ import Models.Resource;
 */
 public class WandererEvent extends RandomEvent {
 
+    /**
+     * Create a WandererEvent.
+     * 
+     * @param player The player this event affects
+     */
+    public WandererEvent(Player player) {
+        super(player);
+    }
 	@Override
-	public void eventAction(Player player, int m) {
+	public void execute() {
 		player.addResource(Resource.ORE, 2);
 	}
 

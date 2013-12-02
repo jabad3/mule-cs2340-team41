@@ -64,7 +64,7 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
     /** The store dialog that is currently open, if any */
     private JDialog storeDialog;
 	
-    /** Carries ou */
+    /** Decides when random events occur and executes them. */
     private RandomEventService randService;
 	
 	/**
@@ -83,7 +83,6 @@ public class DevelopmentStage extends Stage implements MuleTimerListener, ShopEn
 	 */
 	@Override
 	public void start() {
-		System.out.println("Starting Development Stage");
         Map map = gameModel.getMap();
 		mapPanel = new MapPanel(map, null);
 		townPanel = new TownPanel();
