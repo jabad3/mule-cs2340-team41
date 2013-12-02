@@ -22,37 +22,35 @@ import Models.Store;
 
 /**
  * This class shows the players the game's state and allows players to save
- * 
  * @author Tim
  */
 public class SummaryPanel extends JPanel {
-    /**
-     * Creates the SummaryPanel's interface
-     * 
-     * @param summary
-     *            The summary to display
-     */
-    public SummaryPanel(String summary, final GameModel gameModel) {
-	setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
-	JTextArea textArea = new JTextArea(summary);
-	textArea.setEditable(false);
-	textArea.setLineWrap(true);
-	textArea.setOpaque(false);
-	textArea.setBorder(BorderFactory.createEmptyBorder());
-	textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
-	add(textArea);
-
-	JButton saveBtn = new JButton("Save Game");
-	saveBtn.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
-		gameModel.saveGame();
-	    }
-	});
-	saveBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-	add(saveBtn);
-
-	if (gameModel.getCurrentRound() == 0 || gameModel.gameIsOver())
-	    saveBtn.setEnabled(false);
-    }
+	/**
+	 * Creates the SummaryPanel's interface
+	 * 
+	 * @param summary The summary to display
+	 */
+	public SummaryPanel(String summary, final GameModel gameModel) {
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		
+		JTextArea textArea = new JTextArea(summary);
+		textArea.setEditable(false);
+		textArea.setLineWrap(true);
+		textArea.setOpaque(false);
+		textArea.setBorder(BorderFactory.createEmptyBorder());
+		textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
+		add(textArea);
+		
+		JButton saveBtn = new JButton("Save Game");
+		saveBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gameModel.saveGame();
+			}
+		});
+		saveBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		add(saveBtn);
+		
+		if(gameModel.getCurrentRound() == 0 || gameModel.gameIsOver())
+			saveBtn.setEnabled(false);
+	}
 }
