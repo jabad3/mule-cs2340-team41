@@ -16,14 +16,9 @@ import javax.swing.JOptionPane;
  *
  */
 public class RandomEventService {
-	/** the RandomEventFactory used by this service */
-	private RandomEventFactory factory = new RandomEventFactory();
-	
-	/** random object for generating random numbers */
-	Random rand = new Random();
 	
 	/** HashMap for mValues, which are multipliers based on the current turn */
-	HashMap<Integer, Integer> mValues;
+	private HashMap<Integer, Integer> mValues;
 	
 	/**
 	 * constructor for RandomEventService, builds mValues map 
@@ -31,16 +26,6 @@ public class RandomEventService {
 	 */
 	public RandomEventService() {
 		this.buildmValues();
-	}
-	
-	/**
-	 * determines if an event is going to occur.  There is a 27%
-	 * chance of an event occuring.
-	 * 
-	 * @return true if an event is to occur, false otherwise
-	 */
-	private boolean eventIsHappening() {
-	    return rand.nextInt(101) <= 27;
 	}
 	
 	/** 
@@ -65,7 +50,7 @@ public class RandomEventService {
 	/**
 	 * Starts RandomEventService for given player, will 
 	 * determine if an event is going to occur and then execute appropriate
-	 * type of event
+	 * type of event, displaying the result in the specified Component.
 	 * 
 	 * @param player the player to run service on
 	 * @param currentRound the current round of the game
@@ -73,20 +58,34 @@ public class RandomEventService {
 	 * @param component the parent Component to use to draw showMessageDialog
 	 */
 	public void startService(Player player, int currentRound, boolean isInLastPlace, Component component) { 
-		int m = mValues.get(currentRound);
+	    if (!eventIsHappening()) {
+	        return;  // do nothing if no event should occur
+	    }
+	    
+
+	    RandomEventFactory factory = new RandomEventFactory();
+	    int m = mValues.get(currentRound);
 		
-		if(eventIsHappening() && isInLastPlace) {
-			RandomEvent event = factory.buildGoodEvent();
-			event.eventAction(player, m);
-			System.out.println(event.getResultMessage()); //temporary for testing
-			JOptionPane.showMessageDialog(component, event.getResultMessage()); event.getResultMessage();
-		}
-		else if(eventIsHappening() && isInLastPlace) {
-			RandomEvent event = factory.buildFromAllEvent();
-			event.eventAction(player, m);
-			System.out.println(event.getResultMessage()); //temporary for testing
-			JOptionPane.showMessageDialog(component,event.getResultMessage());	
-		}
-	}	
+	    RandomEvent event;
+	    if (isInLastPlace) {
+	        event = factory.buildGoodEvent(player, m);
+	    } else {
+	        event = factory.buildFromAllEvent(player, m);
+	    }
+	    
+	    event.execute();
+	    JOptionPane.showMessageDialog(component, event.getResultMessage());
+	}
+    
+    /**
+     * determines if an event is going to occur.  There is a 27%
+     * chance of an event occuring.
+     * 
+     * @return true if an event is to occur, false otherwise
+     */
+    private boolean eventIsHappening() {
+        Random rand = new Random();
+        return rand.nextInt(101) <= 27;
+    }
 	
 }

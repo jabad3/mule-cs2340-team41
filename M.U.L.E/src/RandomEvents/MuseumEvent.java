@@ -15,19 +15,33 @@ import Models.Resource;
 */
 public class MuseumEvent extends RandomEvent {
     
-    int lastComputerPrice;
+    /** The multiplier associated with this event. */
+    private int m;
+    
+    /** The computer price determined by last execution of the event. */
+    private int computerPrice;
+    
+    /**
+     * Create a MuseumEvent.
+     * 
+     * @param player The player this random event affects
+     * @param m The price multiplier for this event
+     */
+    public MuseumEvent(Player player, int m) {
+        super(player);
+        this.m = m;
+    }
 
 	@Override
-	public void eventAction(Player player, int m) {
-	    int computerPrice = 8 * m;
+	public void execute() {
+	    computerPrice = 8 * m;
 		player.addResource(Resource.MONEY, computerPrice);
-		lastComputerPrice = computerPrice;
 	}
 
     @Override
     public String getResultMessage() {
         String result = "The museum bought your antique personal computer for $"
-                        + lastComputerPrice + "!";
+                        + computerPrice + "!";
         return result;
     }
 

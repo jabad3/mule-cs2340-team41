@@ -15,20 +15,27 @@ import Models.Resource;
 */
 public class RatEvent extends RandomEvent {
 
-    /** The value that the hide was sold for after the last eventAction() call. */
-    int lastHidePrice;
+    /** Price multiplier for this event. */
+    private int m;
+    
+    /** The value that the hide was sold for after the last execute() call. */
+    private int hidePrice;
+    
+    public RatEvent(Player player, int m) {
+        super(player);
+        this.m = m;
+    }
     
 	@Override
-	public void eventAction(Player player, int m) {
-	    int hidePrice = 2 * m;
-		player.addResource(Resource.MONEY, hidePrice); //placeholder!, is really 2 * m-value!
-		lastHidePrice = hidePrice;
+	public void execute() {
+	    hidePrice = 2 * m;
+		player.addResource(Resource.MONEY, hidePrice);
 	}
 
     @Override
     public String getResultMessage() {
         String result = "You found a dead moose rat and sold the hide for $" 
-                        + lastHidePrice;
+                        + hidePrice;
         return result;
     }
 

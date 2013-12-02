@@ -10,13 +10,22 @@ import Models.Player;
  */
 public abstract class RandomEvent {
 	
+    /** The player that the RandomEvent affects. */
+    protected Player player;
+    
     /**
-     * Performs the event action on the given Player.
+     * Create a RandomEvent.
      * 
-     * @param player The player to be affected by the random event
-     * @param m A multiplier used by events
+     * @param player The player that this random event will affect
      */
-	public abstract void eventAction(Player player, int m);
+    public RandomEvent(Player player) {
+        this.player = player;
+    }
+    
+    /**
+     * Executes the action associated with this RandomEvent.
+     */
+	public abstract void execute();
 	
 	/**
 	 * Returns a string-representation of the result of the last eventAction().

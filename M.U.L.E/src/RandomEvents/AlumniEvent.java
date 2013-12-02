@@ -14,9 +14,18 @@ import Models.Resource;
  *
  */
 public class AlumniEvent extends RandomEvent {
+    
+    /**
+     * Create an AlumniEvent.
+     * 
+     * @param player The player that will have the action take place
+     */
+    public AlumniEvent(Player player) {
+        super(player);
+    }
 	
 	@Override
-	public void eventAction(Player player, int m) {
+	public void execute() {
 		player.addResource(Resource.FOOD, 3);
 		player.addResource(Resource.ENERGY, 2);
 	}
